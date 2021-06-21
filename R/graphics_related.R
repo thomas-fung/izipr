@@ -110,7 +110,7 @@ qqPIT.izip <- function(object, bins = 10, col1 = "red", col2 = "black", lty1 = 1
 #' @param lty2 an integer or character string: the line types for the theoretical uniform
 #' Q-Q plot in PIT, see ggplot2::linetype.
 #' @import ggplot2
-#' @import ggpubr
+#' @import patchwork
 #'
 #' @details
 #' The histogram and the Q-Q plot are used to compare the fitted profile with a standard
@@ -520,13 +520,13 @@ plot.izip <- function(x, which=c(1L,2L,6L,8L),
 #' @param ncol numeric; (optional) number of columns in the plot grid.
 #' @param output_as_ggplot logical; if \code{TRUE}, the function would
 #' return a list of \code{ggplot} objects; if \code{FALSE}, the
-#' function would return an \code{ggarrange} object.
+#' function would return an \code{patchwork} object.
 #'
 #' @return
-#' return a list of \code{ggplot} objects or a \code{ggarrange} object.
+#' return a list of \code{ggplot} objects or a \code{patchwork} object.
 #' @import stats
 #' @import ggplot2
-#' @import ggpubr
+#' @import patchwork
 #' @export
 #' @details
 #' The 'Scale-Location' plot, also called 'Spread-Location' plot, takes the square root of
@@ -739,7 +739,7 @@ autoplot.izip <- function(x, which=c(1L,2L,6L,8L), bins = 10,
     p[[show_count]] <- p_temp
     options(warn=0)
   }
-  p_ggarrange <- ggarrange(plotlist = p, ncol = ncol, nrow = nrow)
+   p_ggarrange <- patchwork::wrap_plots(plotlist = p, ncol = ncol, nrow = nrow)
   if ((is.null(ncol) & is.null(nrow))){
     print(p_ggarrange)
   } else if (class(p_ggarrange)[1] != "list"){

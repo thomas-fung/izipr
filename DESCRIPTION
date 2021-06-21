@@ -7,13 +7,14 @@ Authors@R: c(person("Thomas", "Fung", role = c("aut", "cre"),
   person("Alan", "Huang", role = "aut",
          email = "alan.huang@uq.edu.au"))
 Description: A collection of functions for estimation, testing and diagnostic checking for an interpretable zero-inflated Poisson (glm & INGARCH) models.
-License: GPL-3
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/thomas-fung/izipr
 BugReports: https://github.com/thomas-fung/izipr/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Config/testthat/edition: 3
 Suggests: 
     testthat,
     spelling,
@@ -24,7 +25,8 @@ Imports:
     stats,
     tscount,
     stringr,
-    ggplot2
+    ggplot2,
+    patchwork
 Language: en-GB
 Depends: 
     R (>= 2.10)

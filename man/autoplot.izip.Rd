@@ -31,10 +31,10 @@ PIT Q-Q plot.}
 
 \item{output_as_ggplot}{logical; if \code{TRUE}, the function would
 return a list of \code{ggplot} objects; if \code{FALSE}, the
-function would return an \code{ggarrange} object.}
+function would return an \code{patchwork} object.}
 }
 \value{
-return a list of \code{ggplot} objects or a \code{ggarrange} object.
+return a list of \code{ggplot} objects or a \code{patchwork} object.
 }
 \description{
 Eight plots (selectable by \code{which}) are currently available:
