@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R build status](https://github.com/thomas-fung/izipr/workflows/R-CMD-check/badge.svg)](https://github.com/thomas-fung/izipr/actions)
+[![Codecov test coverage](https://codecov.io/gh/thomas-fung/izipr/branch/master/graph/badge.svg)](https://codecov.io/gh/thomas-fung/izipr?branch=master)
 <!-- badges: end -->
 
 The `izipr` package provides a collection of functions for estimation, testing and diagnostic checking for an interpretable zero-inflated models. 

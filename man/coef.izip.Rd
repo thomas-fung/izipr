@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_extract.R
 \name{coef.izip}
 \alias{coef.izip}
-\title{Extract Model Coefficients from an iZIP Model Fit}
+\title{Extract Model Coefficients from an izip Model Fit}
 \usage{
 \method{coef}{izip}(object, ...)
 }

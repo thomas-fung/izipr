@@ -1,4 +1,4 @@
-#' Extract the (Maximized) Log-Likelihood from an iZIP Model Fit
+#' Extract the (Maximized) Log-Likelihood from an izip Model Fit
 #'
 #' An accessor function used to extract the (maximized) log-likelihood from a 'izip' object.
 #' @param object an object of class 'izip' object, obtained from a call to \code{glm.izip}
@@ -20,7 +20,7 @@ print.logLik.izip <- function(x,...){
   cat("'log Lik. ' ", x, " (df=", attr(x,"df"),")",sep="")
 }
 
-#' Extract the Number of Observation from an iZIP Model Fit
+#' Extract the Number of Observation from an izip Model Fit
 #'
 #' An accessor function used to extract the number of observation from a 'izip' object.
 #'
@@ -60,7 +60,7 @@ AIC.izip <- function(object, ..., k = 2){
   return(aic)
 }
 
-#' Extract Fitted Values from an iZIP Model Fit
+#' Extract Fitted Values from an izip Model Fit
 #'
 #' An accessor function used to extract the fitted values from a 'izip' object.
 #' \code{fitted.values} is an alias for \code{fitted}.
@@ -76,7 +76,7 @@ fitted.izip <- function(object, ...){
   return(object$fitted_values)
 }
 
-#' Extract the Model Frame from an iZIP Model Fit
+#' Extract the Model Frame from an izip Model Fit
 #'
 #' An accessor function used to extract the model frame from a 'izip' object.
 #'
@@ -91,7 +91,7 @@ model.frame.izip <- function(formula, ...){
   return(formula$model)
 }
 
-#' Extract Model Coefficients from an iZIP Model Fit
+#' Extract Model Coefficients from an izip Model Fit
 #'
 #' An function used to extract model coefficients from a 'izip' object.
 #' \code{coefficients} is an alias for \code{coef}.
@@ -108,7 +108,7 @@ coef.izip <- function(object, ...){
   return(object$coefficients)
 }
 
-#' Summarizing COM-Poisson Model Fit
+#' Summarizing a izip Model Fit
 #'
 #' \code{summary} method for class \code{izip}.
 #'
@@ -204,7 +204,7 @@ print.summary.izip <- function(x, digits = max(3, getOption("digits") - 3),
 }
 
 #'
-#' Print Values of iZIP Model
+#' Print Values of izip Model
 #'
 #' \code{print} method for class \code{izip}.
 #'

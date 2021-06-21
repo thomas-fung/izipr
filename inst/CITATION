@@ -1,0 +1,28 @@
+citHeader("To cite izipr in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Zero-inflated Poisson exponential families, with applications to time-series modelling of counts",
+  author   = personList(as.person("Alan Huang"),
+  as.person("Thomas Fung")),
+  journal  = "Statistical Modelling",
+  year     = "2021",
+  note = "Under revision.",
+  textVersion = paste("Huang A. & Fung, T. (2021)",
+  "Zero-inflated Poisson exponential families, with applications to time-series modelling of counts.",
+  "Statistical Modelling.",
+  "Under revision.")
+)
+
+citEntry(
+  entry    = "Manual",
+  title    = "izipr: Interpretable Zero-Inflated Poisson (and related) models in R",
+  author   = personList(as.person("Alan Huang"),
+  as.person("Thomas Fung")),
+  year     = "2021",
+  note = "R package version 0.1.0",
+  url      = "URL: https://CRAN.R-project.org/package=izipr",
+  textVersion = paste("Huang, A. & Fung, T. (2021)",
+  "izipr: Interpretable Zero-Inflated Poisson (and related) models in R. R package version 0.1.0.",
+  "URL https://CRAN.R-project.org/package=izipr/.")
+)

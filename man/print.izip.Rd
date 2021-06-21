@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_extract.R
 \name{print.izip}
 \alias{print.izip}
-\title{Print Values of iZIP Model}
+\title{Print Values of izip Model}
 \usage{
 \method{print}{izip}(x, ...)
 }

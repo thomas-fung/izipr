@@ -3,7 +3,7 @@
 \name{summary.izip}
 \alias{summary.izip}
 \alias{print.summary.izip}
-\title{Summarizing COM-Poisson Model Fit}
+\title{Summarizing a izip Model Fit}
 \usage{
 \method{summary}{izip}(object, ...)
 

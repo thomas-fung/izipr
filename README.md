@@ -7,6 +7,8 @@
 
 [![R build
 status](https://github.com/thomas-fung/izipr/workflows/R-CMD-check/badge.svg)](https://github.com/thomas-fung/izipr/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/thomas-fung/izipr/branch/master/graph/badge.svg)](https://codecov.io/gh/thomas-fung/izipr?branch=master)
 <!-- badges: end -->
 
 The `izipr` package provides a collection of functions for estimation,
@@ -40,7 +42,7 @@ A reference manual and some examples are available at
 If you use this package to analyse your data, please use the following
 citation:
 
-  - Fung, T. and Huang, A. (2020). izipr: Interpretable Zero-Inflated
+-   Fung, T. and Huang, A. (2020). izipr: Interpretable Zero-Inflated
     Poisson in R. R package version 0.0.0.9000.
 
 From R you can use:

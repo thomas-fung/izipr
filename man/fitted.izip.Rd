@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_extract.R
 \name{fitted.izip}
 \alias{fitted.izip}
-\title{Extract Fitted Values from an iZIP Model Fit}
+\title{Extract Fitted Values from an izip Model Fit}
 \usage{
 \method{fitted}{izip}(object, ...)
 }
