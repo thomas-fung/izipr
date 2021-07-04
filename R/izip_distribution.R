@@ -54,10 +54,11 @@ dizip <- function(x, mu, nu, pi, ref.lambda = 1, log.p = FALSE){
   if (missing(pi)){
     pi <- nu/(1+nu)
   }
-  df <- CBIND(x = x, mu=mu, nu=nu)
+  df <- CBIND(x = x, mu=mu, nu=nu, ref.lambda = ref.lambda)
   x <- df[,1]
   mu <- df[,2]
   nu <- df[,3]
+  ref.lambda <- df[,4]
   theta <- log(mu+VGAM::lambertW(nu*exp(ref.lambda-mu)*mu))-log(ref.lambda)
   lambda <- ref.lambda*exp(theta)
   p_theta <- nu/(nu+exp(-ref.lambda+lambda))
@@ -96,7 +97,7 @@ dizip <- function(x, mu, nu, pi, ref.lambda = 1, log.p = FALSE){
 
 #' @rdname iZIP_Distribution
 #' @export
-pizip <- function(q, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
+pizip <- function(q, mu, nu, pi, ref.lambda = 1, lower.tail = TRUE, log.p = FALSE){
   # compute the distribution function for iZIP distribution with mean mu and
   # baseline ZI odd nu
   # q, mu, nu are recycled to match the length of each other.
@@ -116,10 +117,11 @@ pizip <- function(q, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
   if (missing(pi)){
     pi <- nu/(1+nu)
   }
-  df <- CBIND(q = q, mu=mu, nu=nu)
+  df <- CBIND(q = q, mu=mu, nu=nu, ref.lambda = ref.lambda)
   q <- df[,1]
   mu <- df[,2]
   nu <- df[,3]
+  ref.lambda <- df[,4]
   cdf <- rep(0,length(q))
   warn <- FALSE
   for (i in 1:length(q)) {
@@ -131,7 +133,8 @@ pizip <- function(q, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
       warn <- TRUE
     } else {
       if (q[i] >= 0){
-        cdf[i] <- sum(dizip(0:floor(q[i]), mu = mu[i], nu = nu[i]))
+        cdf[i] <- sum(dizip(0:floor(q[i]), mu = mu[i], nu = nu[i],
+                            ref.lambda = ref.lambda[i]))
       }
     }
   }
@@ -143,7 +146,7 @@ pizip <- function(q, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
 
 #' @rdname iZIP_Distribution
 #' @export
-qizip <- function(p, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
+qizip <- function(p, mu, nu, pi, ref.lambda = 1, lower.tail = TRUE, log.p = FALSE){
   # compute the quantile function or iZIP distribution with mean mu and
   # baseline ZI odd nu
   # p, mu, nu are recycled to match the length of each other.
@@ -163,10 +166,11 @@ qizip <- function(p, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
   if (missing(pi)){
     pi <- nu/(1+nu)
   }
-  df <- CBIND(p = p, mu=mu, nu=nu)
+  df <- CBIND(p = p, mu=mu, nu=nu, ref.lambda = ref.lambda)
   p <- df[,1]
   mu <- df[,2]
   nu <- df[,3]
+  ref.lambda <- df[,4]
   q <- rep(0, length(p))
   warn <- FALSE
   if (!lower.tail){ p <- 1-p}
@@ -183,7 +187,7 @@ qizip <- function(p, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
       py <- dizip(y, mu = mu[i], nu = nu[i])
       while (py <= p[i]){
         y = y+1
-        py <- py + dizip(y, mu = mu[i], nu = nu[i])
+        py <- py + dizip(y, mu = mu[i], nu = nu[i], ref.lambda = ref.lambda[i])
       }
       q[i] = y
     }
@@ -194,7 +198,7 @@ qizip <- function(p, mu, nu, pi, lower.tail = TRUE, log.p = FALSE){
 
 #' @rdname iZIP_Distribution
 #' @export
-rizip <- function(n, mu, nu, pi){
+rizip <- function(n, mu, nu, pi, ref.lambda = 1){
   # generates random deviates of izip variables with mean mu and baseline ZI odds nu
   # mu, nu, pi are recycled to give vectors length n
   if (length(n)>1){
@@ -219,14 +223,15 @@ rizip <- function(n, mu, nu, pi){
   if (n < max(length(mu), length(nu), length(pi))){
     stop("unused argument in mu or nu or pi")
   }
-  df <- CBIND(x = rep(0,n), mu=mu, nu=nu)
+  df <- CBIND(x = rep(0,n), mu=mu, nu=nu, ref.lambda)
   x <- df[,1]
   mu <- df[,2]
   nu <- df[,3]
+  ref.lambda <- df[,4]
   theta <- log(mu+VGAM::lambertW(nu*exp(ref.lambda-mu)*mu))-log(ref.lambda)
   lambda <- ref.lambda*exp(theta)
   p_theta <- nu/(nu+exp(-ref.lambda+lambda))
-  summax <- mu + 20*sqrt(mu+mu^2*p_theta/(1-p_theta))
+  summax <- max(round(mu + 20*sqrt(mu+mu^2*p_theta/(1-p_theta)),0))
   unif <- runif(n)
   warn <- FALSE
   for (i in 1:n){
@@ -237,7 +242,7 @@ rizip <- function(n, mu, nu, pi){
       warn <- TRUE
     } else {
       y <- 0
-      dc <- dizip(0:summax, mu = mu[i], nu = nu[i])
+      dc <- dizip(0:summax, mu = mu[i], nu = nu[i], ref.lambda = ref.lambda[i])
       py <- dc[y+1]
       while (py <= unif[i]){
         y <- y+1

@@ -8,7 +8,7 @@
 #' @param offset this can be used to specify an *a priori* known component to be included
 #' @param subset an optional vector specifying a subset of observations to be used in the
 #' fitting process.
-#' @param contrast optional lists. See the contrasts.arg of model.matrix.default.
+#' @param contrasts optional lists. See the contrasts.arg of model.matrix.default.
 #' @param na.action a function which indicates what should happen when the data contain
 #' NAs. The default is set by the na.action setting of options, and is na.fail if that
 #' is unset. The ‘factory-fresh’ default is na.omit. Another possible value is NULL,
@@ -76,7 +76,22 @@
 #' @export
 #'
 #' @examples
-#' data()
+#' ## article production by graduate students in
+#' ## biochemistry PhD programs of Long (1990, 1997)
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' summary(M_bioChem)
+#' plot(M_bioChem) # or autoplot(M_bioChem)
+#'
+#' ## Root counts for propagated columnar apple shoots of
+#' ## Ridout, Hinde & Demetrio (1998).
+#' data(appleshoots)
+#' M_shoots <- glm.izip(roots ~ 1 +
+#'              1 + factor(photo)*factor(bap),
+#'              data = appleshoots)
+#' summary(M_shoots)
+#' plot(M_shoots) # or autoplot(M_bioChem)
+#'
 glm.izip <- function(formula, data, ref.lambda = NULL,
                  offset = NULL,
                  subset, contrasts = NULL,
@@ -195,8 +210,11 @@ glm.izip <- function(formula, data, ref.lambda = NULL,
                    link = 'log'),
                    class = "family")
   out$terms <- mt
+  out$contrasts <- attr(X, "contrasts")
+  out$xlevels <- .getXlevels(mt, mf)
   out$aic <- -2*out$logLik+2*length(lm1$par)
   out$bic <- -2*out$logLik+log(NROW(X))*length(lm1$par)
+  out$na.action <- attr(mf, "na.action")
   class(out) = "izip"
   return(out)
 }

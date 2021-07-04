@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_extract.R
 \name{model.frame.izip}
 \alias{model.frame.izip}
-\title{Extract the Model Frame from an izip Model Fit}
+\title{Extract the Model Frame from an iZIP Model Fit}
 \usage{
 \method{model.frame}{izip}(formula, ...)
 }

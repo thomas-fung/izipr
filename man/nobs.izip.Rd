@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_extract.R
 \name{nobs.izip}
 \alias{nobs.izip}
-\title{Extract the Number of Observation from an izip Model Fit}
+\title{Extract the Number of Observation from an iZIP Model Fit}
 \usage{
 \method{nobs}{izip}(object, ...)
 }

@@ -2,13 +2,13 @@
 % Please edit documentation in R/graphics_related.R
 \name{nrPIT}
 \alias{nrPIT}
-\alias{PredProb.izip}
-\alias{PIT.izip}
+\alias{izipPredProb}
+\alias{izipPIT}
 \title{Non-randomized Probability Integral Transform}
 \usage{
-PredProb.izip(object)
+izipPredProb(object)
 
-PIT.izip(object, bins = 10)
+izipPIT(object, bins = 10)
 }
 \arguments{
 \item{object}{an object class "izip", obtained from a call to \code{glm.izip}.}
@@ -17,7 +17,7 @@ PIT.izip(object, bins = 10)
 PIT Q-Q plot.}
 }
 \value{
-\code{compPredprob} returns a list with values:
+\code{izipPredProb} returns a list with values:
 \item{upper}{the predictive cumulative probabilities used as the upper bound for
 computing the non-randomized PIT.}
 \item{lower}{the predictive cumulative probabilities used as the upper bound for
@@ -35,15 +35,14 @@ code and descriptions are taken from Dunsmuir and Scott (2015).
 }
 \details{
 These functions are used to obtain the predictive probabilities and the probability
-integral transform for a fitted COM-Poisson model. The majority of the code and
+integral transform for a fitted izip model. The majority of the code and
 descriptions are taken from Dunsmuir and Scott (2015).
 }
 \examples{
-data(takeoverbids)
-M.bids <- glm.cmp(numbids ~ leglrest + rearest + finrest + whtknght
-    + bidprem + insthold + size + sizesq + regulatn, data=takeoverbids)
-izipPredProb(M.bids)
-izipPIT(M.bids)
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+izipPredProb(M_bioChem)
+izipPIT(M_bioChem)
 }
 \references{
 Czado, C., Gneiting, T. and Held, L. (2009). Predictive model assessment

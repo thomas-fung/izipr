@@ -2,11 +2,11 @@
 % Please edit documentation in R/graphics_related.R
 \name{PIT_ggPlot}
 \alias{PIT_ggPlot}
-\alias{gg_histPIT.izip}
-\alias{gg_qqPIT.izip}
+\alias{gg_histizipPIT}
+\alias{gg_qqizipPIT}
 \title{ggplot version of PIT Plots for a iZIP Object}
 \usage{
-gg_histPIT.izip(
+gg_histizipPIT(
   object,
   bins = 10,
   ref_line = TRUE,
@@ -15,7 +15,7 @@ gg_histPIT.izip(
   size = 1
 )
 
-gg_qqPIT.izip(
+gg_qqizipPIT(
   object,
   bins = 10,
   col1 = "red",
@@ -56,13 +56,13 @@ distributional assumption of the fitted iZIP model: the PIT histogram, and
 the uniform Q-Q plot for PIT.
 }
 \details{
-\code{histcompPIT} and \code{qqcompPIT}
+\code{histizipPIT} and \code{qqizipPIT}
 
 The histogram and the Q-Q plot are used to compare the fitted profile with a standard
-uniform distribution. If they match relatively well, it means the CMP distribution
+uniform distribution. If they match relatively well, it means the iZIP distribution
 is appropriate for the data.
 
-The \code{histcompPIT} and \code{qqcompPIT} functions
+The \code{histizipPIT} and \code{qqizipPIT} functions
 would provide the same two plots but in base R format.
 }
 \examples{
@@ -77,6 +77,6 @@ Time Series Regression of Counts. \emph{Journal of Statistical Software},
 \strong{67}, 1--36.
 }
 \seealso{
-\code{\link{histcompPIT}}, \code{\link{qqcompPIT}},
+\code{\link{histizipPIT}}, \code{\link{qqizipPIT}},
 \code{\link{plot.izip}} and \code{\link{autoplot.izip}}.
 }

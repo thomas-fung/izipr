@@ -10,11 +10,11 @@
 \usage{
 dizip(x, mu, nu, pi, ref.lambda = 1, log.p = FALSE)
 
-pizip(q, mu, nu, pi, lower.tail = TRUE, log.p = FALSE)
+pizip(q, mu, nu, pi, ref.lambda = 1, lower.tail = TRUE, log.p = FALSE)
 
-qizip(p, mu, nu, pi, lower.tail = TRUE, log.p = FALSE)
+qizip(p, mu, nu, pi, ref.lambda = 1, lower.tail = TRUE, log.p = FALSE)
 
-rizip(n, mu, nu, pi)
+rizip(n, mu, nu, pi, ref.lambda = 1)
 }
 \arguments{
 \item{x, q}{vector of quantiles}

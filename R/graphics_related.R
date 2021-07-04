@@ -25,10 +25,10 @@
 #' @import graphics
 #' @details
 #' The histogram and the Q-Q plot are used to compare the fitted profile with a standard
-#' uniform distribution. If they match relatively well, it means the CMP distribution
+#' uniform distribution. If they match relatively well, it means the iZIP distribution
 #' is appropriate for the data.
 #'
-#' The \code{gg_histPIT.izip} and \code{gg_qqPIT.izip} functions
+#' The \code{gg_histizipPIT} and \code{gg_qqizipPIT} functions
 #' would provide the same two plots but in ggplot format.
 #'
 #' @references
@@ -47,9 +47,9 @@
 NULL
 
 #' @rdname PIT_Plot
-histPIT.izip <- function (object, bins = 10, line = TRUE, colLine = "red", colHist = "royal blue", lwdLine = 2, main = NULL, ...)
+histizipPIT <- function (object, bins = 10, line = TRUE, colLine = "red", colHist = "royal blue", lwdLine = 2, main = NULL, ...)
 {
-  PIT.out <- PIT.izip(object, bins = bins)$PIT
+  PIT.out <- izipPIT(object, bins = bins)$PIT
   height <- diff(PIT.out[, ncol(PIT.out)]) * bins
   if (max(height) > 2) {
     y.upper <- max(height) + 1/(bins/2)
@@ -73,10 +73,10 @@ histPIT.izip <- function (object, bins = 10, line = TRUE, colLine = "red", colHi
 }
 
 #' @rdname PIT_Plot
-qqPIT.izip <- function(object, bins = 10, col1 = "red", col2 = "black", lty1 = 1,
+qqizipPIT <- function(object, bins = 10, col1 = "red", col2 = "black", lty1 = 1,
                       lty2 = 2, type = "l", main = NULL, ...){
   dummy.variable <- seq(0, 1, by = 1/bins)
-  PIT <- PIT.izip(object, bins = bins)$PIT
+  PIT <- izipPIT(object, bins = bins)$PIT
   qq.plot <- PIT[, ncol(PIT)]
   if (is.null(main)) {
     main <- "Q-Q Plot of Uniform PIT"}
@@ -92,7 +92,7 @@ qqPIT.izip <- function(object, bins = 10, col1 = "red", col2 = "black", lty1 = 1
 #' distributional assumption of the fitted iZIP model: the PIT histogram, and
 #' the uniform Q-Q plot for PIT.
 #'
-#' \code{histcompPIT} and \code{qqcompPIT}
+#' \code{histizipPIT} and \code{qqizipPIT}
 #'
 #' @param object an object class "izip", obtained from a call to \code{glm.izip}.
 #' @param bins numeric; the number of bins shown in the PIT histogram or the
@@ -110,14 +110,14 @@ qqPIT.izip <- function(object, bins = 10, col1 = "red", col2 = "black", lty1 = 1
 #' @param lty2 an integer or character string: the line types for the theoretical uniform
 #' Q-Q plot in PIT, see ggplot2::linetype.
 #' @import ggplot2
-#' @import patchwork
+#' @import ggpubr
 #'
 #' @details
 #' The histogram and the Q-Q plot are used to compare the fitted profile with a standard
-#' uniform distribution. If they match relatively well, it means the CMP distribution
+#' uniform distribution. If they match relatively well, it means the iZIP distribution
 #' is appropriate for the data.
 #'
-#' The \code{histcompPIT} and \code{qqcompPIT} functions
+#' The \code{histizipPIT} and \code{qqizipPIT} functions
 #' would provide the same two plots but in base R format.
 #' @references
 #' Czado, C., Gneiting, T. and Held, L. (2009). Predictive model assessment
@@ -127,7 +127,7 @@ qqPIT.izip <- function(object, bins = 10, col1 = "red", col2 = "black", lty1 = 1
 #' Time Series Regression of Counts. \emph{Journal of Statistical Software},
 #' \strong{67}, 1--36.
 #' @seealso
-#' \code{\link{histcompPIT}}, \code{\link{qqcompPIT}},
+#' \code{\link{histizipPIT}}, \code{\link{qqizipPIT}},
 #' \code{\link{plot.izip}} and \code{\link{autoplot.izip}}.
 
 #' @examples
@@ -136,12 +136,12 @@ qqPIT.izip <- function(object, bins = 10, col1 = "red", col2 = "black", lty1 = 1
 NULL
 
 #' @rdname PIT_ggPlot
-gg_histPIT.izip <-
+gg_histizipPIT <-
     function (object, bins = 10, ref_line = TRUE, col_line = "red",
               col_hist = "royal blue", size = 1)
 {
   x <- NULL
-  PIT.out <- PIT.izip(object, bins = bins)$PIT
+  PIT.out <- izipPIT(object, bins = bins)$PIT
   height <- diff(PIT.out[, ncol(PIT.out)]) * bins
   if (max(height) > 2) {
     y_lim <- max(height) + 1/(bins/2)
@@ -165,11 +165,11 @@ gg_histPIT.izip <-
 
 #' @rdname PIT_ggPlot
 #' @export
-gg_qqPIT.izip <- function(object, bins = 10, col1 = "red",
+gg_qqizipPIT <- function(object, bins = 10, col1 = "red",
                          col2 = "#999999",
                          lty1 = 1, lty2 = 2){
   dummy.variable <- seq(0, 1, by = 1/bins)
-  PIT.out <- PIT.izip(object, bins = bins)$PIT
+  PIT.out <- izipPIT(object, bins = bins)$PIT
   qq.plot <- PIT.out[, ncol(PIT.out)]
   p <- ggplot(data.frame(dummy.variable = dummy.variable, PIT = qq.plot)) +
     geom_line(aes(x = dummy.variable, y = PIT), linetype= lty1, colour = col1) +
@@ -190,10 +190,10 @@ gg_qqPIT.izip <- function(object, bins = 10, col1 = "red",
 #' PIT Q-Q plot.
 #' @details
 #' These functions are used to obtain the predictive probabilities and the probability
-#' integral transform for a fitted COM-Poisson model. The majority of the code and
+#' integral transform for a fitted izip model. The majority of the code and
 #' descriptions are taken from Dunsmuir and Scott (2015).
 #' @return
-#' \code{compPredprob} returns a list with values:
+#' \code{izipPredProb} returns a list with values:
 #' \item{upper}{the predictive cumulative probabilities used as the upper bound for
 #' computing the non-randomized PIT.}
 #' \item{lower}{the predictive cumulative probabilities used as the upper bound for
@@ -211,17 +211,16 @@ gg_qqPIT.izip <- function(object, bins = 10, col1 = "red",
 #' Time Series Regression of Counts. \emph{Journal of Statistical Software},
 #' \strong{67}, 1--36.
 #' @examples
-#' data(takeoverbids)
-#' M.bids <- glm.cmp(numbids ~ leglrest + rearest + finrest + whtknght
-#'     + bidprem + insthold + size + sizesq + regulatn, data=takeoverbids)
-#' izipPredProb(M.bids)
-#' izipPIT(M.bids)
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' izipPredProb(M_bioChem)
+#' izipPIT(M_bioChem)
 #' @name nrPIT
 NULL
 
 #' @rdname nrPIT
 #' @export
-PredProb.izip <- function (object) {
+izipPredProb <- function (object) {
   lower <- pizip(object$y-1, mu = object$fitted_values, nu = object$nu)
   upper <- lower + dizip(object$y, mu = object$fitted_values, nu = object$nu)
   list(lower = lower, upper = upper)
@@ -229,10 +228,10 @@ PredProb.izip <- function (object) {
 
 #' @rdname nrPIT
 #' @export
-PIT.izip <- function (object, bins = 10)
+izipPIT <- function (object, bins = 10)
 {
   dummy.variable <- seq(0, 1, by = 1/bins)
-  predProb <- PredProb.izip(object)
+  predProb <- izipPredProb(object)
   con.PIT <- matrix(0, ncol = length(object$y), nrow = length(dummy.variable))
   for (i in 1:length(object$y)) {
     for (j in 1:length(dummy.variable)) {
@@ -262,7 +261,7 @@ PIT.izip <- function (object, bins = 10)
 #'
 #' @import stats
 #' @details
-#' The function \code{compPredProb} produces the non-randomized probability integral
+#' The function \code{izipPredProb} produces the non-randomized probability integral
 #' transform(PIT). It returns estimates of the cumulative predictive probabilities as
 #' upper and lower bounds of a collection of intervals. If the model is correct, a
 #' histogram drawn using these estimated probabilities should resemble a histogram
@@ -272,7 +271,7 @@ PIT.izip <- function (object, bins = 10)
 #' a normal distribution. Such a sample can then be examined by the usual tools for
 #' checking normality, such as histograms and normal Q-Q plots.
 #'
-#' For each of the intervals produced by \code{compPredProb}, a random uniform observation
+#' For each of the intervals produced by \code{izipnormRandPIT}, a random uniform observation
 #' is generated, which is then converted to a normal observation by applying the inverse
 #' standard normal distribution function (using \code{qnorm}). The vector of these values
 #' is returned by the function in the list element \code{rt}. In addition non-random
@@ -296,17 +295,16 @@ PIT.izip <- function (object, bins = 10)
 #' Time Series Regression of Counts. \emph{Journal of Statistical Software},
 #' \strong{67}, 1--36.
 #' @examples
-#' data(takeoverbids)
-#' M.bids <- glm.cmp(numbids ~ leglrest + rearest + finrest + whtknght
-#'     + bidprem + insthold + size + sizesq + regulatn, data=takeoverbids)
-#' izipnormRandPIT(M.bids)
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' normRandizipPIT(M.bids)
 #' @name rPIT
 NULL
 
 #' @rdname rPIT
 #' @export
-normRandPIT.izip <- function (object) {
-  temp <- PredProb.izip(object)
+izipnormRandPIT <- function (object) {
+  temp <- izipPredProb(object)
   rt <- qnorm(runif(length(temp$lower), temp$lower, temp$upper))
   rtMid <- qnorm((temp$lower + temp$upper)/2)
   list(rt = rt, rtMid = rtMid)
@@ -314,7 +312,7 @@ normRandPIT.izip <- function (object) {
 
 #' Plot Diagnostic for a \code{glm.izip} Object
 #'
-#' Eight plots (selectable by \code{which}) are currently available:
+#' Eight plots (selectable by \code{which}) are currently available using ggplot or graphics:
 #' a plot of deviance residuals against fitted values,
 #' a non-randomized PIT histogram,
 #' a uniform Q-Q plot for non-randomized PIT,
@@ -325,18 +323,25 @@ normRandPIT.izip <- function (object) {
 #' a plot of pearson residuals against leverage.
 #' By default, four plots (number 1, 2, 6, and 8 from this list of plots) are provided.
 #'
-#' @param x an object class 'cmp' object, obtained from a call to \code{glm.cmp}
+#' @param x an object class 'izip' object, obtained from a call to \code{glm.izip}
 #' @param which if a subset of plots is required, specify a subset of the numbers 1:8.
 #' See 'Details' below.
 #' @param ask logical; if \code{TRUE}, the user is asked before each plot.
 #' @param bins numeric; the number of bins shown in the PIT histogram or the
 #' PIT Q-Q plot.
+#' @param nrow numeric; (optional) number of rows in the plot grid.
+#' @param ncol numeric; (optional) number of columns in the plot grid.
+#' @param output_as_ggplot logical; if \code{TRUE}, the function would
+#' return a list of \code{ggplot} objects; if \code{FALSE}, the
+#' function would return an \code{ggarrange} object, which is a ggplot or a list of ggplot.
 #' @param ... other arguments passed to or from other methods (currently unused).
 #'
-#' @import stats
+#' @return A ggarrange object, which is a ggplot or a list of ggplot for autoplot.
+#' @import ggplot2
+#' @import ggpubr
 #' @import graphics
+#' @import stats
 #' @import grDevices
-#' @export
 #' @details
 #' The 'Scale-Location' plot, also called 'Spread-Location' plot, takes the square root of
 #' the absolute standardized deviance residuals (\emph{sqrt|E|}) in order to diminish
@@ -350,28 +355,33 @@ normRandPIT.izip <- function (object) {
 #' and 1.
 #'
 #' There are two plots based on the non-randomized probability integral transformation (PIT)
-#' using \code{\link{compPIT}}. These are a histogram and a uniform Q-Q plot. If the
+#' using \code{\link{izipPIT}}. These are a histogram and a uniform Q-Q plot. If the
 #' model assumption is appropriate, these plots should reflect a sample obtained
 #' from a uniform distribution.
 #'
 #' There are also two plots based on the normal randomized residuals calculated
-#' using \code{\link{compnormRandPIT}}. These are a histogram and a normal Q-Q plot. If the model
+#' using \code{\link{izipnormRandPIT}}. These are a histogram and a normal Q-Q plot. If the model
 #' assumption is appropriate, these plots should reflect a sample obtained from a normal
 #' distribution.
 #'
 #' @seealso
-#' \code{\link{compPIT}}, \code{\link{compnormRandPIT}},
-#' \code{\link{glm.cmp}} and \code{\link{gg_plot}}.
+#' \code{\link{izipPIT}}, \code{\link{izipnormRandPIT}},
+#' and \code{\link{glm.izip}}.
 #' @examples
-#' data(takeoverbids)
-#' M.bids <- glm.cmp(numbids ~ leglrest + rearest + finrest + whtknght
-#'     + bidprem + insthold + size + sizesq + regulatn, data=takeoverbids)
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #'
 #' ## The default plots are shown
-#' plot(M.bids)
+#' autoplot(M_bioChem) #or plot(M.bioChem)
 #'
 #' ## The plots for the non-randomized PIT
-#' # plot(M.bids, which = c(2,3))
+#' autoplot(M_bioChem, which = c(2,3))
+#' # or plot(M.bioChem, which = c(2,3))
+#' @name izip_graphics
+NULL
+
+#' @rdname izip_graphics
+#' @export
 plot.izip <- function(x, which=c(1L,2L,6L,8L),
                      ask = prod(par("mfcol")) < length(which) && dev.interactive(),
                      bins=10,
@@ -388,7 +398,7 @@ plot.izip <- function(x, which=c(1L,2L,6L,8L),
   if (any(!(which %in% 1:8))){
     cat("The acceptable ragne for option 'which' is 1:8.\n")
     cat("Anyting outside this range would be ignored.\n")
-    cat("Use ?plot.cmp to see which plots are available.\n")
+    cat("Use ?plot.izip to see which plots are available.\n")
   }
   show <- rep(FALSE, 8)
   show[which] <- TRUE
@@ -440,7 +450,7 @@ plot.izip <- function(x, which=c(1L,2L,6L,8L),
   }
   if (show[6L]){
     dev.hold()
-    std.dev.res <- rstandard.cmp(object, type = "deviance")
+    std.dev.res <- rstandard.izip(object, type = "deviance")
     res <- sqrt(abs(std.dev.res))
     plot(object$linear_predictors, res,
          main="Scale-Location", xlab = paste(c("Linear Predicted values", object$call)),
@@ -496,73 +506,8 @@ plot.izip <- function(x, which=c(1L,2L,6L,8L),
   invisible()
 }
 
-
-#' Plot Diagnostic for a \code{glm.izip} Object in ggplot
-#'
-#' Eight plots (selectable by \code{which}) are currently available:
-#' a plot of deviance residuals against fitted values,
-#' a non-randomized PIT histogram,
-#' a uniform Q-Q plot for non-randomized PIT,
-#' a histogram of the normal randomized residuals,
-#' a Q-Q plot of the normal randomized residuals,
-#' a Scale-Location plot of sqrt(| residuals |) against fitted values
-#' a plot of Cook's distances versus row labels
-#' a plot of pearson residuals against leverage.
-#' By default, four plots (number 1, 2, 6, and 8 from this list of plots) are provided.
-#'
-#' @param x an object class 'izip' object, obtained from a call to \code{glm.izip}
-#' @param which if a subset of plots is required, specify a subset of the numbers 1:8.
-#' See 'Details' below.
-#' @param ask logical; if \code{TRUE}, the user is asked before each plot.
-#' @param bins numeric; the number of bins shown in the PIT histogram or the
-#' PIT Q-Q plot.
-#' @param nrow numeric; (optional) number of rows in the plot grid.
-#' @param ncol numeric; (optional) number of columns in the plot grid.
-#' @param output_as_ggplot logical; if \code{TRUE}, the function would
-#' return a list of \code{ggplot} objects; if \code{FALSE}, the
-#' function would return an \code{patchwork} object.
-#'
-#' @return
-#' return a list of \code{ggplot} objects or a \code{patchwork} object.
-#' @import stats
-#' @import ggplot2
-#' @import patchwork
+#' @rdname izip_graphics
 #' @export
-#' @details
-#' The 'Scale-Location' plot, also called 'Spread-Location' plot, takes the square root of
-#' the absolute standardized deviance residuals (\emph{sqrt|E|}) in order to diminish
-#' skewness is much less skewed than than \emph{|E|} for Gaussian zero-mean E.
-#'
-#' The 'Scale-Location' plot uses the standardized deviance residuals while the
-#' Residual-Leverage plot uses the standardized pearson residuals. They are given as
-#' \eqn{R_i/\sqrt{1-h_{ii}}} where \eqn{h_{ii}} are the diagonal entries of the hat matrix.
-#'
-#' The Residuals-Leverage plot shows contours of equal Cook's distance for values of 0.5
-#' and 1.
-#'
-#' There are two plots based on the non-randomized probability integral transformation (PIT)
-#' using \code{\link{izipPIT}}. These are a histogram and a uniform Q-Q plot. If the
-#' model assumption is appropriate, these plots should reflect a sample obtained
-#' from a uniform distribution.
-#'
-#' There are also two plots based on the normal randomized residuals calculated
-#' using \code{\link{izipnormRandPIT}}. These are a histogram and a normal Q-Q plot. If the model
-#' assumption is appropriate, these plots should reflect a sample obtained from a normal
-#' distribution.
-#'
-#' @seealso
-#' \code{\link{izipPIT}}, \code{\link{izipnormRandPIT}},
-#' \code{\link{glm.izip}} and \code{\link{plot.izip}}.
-#' @export
-#' @examples
-#' data(bioChemists)
-#' M <- glm.izip(art~ ., data=bioChemists)
-#'
-#' ## The default plots are shown
-#' autoplot(M)
-#'
-#' ## The plots for the non-randomized PIT
-#' gg_plot(M.bids, which = c(2,3))
 autoplot.izip <- function(x, which=c(1L,2L,6L,8L), bins = 10,
                        ask = TRUE, nrow = NULL, ncol = NULL,
                        output_as_ggplot = TRUE){
@@ -610,17 +555,17 @@ autoplot.izip <- function(x, which=c(1L,2L,6L,8L), bins = 10,
     p[[show_count]] <- p_temp
   }
   if (show[2L]){
-    p_temp <- gg_histPIT.izip(object)
+    p_temp <- gg_histizipPIT(object)
     show_count <- show_count + 1
     p[[show_count]] <- p_temp
   }
   if (show[3L]){
-    p_temp <- gg_qqPIT.izip(object)
+    p_temp <- gg_qqizipPIT(object)
     show_count <- show_count + 1
     p[[show_count]] <- p_temp
   }
   if (any(show[4L:5L] == TRUE)) {
-    rt <- normRandPIT.izip(object)$rt
+    rt <- izipnormRandPIT(object)$rt
   }
   if (show[4L]) {
     p_temp <- ggplot(data.frame(rt = rt), aes(rt)) +
@@ -659,9 +604,9 @@ autoplot.izip <- function(x, which=c(1L,2L,6L,8L), bins = 10,
   }
   if (any(show[7L:8L] == TRUE)) {
     rk <- object$rank
-    h <- hatvalues.cmp(object)
-    std_pear <- rstandard.cmp(object, type = "pearson")
-    cook <- cooks.distance.cmp(object)
+    h <- hatvalues.izip(object)
+    std_pear <- rstandard.izip(object, type = "pearson")
+    cook <- cooks.distance.izip(object)
     n <- length(cook)
     index_cook <- order(cook,decreasing = TRUE)[1:3]
   }
@@ -739,7 +684,7 @@ autoplot.izip <- function(x, which=c(1L,2L,6L,8L), bins = 10,
     p[[show_count]] <- p_temp
     options(warn=0)
   }
-   p_ggarrange <- patchwork::wrap_plots(plotlist = p, ncol = ncol, nrow = nrow)
+   p_ggarrange <- ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow)
   if ((is.null(ncol) & is.null(nrow))){
     print(p_ggarrange)
   } else if (class(p_ggarrange)[1] != "list"){

@@ -3,7 +3,7 @@
 \name{logLik.izip}
 \alias{logLik.izip}
 \alias{print.logLik.izip}
-\title{Extract the (Maximized) Log-Likelihood from an izip Model Fit}
+\title{Extract the (Maximized) Log-Likelihood from an iZIP Model Fit}
 \usage{
 \method{logLik}{izip}(object, ...)
 

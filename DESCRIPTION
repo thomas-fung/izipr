@@ -1,5 +1,5 @@
 Package: izipr
-Title: Interpretable Zero-Inflated Poisson Models in R.
+Title: Interpretable Zero-Inflated Poisson Models in R
 Version: 0.0.0.9000
 Authors@R: c(person("Thomas", "Fung", role = c("aut", "cre"),
          email = "thomas.fung.dr@gmail.com",
@@ -16,17 +16,19 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3
 Suggests: 
-    testthat,
+    testthat (>= 3.0.0),
     spelling,
     pscl,
-    covr
+    covr,
+    vdiffr
 Imports: 
     VGAM,
     stats,
     tscount,
     stringr,
     ggplot2,
-    patchwork
+    ggpubr,
+    generics
 Language: en-GB
 Depends: 
     R (>= 2.10)

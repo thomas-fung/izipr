@@ -26,12 +26,12 @@ glm.izip(
 \item{subset}{an optional vector specifying a subset of observations to be used in the
 fitting process.}
 
+\item{contrasts}{optional lists. See the contrasts.arg of model.matrix.default.}
+
 \item{na.action}{a function which indicates what should happen when the data contain
 NAs. The default is set by the na.action setting of options, and is na.fail if that
 is unset. The ‘factory-fresh’ default is na.omit. Another possible value is NULL,
 no action. Value na.exclude can be useful.}
-
-\item{contrast}{optional lists. See the contrasts.arg of model.matrix.default.}
 }
 \value{
 A fitted model object of class \code{izip} similar to one obtained from \code{glm}
@@ -96,7 +96,22 @@ where
 rate \eqn{\lambda_{ref}}.
 }
 \examples{
-data()
+## article production by graduate students in
+## biochemistry PhD programs of Long (1990, 1997)
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+summary(M_bioChem)
+plot(M_bioChem) # or autoplot(M_bioChem)
+
+## Root counts for propagated columnar apple shoots of
+## Ridout, Hinde & Demetrio (1998).
+data(appleshoots)
+M_shoots <- glm.izip(roots ~ 1 +
+             1 + factor(photo)*factor(bap),
+             data = appleshoots)
+summary(M_shoots)
+plot(M_shoots) # or autoplot(M_bioChem)
+
 }
 \references{
 Huang, A. and Fung, T. (2020). Zero-inflated Poisson exponential families, with applications to time-series modelling of counts.

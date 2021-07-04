@@ -2,10 +2,10 @@
 % Please edit documentation in R/graphics_related.R
 \name{rPIT}
 \alias{rPIT}
-\alias{normRandPIT.izip}
+\alias{izipnormRandPIT}
 \title{Random Normal Probability Integral Transform}
 \usage{
-normRandPIT.izip(object)
+izipnormRandPIT(object)
 }
 \arguments{
 \item{object}{an object class "izip", obtained from a call to \code{glm.izip}.}
@@ -20,7 +20,7 @@ A function to create the normal conditional (randomized) quantile residuals.
 The majority of the code and descriptions are taken from Dunsmuir and Scott (2015).
 }
 \details{
-The function \code{compPredProb} produces the non-randomized probability integral
+The function \code{izipPredProb} produces the non-randomized probability integral
 transform(PIT). It returns estimates of the cumulative predictive probabilities as
 upper and lower bounds of a collection of intervals. If the model is correct, a
 histogram drawn using these estimated probabilities should resemble a histogram
@@ -30,7 +30,7 @@ This function aims to produce observations which instead resemble a sample from
 a normal distribution. Such a sample can then be examined by the usual tools for
 checking normality, such as histograms and normal Q-Q plots.
 
-For each of the intervals produced by \code{compPredProb}, a random uniform observation
+For each of the intervals produced by \code{izipnormRandPIT}, a random uniform observation
 is generated, which is then converted to a normal observation by applying the inverse
 standard normal distribution function (using \code{qnorm}). The vector of these values
 is returned by the function in the list element \code{rt}. In addition non-random
@@ -40,10 +40,9 @@ intervals. The vector of these values is returned by the function in the list el
 \code{rtMid}.
 }
 \examples{
-data(takeoverbids)
-M.bids <- glm.cmp(numbids ~ leglrest + rearest + finrest + whtknght
-    + bidprem + insthold + size + sizesq + regulatn, data=takeoverbids)
-izipnormRandPIT(M.bids)
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+normRandizipPIT(M.bids)
 }
 \references{
 Berkowitz, J. (2001). Testing density forecasts, with applications to risk management.

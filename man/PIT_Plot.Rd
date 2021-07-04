@@ -2,11 +2,11 @@
 % Please edit documentation in R/graphics_related.R
 \name{PIT_Plot}
 \alias{PIT_Plot}
-\alias{histPIT.izip}
-\alias{qqPIT.izip}
+\alias{histizipPIT}
+\alias{qqizipPIT}
 \title{PIT Plots for a iZIP Object}
 \usage{
-histPIT.izip(
+histizipPIT(
   object,
   bins = 10,
   line = TRUE,
@@ -17,7 +17,7 @@ histPIT.izip(
   ...
 )
 
-qqPIT.izip(
+qqizipPIT(
   object,
   bins = 10,
   col1 = "red",
@@ -68,10 +68,10 @@ the uniform Q-Q plot for PIT.
 }
 \details{
 The histogram and the Q-Q plot are used to compare the fitted profile with a standard
-uniform distribution. If they match relatively well, it means the CMP distribution
+uniform distribution. If they match relatively well, it means the iZIP distribution
 is appropriate for the data.
 
-The \code{gg_histPIT.izip} and \code{gg_qqPIT.izip} functions
+The \code{gg_histizipPIT} and \code{gg_qqizipPIT} functions
 would provide the same two plots but in ggplot format.
 }
 \examples{

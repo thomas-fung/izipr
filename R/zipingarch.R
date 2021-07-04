@@ -1,3 +1,16 @@
+#' Title
+#'
+#' @param y
+#' @param X
+#' @param past_mean_lags
+#' @param past_obs_lags
+#' @param ref.lambda
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
 tsglm.izip <- function(y, X = NULL, past_mean_lags = 1,
                        past_obs_lags = 1,
                        ref.lambda = NULL, ...){
