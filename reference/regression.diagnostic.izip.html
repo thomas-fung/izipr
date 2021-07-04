@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print Values of iZIP Model — print.izip • izipr</title>
+<title>iZIP Regression Diagnostic — regression.diagnostic.izip • izipr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Print Values of iZIP Model — print.izip" />
-<meta property="og:description" content="print method for class izip." />
+<meta property="og:title" content="iZIP Regression Diagnostic — regression.diagnostic.izip" />
+<meta property="og:description" content="This suite of functions provides the basic quantities which are used in forming a wide variety of diagnostics for checking the quality of regression fits." />
 
 
 
@@ -108,41 +108,76 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print Values of iZIP Model</h1>
+    <h1>iZIP Regression Diagnostic</h1>
     <small class="dont-index">Source: <a href='https://github.com/thomas-fung/izipr/blob/master/R/summarize_extract.R'><code>R/summarize_extract.R</code></a></small>
-    <div class="hidden name"><code>print.izip.Rd</code></div>
+    <div class="hidden name"><code>regression.diagnostic.izip.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>print</code> method for class <code>izip</code>.</p>
+    <p>This suite of functions provides the basic quantities which are used in forming a wide variety of diagnostics for checking the quality of regression fits.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>hatvalues</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  infl <span class='op'>=</span> <span class='fu'>influence.izip</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"deviance"</span>, <span class='st'>"pearson"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  infl <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>,
+  res <span class='op'>=</span> <span class='va'>infl</span><span class='op'>$</span><span class='va'>pear_res</span>,
+  hat <span class='op'>=</span> <span class='va'>infl</span><span class='op'>$</span><span class='va'>hat</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an object class 'izip', obtained from a call to <code>glm.izip</code>.</p></td>
+      <th>model</th>
+      <td><p>an object class 'izip', obtained from a call to <code><a href='glm.izip.html'>glm.izip</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>other arguments passed to or from other methods  (currently unused).</p></td>
     </tr>
+    <tr>
+      <th>infl</th>
+      <td><p>influence structure as returned by <code><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></code>, only for  <code><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></code> and <code><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>type of residuals for <code><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></code>. The alternatives are: 'deviance' (default), and 'pearson'.</p></td>
+    </tr>
+    <tr>
+      <th>res</th>
+      <td><p>residuals, with proper default.</p></td>
+    </tr>
+    <tr>
+      <th>hat</th>
+      <td><p>hat values \(H[i,i]\), see default.</p></td>
+    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p><code>print.izip</code> can be used to print a short summary of object class 'izip'.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><a href='summary.izip.html'>summary.izip</a>, <a href='coef.izip.html'>coef.izip</a>, <a href='fitted.izip.html'>fitted.izip</a>, <a href='glm.izip.html'>glm.izip</a>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## For examples see example(glm.izip)</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span><span class='op'>~</span> <span class='va'>.</span>, data<span class='op'>=</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span><span class='op'>(</span><span class='va'>M.attendance</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in influence(M.attendance): object 'M.attendance' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>hatvalues</a></span><span class='op'>(</span><span class='va'>M.attendance</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in hatvalues(M.attendance): object 'M.attendance' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span><span class='va'>M.attendance</span>, type <span class='op'>=</span> <span class='st'>"pearson"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in rstandard(M.attendance, type = "pearson"): object 'M.attendance' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span><span class='op'>(</span><span class='va'>M.attendance</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in cooks.distance(M.attendance): object 'M.attendance' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

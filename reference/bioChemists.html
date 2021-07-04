@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the Number of Observation from an iZIP Model Fit — nobs.izip • izipr</title>
+<title>bioChemists data set — bioChemists • izipr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Extract the Number of Observation from an iZIP Model Fit — nobs.izip" />
-<meta property="og:description" content="An accessor function used to extract the number of observation from a 'izip' object." />
+<meta property="og:title" content="bioChemists data set — bioChemists" />
+<meta property="og:description" content="This data set gives the number of article produced by a sample of 915 graduate students during the last 3 years of their biochemistry PhD program, along with some information on the graduates like gender, marital status (mar), the number of kids under 5 (kid5), how prestigious the PhD department is (phd) and the mentor’s publication record over the same period (ment). The bioChemist data has 915 observations." />
 
 
 
@@ -108,38 +108,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the Number of Observation from an iZIP Model Fit</h1>
-    <small class="dont-index">Source: <a href='https://github.com/thomas-fung/izipr/blob/master/R/summarize_extract.R'><code>R/summarize_extract.R</code></a></small>
-    <div class="hidden name"><code>nobs.izip.Rd</code></div>
+    <h1>bioChemists data set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thomas-fung/izipr/blob/master/R/izipr-package.R'><code>R/izipr-package.R</code></a></small>
+    <div class="hidden name"><code>bioChemists.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An accessor function used to extract the number of observation from a 'izip' object.</p>
+    <p>This data set gives the number of article produced by a sample of 915 graduate students during the last 3 years of their biochemistry PhD program, along with some information on the graduates like gender, marital status (mar), the number of kids under 5 (kid5), how prestigious the PhD department is (phd) and the mentor’s publication record over the same period (ment). The <code>bioChemist</code> data has 915 observations.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for izip</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/nobs.html'>nobs</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>an object class 'izip' object, obtained from a call to <code>glm.izip</code></p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other arguments passed to or from other methods  (currently unused).</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>The number of observations extracted from the object <code>object</code>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A data frame with 915 observations on 6 variables.</p><dl>
+<dt>art</dt><dd><p>count of articles produced during last 3 years of Ph.D.</p></dd>
+<dt>fem</dt><dd><p>factor indicating gender of student, with levels Men and Women</p></dd>
+<dt>mar</dt><dd><p>factor indicating marital status of student, with levels Single and Married</p></dd>
+<dt>kid5</dt><dd><p>number of children aged 5 or younger</p></dd>
+<dt>phd</dt><dd><p>prestige of Ph.D. department</p></dd>
+<dt>ment</dt><dd><p>count of articles produced by Ph.D. mentor during last 3 years</p></dd>
 
-    <div class='dont-index'><p><code><a href='coef.izip.html'>coef.izip</a></code>, <code><a href='fitted.izip.html'>fitted.izip</a></code>, <code><a href='glm.izip.html'>glm.izip</a></code></p></div>
+</dl>
 
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>The <code>pscl</code> package</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Jackman, S. (2020). pscl: Classes and Methods for R Developed in the Political Science Computational Laboratory. United States Studies Centre, University of Sydney. Sydney, New South Wales, Australia. R package version 1.5.5. URL https://github.com/atahk/pscl/</p>
+<p>Long, J. Scott. 1990. The origins of sex differences in science. Social Forces. 68(3):1297-1316.</p>
+<p>Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. Thousand Oaks, California: Sage.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>## For examples see example(glm.izip)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

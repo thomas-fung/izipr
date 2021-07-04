@@ -154,15 +154,15 @@ generalized linear model with a log-link.</p>
 fitting process.</p></td>
     </tr>
     <tr>
+      <th>contrasts</th>
+      <td><p>optional lists. See the contrasts.arg of model.matrix.default.</p></td>
+    </tr>
+    <tr>
       <th>na.action</th>
       <td><p>a function which indicates what should happen when the data contain
 NAs. The default is set by the na.action setting of options, and is na.fail if that
 is unset. The ‘factory-fresh’ default is na.omit. Another possible value is NULL,
 no action. Value na.exclude can be useful.</p></td>
-    </tr>
-    <tr>
-      <th>contrast</th>
-      <td><p>optional lists. See the contrasts.arg of model.matrix.default.</p></td>
     </tr>
     </table>
 
@@ -172,7 +172,7 @@ no action. Value na.exclude can be useful.</p></td>
 or <code>glm.nb</code>.</p>
 <p>The function <code>summary</code> (i.e., <code><a href='summary.izip.html'>summary.izip</a></code>) can be used to obtain
 and print a summary of the results.</p>
-<p>The functions <code>plot</code> (i.e., <code><a href='plot.izip.html'>plot.izip</a></code>) and
+<p>The functions <code>plot</code> (i.e., <code><a href='izip_graphics.html'>plot.izip</a></code>) and
 <code>autoplot</code> can be used to produce a range
 of diagnostic plots.</p>
 <p>The generic assessor functions <code>coef</code> (i.e., <code><a href='coef.izip.html'>coef.izip</a></code>),
@@ -180,7 +180,7 @@ of diagnostic plots.</p>
 <code>fitted</code> (i.e., <code><a href='fitted.izip.html'>fitted.izip</a></code>),
 <code>nobs</code> (i.e., <code><a href='nobs.izip.html'>nobs.izip</a></code>),
 <code>AIC</code> (i.e., <code><a href='AIC.izip.html'>AIC.izip</a></code>) and
-<code>residuals</code> (i.e., <code>residuals.izip</code>)
+<code>residuals</code> (i.e., <code><a href='residuals.izip.html'>residuals.izip</a></code>)
 can be used to extract various useful features of the value
 returned by <code>glm.izip</code>.</p>
 <p>An object class 'glm.izip' is a list containing at least the following components:</p>
@@ -219,7 +219,79 @@ rate \(\lambda_{ref}\).</p>
     <p>Huang, A. and Fung, T. (2020). Zero-inflated Poisson exponential families, with applications to time-series modelling of counts.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'>## article production by graduate students in</span>
+<span class='co'>## biochemistry PhD programs of Long (1990, 1997)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'>glm.izip</span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call: glm.izip(formula = art ~ ., data = bioChemists)
+#&gt; 
+#&gt; Deviance Residuals: 
+#&gt;    Min      1Q  Median      3Q     Max  
+#&gt; -3.377  -1.423  -0.338   0.520   5.349  
+#&gt; 
+#&gt; Linear Model Coefficients:
+#&gt;              Estimate   Std.Err Z value Pr(&gt;|z|)    
+#&gt; (Intercept)  0.324567  0.118344   2.743 0.006096 ** 
+#&gt; femWomen    -0.228623  0.062988  -3.630 0.000284 ***
+#&gt; marMarried   0.158891  0.070602   2.251 0.024417 *  
+#&gt; kid5        -0.189543  0.046299  -4.094 4.24e-05 ***
+#&gt; phd          0.010118  0.030253   0.334 0.738041    
+#&gt; ment         0.024687  0.002175  11.352  &lt; 2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; (Baseline zero-inflation odds for iZIP estimated to be 0.2861)
+#&gt; 
+#&gt; (The baseline Poisson rate for iZIP is set at 1.693)
+#&gt; 
+#&gt; 
+#&gt;     Null deviance: 1542.8  on 914 degrees of freedom
+#&gt; Residual deviance: 1405.5  on 909 degrees of freedom
+#&gt; 
+#&gt; AIC: 3240.321 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span> <span class='co'># or autoplot(M_bioChem)</span>
+</div><div class='img'><img src='glm.izip-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>## Root counts for propagated columnar apple shoots of</span>
+<span class='co'>## Ridout, Hinde &amp; Demetrio (1998).</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>appleshoots</span><span class='op'>)</span>
+<span class='va'>M_shoots</span> <span class='op'>&lt;-</span> <span class='fu'>glm.izip</span><span class='op'>(</span><span class='va'>roots</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span>
+             <span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>photo</span><span class='op'>)</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>bap</span><span class='op'>)</span>,
+             data <span class='op'>=</span> <span class='va'>appleshoots</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>M_shoots</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call: glm.izip(formula = roots ~ 1 + 1 + factor(photo) * factor(bap), 
+#&gt;     data = appleshoots)
+#&gt; 
+#&gt; Deviance Residuals: 
+#&gt;     Min       1Q   Median       3Q      Max  
+#&gt; -3.5028  -1.9069  -0.2788   0.8393   3.9440  
+#&gt; 
+#&gt; Linear Model Coefficients:
+#&gt;                                 Estimate Std.Err Z value Pr(&gt;|z|)    
+#&gt; (Intercept)                       1.7636  0.1014  17.398  &lt; 2e-16 ***
+#&gt; factor(photo)16                  -0.5798  0.2000  -2.900  0.00374 ** 
+#&gt; factor(bap)4.4                    0.2862  0.1253   2.285  0.02232 *  
+#&gt; factor(bap)8.8                    0.2513  0.1211   2.076  0.03790 *  
+#&gt; factor(bap)17.6                   0.2035  0.1231   1.654  0.09819 .  
+#&gt; factor(photo)16:factor(bap)4.4   -0.4645  0.2895  -1.604  0.10863    
+#&gt; factor(photo)16:factor(bap)8.8   -0.2930  0.2757  -1.063  0.28780    
+#&gt; factor(photo)16:factor(bap)17.6  -0.4912  0.2797  -1.756  0.07902 .  
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; (Baseline zero-inflation odds for iZIP estimated to be 0.6592)
+#&gt; 
+#&gt; (The baseline Poisson rate for iZIP is set at 5.059)
+#&gt; 
+#&gt; 
+#&gt;     Null deviance: 628.20  on 269 degrees of freedom
+#&gt; Residual deviance: 503.72  on 262 degrees of freedom
+#&gt; 
+#&gt; AIC: 1283.312 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>M_shoots</span><span class='op'>)</span> <span class='co'># or autoplot(M_bioChem)</span>
+</div><div class='img'><img src='glm.izip-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-8.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

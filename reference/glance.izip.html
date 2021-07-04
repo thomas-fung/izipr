@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the Number of Observation from an iZIP Model Fit — nobs.izip • izipr</title>
+<title>Glance at a(n) CMP model object — glance.izip • izipr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Extract the Number of Observation from an iZIP Model Fit — nobs.izip" />
-<meta property="og:description" content="An accessor function used to extract the number of observation from a 'izip' object." />
+<meta property="og:title" content="Glance at a(n) CMP model object — glance.izip" />
+<meta property="og:description" content="Glance accepts a model object and returns a tibble::tibble() with exactly one row of model summaries. The summaries are typically goodness of fit measures, p-values for hypothesis tests on residuals, or model convergence information." />
 
 
 
@@ -108,23 +108,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the Number of Observation from an iZIP Model Fit</h1>
+    <h1>Glance at a(n) CMP model object</h1>
     <small class="dont-index">Source: <a href='https://github.com/thomas-fung/izipr/blob/master/R/summarize_extract.R'><code>R/summarize_extract.R</code></a></small>
-    <div class="hidden name"><code>nobs.izip.Rd</code></div>
+    <div class="hidden name"><code>glance.izip.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An accessor function used to extract the number of observation from a 'izip' object.</p>
+    <p>Glance accepts a model object and returns a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with exactly one row of model summaries. The summaries are typically goodness of fit measures, p-values for hypothesis tests on residuals, or model convergence information.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/nobs.html'>nobs</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://generics.r-lib.org/reference/glance.html'>glance</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
+      <th>x</th>
       <td><p>an object class 'izip' object, obtained from a call to <code>glm.izip</code></p></td>
     </tr>
     <tr>
@@ -135,11 +135,30 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The number of observations extracted from the object <code>object</code>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with exactly one row and columns:</p>
+<dt>AIC</dt><dd><p>Akaike's Information Criterion for the model.</p></dd>
+<dt>BIC</dt><dd><p>Bayesian Information Criterion for the model.</p></dd>
+<dt>deviance</dt><dd><p>(Residual) Deviance of the model.</p></dd>
+<dt>df.null</dt><dd><p>Degrees of freedom used by the null model.</p></dd>
+<dt>df.residual</dt><dd><p>Residual degrees of freedom.</p></dd>
+<dt>logLik</dt><dd><p>The log-likelihood of the model.</p></dd>
+<dt>nobs</dt><dd><p>Number of observations used.</p></dd>
+<dt>null.deviance</dt><dd><p>Deviance of the null model.</p></dd>
 
-    <div class='dont-index'><p><code><a href='coef.izip.html'>coef.izip</a></code>, <code><a href='fitted.izip.html'>fitted.izip</a></code>, <code><a href='glm.izip.html'>glm.izip</a></code></p></div>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>Glance never returns information from the original call to the modeling function. This includes the name of the modeling function or any arguments passed to the modeling function.</p>
+<p>Glance does not calculate summary measures. Rather, it farms out these computations to appropriate methods and gathers the results together. Sometimes a goodness of fit measure will be undefined. In these cases the measure will be reported as NA.</p>
+<p>Glance returns the same number of columns regardless of whether the model matrix is rank-deficient or not. If so, entries in columns that no longer have a well-defined value are filled in with an NA of the appropriate type.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span><span class='op'>~</span> <span class='va'>.</span>, data<span class='op'>=</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/glance.html'>glance</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 8</span>
+#&gt;   null.deviance df.null logLik   AIC   BIC deviance df.residual  nobs
+#&gt;           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>         <span style='text-decoration: underline;'>1</span>543.     914 -<span style='color: #BB0000; text-decoration: underline;'>1</span><span style='color: #BB0000;'>613.</span> <span style='text-decoration: underline;'>3</span>240. <span style='text-decoration: underline;'>3</span>274.    <span style='text-decoration: underline;'>1</span>406.         909   915</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

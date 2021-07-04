@@ -121,11 +121,11 @@ interpretable Zero-Inflated Poisson with parameter <code>mu</code> and <code>nu<
 
     <pre class="usage"><span class='fu'>dizip</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>mu</span>, <span class='va'>nu</span>, <span class='va'>pi</span>, ref.lambda <span class='op'>=</span> <span class='fl'>1</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>pizip</span><span class='op'>(</span><span class='va'>q</span>, <span class='va'>mu</span>, <span class='va'>nu</span>, <span class='va'>pi</span>, lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>pizip</span><span class='op'>(</span><span class='va'>q</span>, <span class='va'>mu</span>, <span class='va'>nu</span>, <span class='va'>pi</span>, ref.lambda <span class='op'>=</span> <span class='fl'>1</span>, lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>qizip</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>mu</span>, <span class='va'>nu</span>, <span class='va'>pi</span>, lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>qizip</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>mu</span>, <span class='va'>nu</span>, <span class='va'>pi</span>, ref.lambda <span class='op'>=</span> <span class='fl'>1</span>, lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>rizip</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>mu</span>, <span class='va'>nu</span>, <span class='va'>pi</span><span class='op'>)</span></pre>
+<span class='fu'>rizip</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>mu</span>, <span class='va'>nu</span>, <span class='va'>pi</span>, ref.lambda <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +183,7 @@ Only the first argument of the logical arguments are used.</p>
 </div><div class='output co'>#&gt; [1] 0.9654487</div><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>10</span>
 <span class='fu'>qizip</span><span class='op'>(</span><span class='va'>p</span>, mu <span class='op'>=</span> <span class='fl'>2</span>, nu <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0 0 1 1 2 2 3 3 4</div><div class='input'><span class='fu'>rizip</span><span class='op'>(</span><span class='fl'>10</span>, mu <span class='op'>=</span> <span class='fl'>2</span>, nu <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in VGAM::lambertW(nu * exp(ref.lambda - mu) * mu): object 'ref.lambda' not found</span></div></pre>
+</div><div class='output co'>#&gt;  [1] 0 4 2 0 0 1 2 0 3 4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
