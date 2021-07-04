@@ -20,7 +20,7 @@ Extracting the Variance-Covariance Matrix from a iZIP
 Model Fit
 }
 \examples{
-data(attendance)
-M.attendance <- glm.cmp(daysabs ~ gender + math + prog, data = attendance)
-vcov(M.attendance)
+data(bioChemists)
+M_bioChem <- glm.izip(art~ ., data=bioChemists)
+vcov(M_bioChem)
 }

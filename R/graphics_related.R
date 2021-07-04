@@ -1,7 +1,7 @@
 #' PIT Plots for a iZIP Object
 #'
 #' Two plots for the non-randomized PIT are currently available for checking the
-#' distributional assumption of the fitted CMP model: the PIT histogram, and
+#' distributional assumption of the fitted iZIP model: the PIT histogram, and
 #' the uniform Q-Q plot for PIT.
 #'
 #' @param object an object class "izip", obtained from a call to \code{glm.izip}.
@@ -168,6 +168,7 @@ gg_histizipPIT <-
 gg_qqizipPIT <- function(object, bins = 10, col1 = "red",
                          col2 = "#999999",
                          lty1 = 1, lty2 = 2){
+  PIT <- NULL
   dummy.variable <- seq(0, 1, by = 1/bins)
   PIT.out <- izipPIT(object, bins = bins)$PIT
   qq.plot <- PIT.out[, ncol(PIT.out)]
@@ -297,7 +298,7 @@ izipPIT <- function (object, bins = 10)
 #' @examples
 #' data(bioChemists)
 #' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
-#' normRandizipPIT(M.bids)
+#' izipnormRandPIT(M_bioChem)
 #' @name rPIT
 NULL
 
@@ -372,11 +373,11 @@ izipnormRandPIT <- function (object) {
 #' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #'
 #' ## The default plots are shown
-#' autoplot(M_bioChem) #or plot(M.bioChem)
+#' plot(M_bioChem) #or autoplot(M_bioChem)
 #'
 #' ## The plots for the non-randomized PIT
-#' autoplot(M_bioChem, which = c(2,3))
-#' # or plot(M.bioChem, which = c(2,3))
+#' plot(M_bioChem, which = c(2,3))
+#' # or autoplot(M_bioChem, which = c(2,3))
 #' @name izip_graphics
 NULL
 

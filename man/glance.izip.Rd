@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_extract.R
 \name{glance.izip}
 \alias{glance.izip}
-\title{Glance at a(n) CMP model object}
+\title{Glance at a(n) iZIP model object}
 \usage{
 \method{glance}{izip}(x, ...)
 }

@@ -15,8 +15,6 @@
 
 \item{evaluate}{logical; if \code{TRUE} evaluate the new call otherwise simply return
 the call}
-
-\item{formula_nu.}{changes to the existing formula_nu in \code{object} -- see \code{update.formula} for details. It also accepts NULL to not regressing on the dispersion.}
 }
 \description{
 \code{update} (i.e., \code{update.izip}) will update and (by-default) re-fit a model. It is

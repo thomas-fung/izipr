@@ -42,7 +42,7 @@ intervals. The vector of these values is returned by the function in the list el
 \examples{
 data(bioChemists)
 M_bioChem <- glm.izip(art ~ ., data = bioChemists)
-normRandizipPIT(M.bids)
+izipnormRandPIT(M_bioChem)
 }
 \references{
 Berkowitz, J. (2001). Testing density forecasts, with applications to risk management.

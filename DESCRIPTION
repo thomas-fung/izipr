@@ -28,7 +28,11 @@ Imports:
     stringr,
     ggplot2,
     ggpubr,
-    generics
+    generics,
+    purrr,
+    rlang,
+    tibble,
+    dplyr
 Language: en-GB
 Depends: 
     R (>= 2.10)

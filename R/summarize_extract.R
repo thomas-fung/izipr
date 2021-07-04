@@ -276,10 +276,10 @@ print.izip <- function(x,...)
 #' @examples
 #' data(bioChemists)
 #' M_bioChem <- glm.izip(art~ ., data=bioChemists)
-#' influence(M.attendance)
-#' hatvalues(M.attendance)
-#' rstandard(M.attendance, type = "pearson")
-#' cooks.distance(M.attendance)
+#' influence(M_bioChem)
+#' hatvalues(M_bioChem)
+#' rstandard(M_bioChem, type = "pearson")
+#' cooks.distance(M_bioChem)
 #' @name regression.diagnostic.izip
 NULL
 
@@ -491,9 +491,9 @@ tidy.izip <- function(x, conf.int = FALSE, conf.level = 0.95,
 #' @export
 #'
 #' @examples
-#' data(attendance)
-#' M.attendance <- glm.cmp(daysabs ~ gender + math + prog, data = attendance)
-#' vcov(M.attendance)
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' vcov(M_bioChem)
 vcov.izip <- function(object, ...) {
     out <- object$vcov
   return(out)
@@ -501,7 +501,7 @@ vcov.izip <- function(object, ...) {
 
 
 
-#' Glance at a(n) CMP model object
+#' Glance at a(n) iZIP model object
 #'
 #' Glance accepts a model object and returns a \code{tibble::tibble()} with exactly one row of model summaries. The summaries are typically goodness of fit measures, p-values for hypothesis tests on residuals, or model convergence information.
 #'
@@ -542,7 +542,7 @@ glance.izip <- function(x, ...) {
 }
 
 
-#' Augment data with information from a(n) CMP model object
+#' Augment data with information from a(n) iZIP model object
 #'
 #' Augment accepts a model object and a dataset and adds information about each observation in the dataset. Most commonly, this includes predicted values in the .fitted column, residuals in the .resid column, and standard errors for the fitted values in a .se.fit column. New columns always begin with a . prefix to avoid overwriting columns in the original dataset.
 #'
@@ -557,7 +557,7 @@ glance.izip <- function(x, ...) {
 #' We are in the process of defining behaviours for models fit with various na.action arguments, but make no guarantees about behaviour when data is missing at this time.
 #'
 #' @param x an object class 'izip' object, obtained from a call to \code{\link{glm.izip}}
-#' @param data A base::data.frame or \code{tibble::tibble()} containing the original data that was used to produce the object x. Defaults to model.frame.cmp(x) so that augment(my_fit) returns the augmented original data. __Do not__ pass new data to the data argument. Augment will report information such as influence and cooks distance for data passed to the data argument. These measures are only defined for the original training data.
+#' @param data A base::data.frame or \code{tibble::tibble()} containing the original data that was used to produce the object x. Defaults to model.frame.izip(x) so that augment(my_fit) returns the augmented original data. __Do not__ pass new data to the data argument. Augment will report information such as influence and cooks distance for data passed to the data argument. These measures are only defined for the original training data.
 #' @param newdata A \code{base::data.frame()} or \code{tibble::tibble()} containing all the original predictors used to create x. Defaults to NULL, indicating that nothing has been passed to newdata. If newdata is specified, the data argument will be ignored.
 #' @param type.predict Passed to \code{\link{predict.izip}()} type argument. Defaults to \code{"link"}.
 #' @param type.residuals Passed to \code{\link{residuals.izip}()} type arguments. Defaults to \code{"deviance"}.

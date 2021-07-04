@@ -45,16 +45,14 @@ CBIND <- function(..., deparse.level = 1) {
 #'
 #' @param x numeric vector to be tested
 #' @param tol numeric; precision level
-#'
 is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
   abs(x - round(x)) < tol
 }
 
-
-
 #' @keywords internal
-#' Imported from the broom package
+#' @importFrom tibble as_tibble add_column
 as_augment_tibble <- function(data) {
+  # Imported from the broom package
   if (inherits(data, "matrix") & is.null(colnames(data))) {
     stop(
       "The supplied `data`/`newdata` argument was an unnamed matrix. ",
@@ -77,25 +75,29 @@ as_augment_tibble <- function(data) {
 }
 
 #' @keywords internal
-#' Imported from the stats package
 format.perc <- function(probs, digits) {
+  # Imported from the stats package
   paste(
     format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits),
     "%"
   )
 }
 
+
 #' @keywords internal
-#' Imported from the broom package
 data_error <- function(cnd) {
+  # Imported from the broom package
   stop("Must specify either `data` or `newdata` argument.",
        call. = FALSE
   )
 }
 
 #' @keywords internal
-#' Imported from the broom package
+#' @importFrom stringr str_length
+#' @importFrom purrr map2
+#' @importFrom tibble as_tibble_row
 as_glance_tibble <- function(..., na_types) {
+  # Imported from the broom package
   cols <- list(...)
   if (length(cols) != stringr::str_length(na_types)) {
     stop(
@@ -116,8 +118,10 @@ as_glance_tibble <- function(..., na_types) {
 }
 
 #' @keywords internal
-#' Imported from the broom package
+#' @importFrom purrr  map
+#' @importFrom stringr str_split
 parse_na_types <- function(s) {
+  # Imported from the broom package
   positions <- unlist(purrr::map(
     stringr::str_split(s, pattern = ""),
     match,
@@ -128,8 +132,9 @@ parse_na_types <- function(s) {
 }
 
 #' @keywords internal
-#' Imported from the broom package
+#' @importFrom rlang na_int na_lgl
 na_types_dict <- list(
+  # Imported from the broom package
   "r" = NA_real_,
   "i" = rlang::na_int,
   "c" = NA_character_,
@@ -137,9 +142,10 @@ na_types_dict <- list(
 )
 
 #' @keywords internal
-#' Imported from the broom package.
-#' Notice that this is difference to the same function in tibble.
+#' @importFrom tibble is_tibble
 has_rownames <- function(df) {
+  # Imported from the broom package.
+  # Notice that this is difference to the same function in tibble.
   if (tibble::is_tibble(df)) {
     return(FALSE)
   }
@@ -147,11 +153,13 @@ has_rownames <- function(df) {
 }
 
 #' @keywords internal
-#' Imported from the broom package.
+#' @importFrom dplyr mutate_at vars
 exponentiate <- function(data) {
-  data <- dplyr::mutate_at(data, vars(estimate), exp)
+  # Imported from the broom package.
+  estimate <- conf.low <- conf.high <- NULL
+  data <- dplyr::mutate_at(data, dplyr::vars(estimate), exp)
   if ("conf.low" %in% colnames(data)) {
-    data <- dplyr::mutate_at(data, vars(conf.low, conf.high), exp)
+    data <- dplyr::mutate_at(data, dplyr::vars(conf.low, conf.high), exp)
   }
   data
 }

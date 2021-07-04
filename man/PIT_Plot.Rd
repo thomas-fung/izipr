@@ -63,7 +63,7 @@ Q-Q plot in PIT, see par(lty = .).}
 }
 \description{
 Two plots for the non-randomized PIT are currently available for checking the
-distributional assumption of the fitted CMP model: the PIT histogram, and
+distributional assumption of the fitted iZIP model: the PIT histogram, and
 the uniform Q-Q plot for PIT.
 }
 \details{

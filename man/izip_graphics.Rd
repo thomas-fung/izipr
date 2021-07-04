@@ -87,11 +87,11 @@ data(bioChemists)
 M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 
 ## The default plots are shown
-autoplot(M_bioChem) #or plot(M.bioChem)
+plot(M_bioChem) #or autoplot(M_bioChem)
 
 ## The plots for the non-randomized PIT
-autoplot(M_bioChem, which = c(2,3))
-# or plot(M.bioChem, which = c(2,3))
+plot(M_bioChem, which = c(2,3))
+# or autoplot(M_bioChem, which = c(2,3))
 }
 \seealso{
 \code{\link{izipPIT}}, \code{\link{izipnormRandPIT}},

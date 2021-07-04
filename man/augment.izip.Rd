@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_extract.R
 \name{augment.izip}
 \alias{augment.izip}
-\title{Augment data with information from a(n) CMP model object}
+\title{Augment data with information from a(n) iZIP model object}
 \usage{
 \method{augment}{izip}(
   x,
@@ -17,7 +17,7 @@
 \arguments{
 \item{x}{an object class 'izip' object, obtained from a call to \code{\link{glm.izip}}}
 
-\item{data}{A base::data.frame or \code{tibble::tibble()} containing the original data that was used to produce the object x. Defaults to model.frame.cmp(x) so that augment(my_fit) returns the augmented original data. \strong{Do not} pass new data to the data argument. Augment will report information such as influence and cooks distance for data passed to the data argument. These measures are only defined for the original training data.}
+\item{data}{A base::data.frame or \code{tibble::tibble()} containing the original data that was used to produce the object x. Defaults to model.frame.izip(x) so that augment(my_fit) returns the augmented original data. \strong{Do not} pass new data to the data argument. Augment will report information such as influence and cooks distance for data passed to the data argument. These measures are only defined for the original training data.}
 
 \item{newdata}{A \code{base::data.frame()} or \code{tibble::tibble()} containing all the original predictors used to create x. Defaults to NULL, indicating that nothing has been passed to newdata. If newdata is specified, the data argument will be ignored.}
 

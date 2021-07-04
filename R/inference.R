@@ -68,7 +68,6 @@ iziplrtest <- function(object1, object2, digits = 3) {
 #'
 #' @param object an object class 'izip', obtained from a call to \code{glm.izip}.
 #' @param formula. changes to the existing formula in \code{object} -- see \code{update.formula}
-#' @param formula_nu. changes to the existing formula_nu in \code{object} -- see \code{update.formula} for details. It also accepts NULL to not regressing on the dispersion.
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #' @param evaluate logical; if \code{TRUE} evaluate the new call otherwise simply return
 #' the call
