@@ -51,7 +51,8 @@ test_that("Testing function that extracting info from glm.izip", {
     residuals(M_bioChem),
     residuals(M_bioChem, type = "deviance")
   )
-  expect_snapshot(residuals(M_bioChem, type = "response"))
+  expect_snapshot(round(residuals(M_bioChem,
+                                  type = "response"), 5))
   expect_snapshot(residuals(M_bioChem, type = "pearson"))
   expect_snapshot(influence(M_bioChem))
   expect_snapshot(hatvalues(M_bioChem))
@@ -66,7 +67,8 @@ test_that("Testing function that extracting info from glm.izip", {
     predict(M_bioChem, type = "link"),
     predict(M_bioChem)
   )
-  expect_snapshot(predict(M_bioChem, se.fit = TRUE))
+  expect_snapshot(
+    round(predict(M_bioChem, se.fit = TRUE)$se.fit, 5))
   expect_equal(
     predict(M_bioChem, type = "link", se.fit = TRUE),
     predict(M_bioChem, se.fit = TRUE)
