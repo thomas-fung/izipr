@@ -179,11 +179,11 @@ of diagnostic plots.</p>
 <code>logLik</code> (i.e., <code><a href='logLik.izip.html'>logLik.izip</a></code>)
 <code>fitted</code> (i.e., <code><a href='fitted.izip.html'>fitted.izip</a></code>),
 <code>nobs</code> (i.e., <code><a href='nobs.izip.html'>nobs.izip</a></code>),
-<code>AIC</code> (i.e., <code><a href='AIC.izip.html'>AIC.izip</a></code>) and
+<code>AIC</code> (i.e., <code><a href='aic.izip.html'>AIC.izip</a></code>) and
 <code>residuals</code> (i.e., <code><a href='residuals.izip.html'>residuals.izip</a></code>)
 can be used to extract various useful features of the value
 returned by <code>glm.izip</code>.</p>
-<p>An object class 'glm.izip' is a list containing at least the following components:</p>
+<p>An object class 'izip' is a list containing at least the following components:</p>
 <dt>coefficients</dt><dd><p>a named vector of coefficients</p></dd>
 <dt>stderr</dt><dd><p>approximate standard errors (using observed rather than expected information) for mean coefficients</p></dd>
 <dt>residuals</dt><dd><p>the <em>response</em> residuals (i.e., observed-fitted)</p></dd>
@@ -257,8 +257,9 @@ rate \(\lambda_{ref}\).</p>
 <span class='co'>## Ridout, Hinde &amp; Demetrio (1998).</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>appleshoots</span><span class='op'>)</span>
 <span class='va'>M_shoots</span> <span class='op'>&lt;-</span> <span class='fu'>glm.izip</span><span class='op'>(</span><span class='va'>roots</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span>
-             <span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>photo</span><span class='op'>)</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>bap</span><span class='op'>)</span>,
-             data <span class='op'>=</span> <span class='va'>appleshoots</span><span class='op'>)</span>
+  <span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>photo</span><span class='op'>)</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>bap</span><span class='op'>)</span>,
+data <span class='op'>=</span> <span class='va'>appleshoots</span>
+<span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>M_shoots</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Call: glm.izip(formula = roots ~ 1 + 1 + factor(photo) * factor(bap), 
@@ -291,8 +292,7 @@ rate \(\lambda_{ref}\).</p>
 #&gt; 
 #&gt; AIC: 1283.312 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>M_shoots</span><span class='op'>)</span> <span class='co'># or autoplot(M_bioChem)</span>
-</div><div class='img'><img src='glm.izip-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-8.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+</div><div class='img'><img src='glm.izip-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='glm.izip-8.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

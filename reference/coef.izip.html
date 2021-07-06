@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Extract Model Coefficients from an iZIP Model Fit — coef.izip" />
-<meta property="og:description" content="An function used to extract model coefficients from a 'izip' object.
+<meta property="og:description" content="An function used to extract model coefficients from an 'izip' or an 'tsizip' object.
 coefficients is an alias for coef." />
 
 
@@ -115,11 +115,14 @@ coefficients is an alias for coef." />
     </div>
 
     <div class="ref-description">
-    <p>An function used to extract model coefficients from a 'izip' object.
+    <p>An function used to extract model coefficients from an 'izip' or an 'tsizip' object.
 <code>coefficients</code> is an alias for <code>coef</code>.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for tsizip</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -127,7 +130,7 @@ coefficients is an alias for coef." />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an object class 'izip' object, obtained from a call to <code>glm.izip</code></p></td>
+      <td><p>an object class 'izip' or 'tsizip' object, obtained from a call to <code>glm.izip</code> or <code>tsglm.izip</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -140,7 +143,13 @@ coefficients is an alias for coef." />
     <p>Coefficients extracted from the object <code>object</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='fitted.izip.html'>fitted.izip</a>, <a href='residuals.izip.html'>residuals.izip</a>, <a href='glm.izip.html'>glm.izip</a>.</p></div>
+    <div class='dont-index'><p><a href='fitted.izip.html'>fitted.izip</a>, <a href='residuals.izip.html'>residuals.izip</a>, <a href='glm.izip.html'>glm.izip</a>, <a href='fitted.izip.html'>fitted.tsizip</a>, <a href='residuals.izip.html'>residuals.tsizip</a>, <a href='tsglm.izip.html'>tsglm.izip</a>.
+data(bioChemists)
+M_bioChem &lt;- glm.izip(art~ ., data=bioChemists)
+coefficients(M_bioChem)</p>
+<p>data(arson)
+M_arson &lt;- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1,2))
+coef(M_arson)</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

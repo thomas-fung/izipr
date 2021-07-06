@@ -118,6 +118,9 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/glance.html'>glance</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for tsizip</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/glance.html'>glance</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -135,7 +138,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with exactly one row and columns:</p>
+    <p>For an 'izip' object, a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with exactly one row and columns:</p>
 <dt>AIC</dt><dd><p>Akaike's Information Criterion for the model.</p></dd>
 <dt>BIC</dt><dd><p>Bayesian Information Criterion for the model.</p></dd>
 <dt>deviance</dt><dd><p>(Residual) Deviance of the model.</p></dd>
@@ -145,6 +148,12 @@
 <dt>nobs</dt><dd><p>Number of observations used.</p></dd>
 <dt>null.deviance</dt><dd><p>Deviance of the null model.</p></dd>
 
+For an 'tsizip' object, a tibble::tibble() with exactly one row and columns:
+<dt>AIC</dt><dd><p>Akaike's Information Criterion for the model.</p></dd>
+<dt>BIC</dt><dd><p>Bayesian Information Criterion for the model.</p></dd>
+<dt>logLik</dt><dd><p>The log-likelihood of the model.</p></dd>
+<dt>nobs</dt><dd><p>Number of observations used.</p></dd>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Glance never returns information from the original call to the modeling function. This includes the name of the modeling function or any arguments passed to the modeling function.</p>
@@ -153,12 +162,19 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
-<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span><span class='op'>~</span> <span class='va'>.</span>, data<span class='op'>=</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/glance.html'>glance</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 8</span>
 #&gt;   null.deviance df.null logLik   AIC   BIC deviance df.residual  nobs
 #&gt;           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>         <span style='text-decoration: underline;'>1</span>543.     914 -<span style='color: #BB0000; text-decoration: underline;'>1</span><span style='color: #BB0000;'>613.</span> <span style='text-decoration: underline;'>3</span>240. <span style='text-decoration: underline;'>3</span>274.    <span style='text-decoration: underline;'>1</span>406.         909   915</div></pre>
+#&gt; <span style='color: #BCBCBC;'>1</span>         <span style='text-decoration: underline;'>1</span>543.     914 -<span style='color: #BB0000; text-decoration: underline;'>1</span><span style='color: #BB0000;'>613.</span> <span style='text-decoration: underline;'>3</span>240. <span style='text-decoration: underline;'>3</span>274.    <span style='text-decoration: underline;'>1</span>406.         909   915</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>arson</span><span class='op'>)</span>
+<span class='va'>M_arson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tsglm.izip.html'>tsglm.izip</a></span><span class='op'>(</span><span class='va'>arson</span> <span class='op'>~</span> <span class='fl'>1</span>, past_mean_lags <span class='op'>=</span> <span class='fl'>1</span>, past_obs_lags <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/glance.html'>glance</a></span><span class='op'>(</span><span class='va'>M_arson</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 5</span>
+#&gt;   logLik     k   AIC   BIC  nobs
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  -<span style='color: #BB0000;'>197.</span>     5  405.  419.   144</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

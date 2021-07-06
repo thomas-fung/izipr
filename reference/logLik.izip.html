@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Extract the (Maximized) Log-Likelihood from an iZIP Model Fit — logLik.izip" />
-<meta property="og:description" content="An accessor function used to extract the (maximized) log-likelihood from a 'izip' object." />
+<meta property="og:description" content="An accessor function used to extract the (maximized) log-likelihood from an 'izip' or a 'tsizip' object." />
 
 
 
@@ -114,13 +114,19 @@
     </div>
 
     <div class="ref-description">
-    <p>An accessor function used to extract the (maximized) log-likelihood from a 'izip' object.</p>
+    <p>An accessor function used to extract the (maximized) log-likelihood from an 'izip' or a 'tsizip' object.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for logLik.izip</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for tsizip</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for logLik.tsizip</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -128,7 +134,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an object of class 'izip' object, obtained from a call to <code>glm.izip</code></p></td>
+      <td><p>an object of class 'izip' object or 'tsizip', obtained from a call to <code>glm.izip</code> or <code>tsglm.izip</code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -136,14 +142,23 @@
     </tr>
     <tr>
       <th>x</th>
-      <td><p>an object of class 'logLik.izip', obtained from a call to <code>logLik.izip</code>.</p></td>
+      <td><p>an object of class 'logLik.izip' or 'logLik.tsizip', obtained from a call to <code>logLik.izip</code> or <code>logLik.tsizip</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='coef.izip.html'>coef.izip</a>, <a href='fitted.izip.html'>fitted.izip</a>, <a href='glm.izip.html'>glm.izip</a></p></div>
+    <div class='dont-index'><p><a href='coef.izip.html'>coef.izip</a>, <a href='fitted.izip.html'>fitted.izip</a>, <a href='glm.izip.html'>glm.izip</a>, <a href='coef.izip.html'>coef.tsizip</a>, <a href='fitted.izip.html'>fitted.tsizip</a>, <a href='tsglm.izip.html'>tsglm.izip</a></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'log Lik. ' -1613.16 (df=7)</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>arson</span><span class='op'>)</span>
+<span class='va'>M_arson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tsglm.izip.html'>tsglm.izip</a></span><span class='op'>(</span><span class='va'>arson</span> <span class='op'>~</span> <span class='fl'>1</span>, past_mean_lags <span class='op'>=</span> <span class='fl'>1</span>, past_obs_lags <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>M_arson</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'log Lik. ' -197.2757 (df=5)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

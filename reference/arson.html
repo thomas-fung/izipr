@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update and Re-fit a iZIP Model — update.izip • izipr</title>
+<title>arson data set — arson • izipr</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Update and Re-fit a iZIP Model — update.izip" />
-<meta property="og:description" content="update (i.e., update.izip) will update and (by-default) re-fit a model. It is
-identical to update in the stats package." />
+<meta property="og:title" content="arson data set — arson" />
+<meta property="og:description" content="This data set gives the monthly counts of arson in the 13th police car beat plus in Pittsburgh PA, USA, starting from January 1990 to December 2001. We have 144 observations in which 61 of them, or 42.4%, are zeros." />
 
 
 
@@ -109,82 +108,31 @@ identical to update in the stats package." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update and Re-fit a iZIP Model</h1>
-    <small class="dont-index">Source: <a href='https://github.com/thomas-fung/izipr/blob/master/R/inference.R'><code>R/inference.R</code></a></small>
-    <div class="hidden name"><code>update.izip.Rd</code></div>
+    <h1>arson data set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thomas-fung/izipr/blob/master/R/izipr-package.R'><code>R/izipr-package.R</code></a></small>
+    <div class="hidden name"><code>arson.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>update</code> (i.e., <code>update.izip</code>) will update and (by-default) re-fit a model. It is
-identical to <code>update</code> in the <code>stats</code> package.</p>
+    <p>This data set gives the monthly counts of arson in the 13th police car beat plus in Pittsburgh PA, USA, starting from January 1990 to December 2001. We have 144 observations in which 61 of them, or 42.4%, are zeros.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for izip</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>formula.</span>, <span class='va'>...</span>, evaluate <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>arson</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>an object class 'izip', obtained from a call to <code>glm.izip</code>.</p></td>
-    </tr>
-    <tr>
-      <th>formula.</th>
-      <td><p>changes to the existing formula in <code>object</code> -- see <code>update.formula</code></p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other arguments passed to or from other methods  (currently unused).</p></td>
-    </tr>
-    <tr>
-      <th>evaluate</th>
-      <td><p>logical; if <code>TRUE</code> evaluate the new call otherwise simply return
-the call</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p><code><a href='glm.izip.html'>glm.izip</a></code>, <code><a href='https://rdrr.io/r/stats/update.formula.html'>update.formula</a></code>, <code><a href='iziplrtest.html'>iziplrtest</a></code>.</p></div>
+    <p>A vector of 144 observations.</p>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>https://www.icpsr.umich.edu/icpsrweb/NACJD</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Zhu, F. (2012) Zero-inflated poisson and negative binomial integer-valued garch models. Journal of Statistical Planning and Inference, 142, 826–839.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># To update the regression formula</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemist</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘bioChemist’ not found</span></div><div class='input'>
-<span class='co'>## Fit full model</span>
-<span class='va'>M_bioChem.full</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
-<span class='va'>M_bioChem.full</span>
-</div><div class='output co'>#&gt; 
-#&gt; Call: glm.izip(formula = art ~ ., data = bioChemists)
-#&gt; 
-#&gt; Linear Model Coefficients:
-#&gt; (Intercept)     femWomen   marMarried         kid5          phd         ment  
-#&gt;    0.324570    -0.228620     0.158890    -0.189540     0.010118     0.024687  
-#&gt; 
-#&gt; Baseline Zero-inflation odds (nu): 0.286
-#&gt; Degrees of Freedom: 914 Total (i.e. Null);  909 Residual
-#&gt; Null Deviance: 1542.813 
-#&gt; Residual Deviance: 
-#&gt; AIC: 3240.321 
-#&gt; </div><div class='input'>
-<span class='co'>## Dropping phd</span>
-<span class='va'>M.bioChem.null</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>M_bioChem.full</span>, <span class='va'>.</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>-</span> <span class='va'>phd</span><span class='op'>)</span>
-<span class='va'>M.bioChem.null</span>
-</div><div class='output co'>#&gt; 
-#&gt; Call: glm.izip(formula = art ~ fem + mar + kid5 + ment, data = bioChemists)
-#&gt; 
-#&gt; Linear Model Coefficients:
-#&gt; (Intercept)     femWomen   marMarried         kid5         ment  
-#&gt;    0.356620    -0.229230     0.156560    -0.189560     0.024839  
-#&gt; 
-#&gt; Baseline Zero-inflation odds (nu): 0.286
-#&gt; Degrees of Freedom: 914 Total (i.e. Null);  910 Residual
-#&gt; Null Deviance: 1542.754 
-#&gt; Residual Deviance: 
-#&gt; AIC: 3238.432 
-#&gt; </div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## For examples see example(tsglm.izip)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

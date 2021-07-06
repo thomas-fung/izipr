@@ -120,6 +120,9 @@ fitted model.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, level <span class='op'>=</span> <span class='fl'>0.95</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for tsizip</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, level <span class='op'>=</span> <span class='fl'>0.95</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -127,7 +130,7 @@ fitted model.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an object class 'izip', obtained from a call to <code><a href='glm.izip.html'>glm.izip</a></code>.</p></td>
+      <td><p>an object class 'izip' or 'tsizip', obtained from a call to <code><a href='glm.izip.html'>glm.izip</a></code> or <code><a href='tsglm.izip.html'>tsglm.izip</a></code>.</p></td>
     </tr>
     <tr>
       <th>parm</th>
@@ -164,7 +167,15 @@ fitted model.</p>
 #&gt; marMarried   0.04276045  0.27502173
 #&gt; kid5        -0.26569884 -0.11338733
 #&gt; phd         -0.03964397  0.05988022
-#&gt; ment         0.02111009  0.02826435</div></pre>
+#&gt; ment         0.02111009  0.02826435</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>arson</span><span class='op'>)</span>
+<span class='va'>M_arson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tsglm.izip.html'>tsglm.izip</a></span><span class='op'>(</span><span class='va'>arson</span> <span class='op'>~</span> <span class='fl'>1</span>, past_mean_lags <span class='op'>=</span> <span class='fl'>1</span>, past_obs_lags <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>M_arson</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                    2.5 %    97.5 %
+#&gt; (Intercept) -0.109465665 1.7724965
+#&gt; beta_1      -0.137404909 0.1901232
+#&gt; beta_2       0.001429144 0.3497717
+#&gt; alpha_1     -0.913769353 0.9137694</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

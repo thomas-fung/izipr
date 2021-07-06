@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extracting the Variance-Covariance Matrix from a iZIP
-Model Fit — vcov.izip • izipr</title>
+<title>Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+INGARCH Model Fit — vcov.izip • izipr</title>
 
 
 <!-- jquery -->
@@ -40,10 +40,10 @@ Model Fit — vcov.izip • izipr</title>
 
 
 
-<meta property="og:title" content="Extracting the Variance-Covariance Matrix from a iZIP
-Model Fit — vcov.izip" />
-<meta property="og:description" content="Extracting the Variance-Covariance Matrix from a iZIP
-Model Fit" />
+<meta property="og:title" content="Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+INGARCH Model Fit — vcov.izip" />
+<meta property="og:description" content="Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+INGARCH Model Fit" />
 
 
 
@@ -111,18 +111,21 @@ Model Fit" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extracting the Variance-Covariance Matrix from a iZIP
-Model Fit</h1>
+    <h1>Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+INGARCH Model Fit</h1>
     <small class="dont-index">Source: <a href='https://github.com/thomas-fung/izipr/blob/master/R/summarize_extract.R'><code>R/summarize_extract.R</code></a></small>
     <div class="hidden name"><code>vcov.izip.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extracting the Variance-Covariance Matrix from a iZIP
-Model Fit</p>
+    <p>Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+INGARCH Model Fit</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/vcov.html'>vcov</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for tsizip</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/vcov.html'>vcov</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -130,7 +133,7 @@ Model Fit</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an object class 'izip' object, obtained from a call to <code>glm.izip</code></p></td>
+      <td><p>an object class 'izip' or 'tsizip' object, obtained from a call to <code>glm.izip</code> or <code>tsglm.izip</code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -140,11 +143,11 @@ Model Fit</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The method will return the estimated covariances between the parameter estimates of the fitted iZIP model.</p>
+    <p>The method will return the estimated covariances between the parameter estimates of the fitted iZIP log-linear or INGARCH model.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
-<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span><span class='op'>~</span> <span class='va'>.</span>, data<span class='op'>=</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/vcov.html'>vcov</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;               (Intercept)      femWomen    marMarried          kid5
 #&gt; (Intercept)  0.0140052010 -2.575516e-03 -3.779114e-03 -1.939299e-04
@@ -159,7 +162,16 @@ Model Fit</p>
 #&gt; marMarried   2.129996e-04  1.268008e-06
 #&gt; kid5         1.080880e-05 -9.800836e-06
 #&gt; phd          9.152565e-04 -1.537157e-05
-#&gt; ment        -1.537157e-05  4.729492e-06</div></pre>
+#&gt; ment        -1.537157e-05  4.729492e-06</div><div class='input'>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>arson</span><span class='op'>)</span>
+<span class='va'>M_arson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tsglm.izip.html'>tsglm.izip</a></span><span class='op'>(</span><span class='va'>arson</span> <span class='op'>~</span> <span class='fl'>1</span>, past_mean_lags <span class='op'>=</span> <span class='fl'>1</span>, past_obs_lags <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/vcov.html'>vcov</a></span><span class='op'>(</span><span class='va'>M_arson</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               [,1]          [,2]          [,3]         [,4]
+#&gt; [1,]  2.304972e-01 -0.0002056272  5.774753e-05 -0.213752728
+#&gt; [2,] -2.056272e-04  0.0069813766 -1.612592e-04 -0.006356661
+#&gt; [3,]  5.774753e-05 -0.0001612592  7.896905e-03 -0.006250237
+#&gt; [4,] -2.137527e-01 -0.0063566605 -6.250237e-03  0.217358684</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

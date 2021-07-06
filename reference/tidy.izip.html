@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Tidy a(n) iZIP model object — tidy.izip" />
-<meta property="og:description" content="Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return." />
+<meta property="og:description" content="Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.
+Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return." />
 
 
 
@@ -115,9 +116,16 @@
 
     <div class="ref-description">
     <p>Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.</p>
+<p>Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, conf.int <span class='op'>=</span> <span class='cn'>FALSE</span>, conf.level <span class='op'>=</span> <span class='fl'>0.95</span>, exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for izip</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, conf.int <span class='op'>=</span> <span class='cn'>FALSE</span>, conf.level <span class='op'>=</span> <span class='fl'>0.95</span>, exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for tsizip</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, conf.int <span class='op'>=</span> <span class='cn'>FALSE</span>, conf.level <span class='op'>=</span> <span class='fl'>0.95</span>, exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -125,7 +133,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object class 'izip' object, obtained from a call to <code>glm.izip</code></p></td>
+      <td><p>an object class 'tsizip' object, obtained from a call to <code>tsglm.izip</code></p></td>
     </tr>
     <tr>
       <th>conf.int</th>
@@ -153,14 +161,33 @@
 <dt>std.error</dt><dd><p>The standard error of the regression term.</p></dd>
 <dt>statistic</dt><dd><p>The value of a test statistic to use in a hypothesis that the regression term is non-zero.</p></dd>
 <dt>p.value</dt><dd><p>The two-sided p-value associated with the observed statistic based on asymptotic normality.</p></dd>
-<dt>parameter</dt><dd><p>Only for varying dispersion models. Type of coefficient being estimated: 'mu', 'nu'</p></dd>
+<dt>conf.low</dt><dd><p>Lower bound on the confidence interval for the estimate.</p></dd>
+<dt>conf.high</dt><dd><p>Upper bound on the confidence interval for the estimate.</p></dd>
+
+A tibble::tibble() with columns:
+<dt>term</dt><dd><p>The name of the regression term.</p></dd>
+<dt>estimate</dt><dd><p>The estimated value of the regression term.</p></dd>
+<dt>std.error</dt><dd><p>The standard error of the regression term.</p></dd>
+<dt>statistic</dt><dd><p>The value of a test statistic to use in a hypothesis that the regression term is non-zero.</p></dd>
+<dt>p.value</dt><dd><p>The two-sided p-value associated with the observed statistic based on asymptotic normality.</p></dd>
 <dt>conf.low</dt><dd><p>Lower bound on the confidence interval for the estimate.</p></dd>
 <dt>conf.high</dt><dd><p>Upper bound on the confidence interval for the estimate.</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
-<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span><span class='op'>~</span> <span class='va'>.</span>, data<span class='op'>=</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 5</span>
+#&gt;   term        estimate std.error statistic  p.value
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> (Intercept)   0.325    0.118       2.74  6.10<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> femWomen     -<span style='color: #BB0000;'>0.229</span>    0.063<span style='text-decoration: underline;'>0</span>     -<span style='color: #BB0000;'>3.63</span>  2.84<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 4</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> marMarried    0.159    0.070<span style='text-decoration: underline;'>6</span>      2.25  2.44<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>
+#&gt; <span style='color: #BCBCBC;'>4</span> kid5         -<span style='color: #BB0000;'>0.190</span>    0.046<span style='text-decoration: underline;'>3</span>     -<span style='color: #BB0000;'>4.09</span>  4.24<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span>
+#&gt; <span style='color: #BCBCBC;'>5</span> phd           0.010<span style='text-decoration: underline;'>1</span>   0.030<span style='text-decoration: underline;'>3</span>      0.334 7.38<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> ment          0.024<span style='text-decoration: underline;'>7</span>   0.002<span style='text-decoration: underline;'>17</span>    11.4   7.26<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-30</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span>
+<span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'><a href='glm.izip.html'>glm.izip</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 5</span>
 #&gt;   term        estimate std.error statistic  p.value
