@@ -49,7 +49,7 @@
 #' can be used to extract various useful features of the value
 #' returned by \code{glm.izip}.
 #'
-#' An object class 'glm.izip' is a list containing at least the following components:
+#' An object class 'izip' is a list containing at least the following components:
 #'
 #' \item{coefficients}{a named vector of coefficients}
 #' \item{stderr}{approximate standard errors (using observed rather than expected information) for mean coefficients}
@@ -74,7 +74,8 @@
 #' @references
 #' Huang, A. and Fung, T. (2020). Zero-inflated Poisson exponential families, with applications to time-series modelling of counts.
 #' @export
-#'
+#' @importFrom  VGAM lambertW
+#' @importFrom stats optim
 #' @examples
 #' ## article production by graduate students in
 #' ## biochemistry PhD programs of Long (1990, 1997)
@@ -87,15 +88,15 @@
 #' ## Ridout, Hinde & Demetrio (1998).
 #' data(appleshoots)
 #' M_shoots <- glm.izip(roots ~ 1 +
-#'              1 + factor(photo)*factor(bap),
-#'              data = appleshoots)
+#'   1 + factor(photo) * factor(bap),
+#' data = appleshoots
+#' )
 #' summary(M_shoots)
 #' plot(M_shoots) # or autoplot(M_bioChem)
-#'
 glm.izip <- function(formula, data, ref.lambda = NULL,
-                 offset = NULL,
-                 subset, contrasts = NULL,
-                 na.action){
+                     offset = NULL,
+                     subset, contrasts = NULL,
+                     na.action) {
   call <- match.call()
   mf <- match.call(expand.dots = FALSE)
   m <- match(c("formula", "data", "subset", "na.action", "offset"), names(mf), 0L)
@@ -115,48 +116,53 @@ glm.izip <- function(formula, data, ref.lambda = NULL,
   q <- dim(X)[2]
   offset <- as.vector(model.offset(mf))
   if (is.null(offset)) {
-    offset <-  rep(0, length(y))
+    offset <- rep(0, length(y))
   } else {
-    offset <-  model.extract(mf, "offset")
+    offset <- model.extract(mf, "offset")
   }
-  if(is.null(ref.lambda)) {ref.lambda <- mean(y)}
-  logziplik <- function(para){
+  if (is.null(ref.lambda)) {
+    ref.lambda <- mean(y)
+  }
+  logziplik <- function(para) {
     # pre-compute quantities for efficiency
-    log.odds <- para[q+1]
+    log.odds <- para[q + 1]
     odds <- exp(log.odds)
-    mu <- exp(X%*%para[1:q]+offset)
-    theta <- log(mu+VGAM::lambertW(odds*exp(ref.lambda-mu)*mu))-log(ref.lambda)
-    lambda <- ref.lambda*exp(theta)
-    p_theta <- odds/(odds+exp(-ref.lambda+lambda))
+    mu <- exp(X %*% para[1:q] + offset)
+    theta <- log(mu + VGAM::lambertW(odds * exp(ref.lambda - mu) * mu)) - log(ref.lambda)
+    lambda <- ref.lambda * exp(theta)
+    p_theta <- odds / (odds + exp(-ref.lambda + lambda))
     # the negative log likelihood function
     # loglikelihoods contributions for the zero observations
-    loglikzero <- (y==0)*log(p_theta + (1-p_theta)*exp(-lambda))
+    loglikzero <- (y == 0) * log(p_theta + (1 - p_theta) * exp(-lambda))
     # loglikelihood contributions for the non-zero observations
-    logliknonzero <- (y > 0)*(log(1-p_theta) - lambda + y*log(lambda)-lgamma(y+1))
+    logliknonzero <- (y > 0) * (log(1 - p_theta) - lambda + y * log(lambda) - lgamma(y + 1))
     loglik <- -sum(loglikzero + logliknonzero)
     return(loglik)
   }
-  lm1 <-  stats::optim(c(log(mean(y)),rep(0,q-1),0),
-                     logziplik, method = "BFGS",
-                     control = list(maxit = 100000), hessian=TRUE)
+  lm1 <- stats::optim(c(log(mean(y)), rep(0, q - 1), 0),
+    logziplik,
+    method = "BFGS",
+    control = list(maxit = 100000), hessian = TRUE
+  )
   beta <- lm1$par[1:q]
-  log.odds <- lm1$par[q+1]
+  log.odds <- lm1$par[q + 1]
   odds <- exp(log.odds)
-  mu <- as.numeric(exp(X%*%lm1$par[1:q]+offset))
-  theta <- log(mu+VGAM::lambertW(odds*exp(ref.lambda-mu)*mu))-log(ref.lambda)
-  lambda <- ref.lambda*exp(theta)
-  p_theta <- odds/(odds+exp(-ref.lambda+lambda))
-  variances <- mu + mu^2*p_theta/(1-p_theta)
+  mu <- as.numeric(exp(X %*% lm1$par[1:q] + offset))
+  theta <- log(mu + VGAM::lambertW(odds * exp(ref.lambda - mu) * mu)) - log(ref.lambda)
+  lambda <- ref.lambda * exp(theta)
+  p_theta <- odds / (odds + exp(-ref.lambda + lambda))
+  variances <- mu + mu^2 * p_theta / (1 - p_theta)
   variance_beta <- solve(lm1$hessian)[1:q, 1:q]
   se_beta <- as.vector(sqrt(diag(variance_beta)))
-  Xtilde <- diag(mu/sqrt(variances))%*%as.matrix(X)
-  h <- diag(Xtilde%*%solve(t(Xtilde)%*%Xtilde)%*%t(Xtilde))
-  df_residuals <- length(y)-length(beta)
-  if (df_residuals > 0){
-    indsat_deviance <-  dizip(y, mu = y, nu = odds, log.p=TRUE)
-    indred_deviance <-  2*(indsat_deviance - dizip(y, mu = mu, nu=odds, log.p=TRUE))
-    d_res <-  sign(y-mu)*sqrt(abs(indred_deviance))
-  } else { d_res = rep(0,length(y))
+  Xtilde <- diag(mu / sqrt(variances)) %*% as.matrix(X)
+  h <- diag(Xtilde %*% solve(t(Xtilde) %*% Xtilde) %*% t(Xtilde))
+  df_residuals <- length(y) - length(beta)
+  if (df_residuals > 0) {
+    indsat_deviance <- dizip(y, mu = y, nu = odds, log.p = TRUE)
+    indred_deviance <- 2 * (indsat_deviance - dizip(y, mu = mu, nu = odds, log.p = TRUE))
+    d_res <- sign(y - mu) * sqrt(abs(indred_deviance))
+  } else {
+    d_res <- rep(0, length(y))
   }
   out <- list()
   out$coefficients <- beta
@@ -165,14 +171,14 @@ glm.izip <- function(formula, data, ref.lambda = NULL,
   out$nobs <- NROW(X)
   out$rank <- q
   out$offset <- offset
-  out$pi <- exp(lm1$par[q+1])/(1+exp(lm1$par[q+1]))
+  out$pi <- exp(lm1$par[q + 1]) / (1 + exp(lm1$par[q + 1]))
   out$nu <- odds
   out$ref.lambda <- ref.lambda
   out$logLik <- -lm1$value
   out$hessian <- lm1$hessian
   out$vcov <- variance_beta
   out$df_residuals <- df_residuals
-  out$df_null <- NROW(X)-1
+  out$df_null <- NROW(X) - 1
   colnames(out$vcov) <- row.names(out$vcov) <- names(as.data.frame(X))
   out$stderr <- se_beta
   names(out$stderr) <- names(as.data.frame(X))
@@ -184,15 +190,15 @@ glm.izip <- function(formula, data, ref.lambda = NULL,
   out$leverage <- h
   out$offset <- offset
   out$d_res <- d_res
-  out$null_deviance <- 2*(sum(indsat_deviance) -
-                            sum(dizip(y, mu = mean(y), nu = odds, log.p = TRUE,
-                                      ref.lambda = ref.lambda)))
-  out$deviance <- out$residual_deviance <-
-    2*(sum(indsat_deviance) -
-         sum(dizip(y, mu = mu, nu = odds, log.p = TRUE, ref.lambda = ref.lambda)))
-  out$linear_predictors <- t(X%*%out$coef)[1,]
-  names(out$offset) <- names(out$linear_predictors) <- names(out$theta) <-
-    names(out$lambda) <- names(out$leverage) <- 1:out$nobs
+  out$null_deviance <- 2 * (sum(indsat_deviance) -
+    sum(dizip(y,
+      mu = mean(y), nu = odds, log.p = TRUE,
+      ref.lambda = ref.lambda
+    )))
+  out$deviance <- out$residual_deviance <- 2 * (sum(indsat_deviance) -
+    sum(dizip(y, mu = mu, nu = odds, log.p = TRUE, ref.lambda = ref.lambda)))
+  out$linear_predictors <- t(X %*% out$coef)[1, ]
+  names(out$offset) <- names(out$linear_predictors) <- names(out$theta) <- names(out$lambda) <- names(out$leverage) <- 1:out$nobs
   out$fitted_values <- mu
   out$residuals <- y - mu
   out$fitted_zero <- p_theta
@@ -200,21 +206,30 @@ glm.izip <- function(formula, data, ref.lambda = NULL,
   out$X <- X
   out$model <- mf
   out$family <-
-    structure(list(family =
-                     paste0("iZIP(mu, ",
-                            signif(odds,
-                                   max(3, getOption("digits") - 4)),
-                            "| ref.lambda =",
-                            signif(ref.lambda,
-                                   max(3, getOption("digits") - 4)), ")"),
-                   link = 'log'),
-                   class = "family")
+    structure(list(
+      family =
+        paste0(
+          "iZIP(mu, ",
+          signif(
+            odds,
+            max(3, getOption("digits") - 4)
+          ),
+          "| ref.lambda =",
+          signif(
+            ref.lambda,
+            max(3, getOption("digits") - 4)
+          ), ")"
+        ),
+      link = "log"
+    ),
+    class = "family"
+    )
   out$terms <- mt
   out$contrasts <- attr(X, "contrasts")
   out$xlevels <- .getXlevels(mt, mf)
-  out$aic <- -2*out$logLik+2*length(lm1$par)
-  out$bic <- -2*out$logLik+log(NROW(X))*length(lm1$par)
+  out$aic <- -2 * out$logLik + 2 * length(lm1$par)
+  out$bic <- -2 * out$logLik + log(NROW(X)) * length(lm1$par)
   out$na.action <- attr(mf, "na.action")
-  class(out) = "izip"
+  class(out) <- "izip"
   return(out)
 }

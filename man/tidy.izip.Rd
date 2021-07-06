@@ -2,12 +2,17 @@
 % Please edit documentation in R/summarize_extract.R
 \name{tidy.izip}
 \alias{tidy.izip}
+\alias{tidy.tsizip}
 \title{Tidy a(n) iZIP model object}
 \usage{
 \method{tidy}{izip}(x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, ...)
+
+\method{tidy}{izip}(x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, ...)
+
+\method{tidy}{tsizip}(x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, ...)
 }
 \arguments{
-\item{x}{an object class 'izip' object, obtained from a call to \code{glm.izip}}
+\item{x}{an object class 'tsizip' object, obtained from a call to \code{tsglm.izip}}
 
 \item{conf.int}{Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.}
 
@@ -24,15 +29,28 @@ A \code{tibble::tibble()} with columns:
 \item{std.error}{The standard error of the regression term.}
 \item{statistic}{The value of a test statistic to use in a hypothesis that the regression term is non-zero.}
 \item{p.value}{The two-sided p-value associated with the observed statistic based on asymptotic normality.}
-\item{parameter}{Only for varying dispersion models. Type of coefficient being estimated: 'mu', 'nu'}
+\item{conf.low}{Lower bound on the confidence interval for the estimate.}
+\item{conf.high}{Upper bound on the confidence interval for the estimate.}
+
+A \code{tibble::tibble()} with columns:
+\item{term}{The name of the regression term.}
+\item{estimate}{The estimated value of the regression term.}
+\item{std.error}{The standard error of the regression term.}
+\item{statistic}{The value of a test statistic to use in a hypothesis that the regression term is non-zero.}
+\item{p.value}{The two-sided p-value associated with the observed statistic based on asymptotic normality.}
 \item{conf.low}{Lower bound on the confidence interval for the estimate.}
 \item{conf.high}{Upper bound on the confidence interval for the estimate.}
 }
 \description{
 Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.
+
+Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.
 }
 \examples{
 data(bioChemists)
-M_bioChem <- glm.izip(art~ ., data=bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+tidy(M_bioChem)
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 tidy(M_bioChem)
 }

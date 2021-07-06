@@ -30,7 +30,6 @@ M.bioChem.null <- update(M_bioChem.full, . ~ . - phd)
 
 ## Likelihood ratio test for the nested models
 iziplrtest(M_bioChem.full, M.bioChem.null) # order of objects is not important
-
 }
 \seealso{
 \code{\link{glm.izip}}, \code{\link{update.izip}}

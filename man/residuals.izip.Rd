@@ -2,15 +2,18 @@
 % Please edit documentation in R/summarize_extract.R
 \name{residuals.izip}
 \alias{residuals.izip}
+\alias{residuals.tsizip}
 \title{Extract iZIP Model Residuals}
 \usage{
 \method{residuals}{izip}(object, type = c("deviance", "pearson", "response"), ...)
+
+\method{residuals}{tsizip}(object, type = c("response", "pearson"), ...)
 }
 \arguments{
-\item{object}{an object class 'izip', obtained from a call to \code{glm.izip}.}
+\item{object}{an object class 'izip' or 'tsizip', obtained from a call to \code{glm.izip} or \code{tsglm.izip}.}
 
 \item{type}{the \code{type} of residuals which should be returned. The alternatives are:
-'deviance' (default), 'pearson' and 'response'. Can be abbreviated.}
+'deviance' (default), 'pearson' and 'response' for an 'izip' object; 'response' (default),  and 'pearson' for an 'tsizip' object. Can be abbreviated.}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 }
@@ -19,9 +22,21 @@ Residuals extracted from the object \code{object}.
 }
 \description{
 \code{residuals} is a generic function which extracts model residuals from objects
-returned by the modelling function \code{glm.izip}. \code{resid} is an alias for
+returned by the modelling function \code{glm.izip} or \code{tsglm.izip}. \code{resid} is an alias for
 \code{residuals} .
 }
+\examples{
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+# deviance residuals
+residuals(M_bioChem)
+
+data(arson)
+M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+# pearson residuals
+resid(M_arson, type = "pearson")
+}
 \seealso{
-\code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}}
+\code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}},
+\code{\link{coef.tsizip}}, \code{\link{fitted.tsizip}}, \code{\link{tsglm.izip}}
 }

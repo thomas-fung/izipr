@@ -23,7 +23,6 @@
 #'
 #' ## Likelihood ratio test for the nested models
 #' iziplrtest(M_bioChem.full, M.bioChem.null) # order of objects is not important
-#'
 iziplrtest <- function(object1, object2, digits = 3) {
   if (class(object1) != "izip") {
     stop("object1 must be an S3 object of class izip.")
@@ -32,7 +31,7 @@ iziplrtest <- function(object1, object2, digits = 3) {
     stop("object2 must be an S3 object of class izip.")
   }
   if (!(all(names(object1$coefficients) %in% names(object2$coefficients))) &&
-      !all(names(object2$coefficients) %in% names(object1$coefficients))) {
+    !all(names(object2$coefficients) %in% names(object1$coefficients))) {
     warning(paste0(
       "Neither models' coefficient names are subset of the other. ",
       "Please make sure the models are nested."
@@ -87,9 +86,8 @@ iziplrtest <- function(object1, object2, digits = 3) {
 #' ## Dropping phd
 #' M.bioChem.null <- update(M_bioChem.full, . ~ . - phd)
 #' M.bioChem.null
-#'
 update.izip <- function(object, formula., ...,
-                       evaluate = TRUE) {
+                        evaluate = TRUE) {
   if (is.null(call <- getCall(object))) {
     stop("need an object with call component")
   }
@@ -98,27 +96,34 @@ update.izip <- function(object, formula., ...,
     Terms <- terms(object)
     tmp <- attr(Terms, "term.labels")
     ind <- grep("|", tmp, fixed = TRUE)
-    if (length(ind))
+    if (length(ind)) {
       tmp[ind] <- paste("(", tmp[ind], ")")
+    }
     if (length(ind <- attr(Terms, "offset"))) {
       tmp2 <- as.character(attr(Terms, "variables"))[-1L]
       tmp <- c(tmp, tmp2[ind])
     }
-    rhs <- if (length(tmp))
+    rhs <- if (length(tmp)) {
       paste(tmp, collapse = " + ")
-    else "1"
-    if (!attr(Terms, "intercept"))
+    } else {
+      "1"
+    }
+    if (!attr(Terms, "intercept")) {
       rhs <- paste(rhs, "- 1")
+    }
     if (length(form <- formula(object)) > 2L) {
       res <- formula(paste("lhs ~", rhs))
       res[[2L]] <- form[[2L]]
       res
     }
-    else formula(paste("~", rhs))
+    else {
+      formula(paste("~", rhs))
+    }
   }
   if (!missing(formula.)) {
     call$formula <- stats::update.formula(fixFormulaObject(object), formula.,
-                                          data = call$data)
+      data = call$data
+    )
   }
   if (length(extras)) {
     existing <- !is.na(match(names(extras), names(call)))
@@ -140,7 +145,7 @@ update.izip <- function(object, formula., ...,
 #'
 #' Computes confidence intervals for one or more parameters in a
 #' fitted model.
-#' @param object an object class 'izip', obtained from a call to \code{\link{glm.izip}}.
+#' @param object an object class 'izip' or 'tsizip', obtained from a call to \code{\link{glm.izip}} or \code{\link{tsglm.izip}}.
 #' @param parm a specification of which parameters are to be given confidence intervals, either a vector of numbers or a vector of names (comparing to those provided by \code{\link{coef}()}) . If missing, all parameters are considered.
 #' @param level the confidence level required.
 #' @param ... other arguments passed to or from other methods  (currently unused).
@@ -154,6 +159,15 @@ update.izip <- function(object, formula., ...,
 #' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' confint(M_bioChem)
 #' confint(M_bioChem, param = "ment", level = 0.9)
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+#' confint(M_arson)
+#' @name confint.izip
+NULL
+
+#' @rdname confint.izip
+#' @export
 confint.izip <- function(object, parm, level = 0.95, ...) {
   cf <- coef(object)
   ses <- object$stderr
@@ -168,8 +182,33 @@ confint.izip <- function(object, parm, level = 0.95, ...) {
   fac <- qnorm(a)
   pct <- format.perc(a, 3)
   ci <- array(NA_real_,
-              dim = c(length(parm), 2L),
-              dimnames = list(parm, pct)
+    dim = c(length(parm), 2L),
+    dimnames = list(parm, pct)
+  )
+  ci[] <- cf[parm] + ses[parm] %o% fac
+  ci
+}
+
+
+
+#' @rdname confint.izip
+#' @export
+confint.tsizip <- function(object, parm, level = 0.95, ...) {
+  cf <- coef(object)
+  ses <- object$stderr
+  pnames <- names(ses) <- names(cf)
+  if (missing(parm)) {
+    parm <- pnames
+  } else if (is.numeric(parm)) {
+    parm <- pnames[parm]
+  }
+  a <- (1 - level) / 2
+  a <- c(a, 1 - a)
+  fac <- qnorm(a)
+  pct <- format.perc(a, 3)
+  ci <- array(NA_real_,
+    dim = c(length(parm), 2L),
+    dimnames = list(parm, pct)
   )
   ci[] <- cf[parm] + ses[parm] %o% fac
   ci

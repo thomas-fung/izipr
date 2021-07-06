@@ -7,16 +7,18 @@
 ##'   'value' may be an error caught.
 ##' @author Martin Maechler;
 ##' Copyright (C) 2010-2012  The R Core Team
-tryCatch.W.E <- function(expr)
-{
+tryCatch.W.E <- function(expr) {
   W <- NULL
-  w.handler <- function(w){ # warning handler
+  w.handler <- function(w) { # warning handler
     W <<- w
     invokeRestart("muffleWarning")
   }
-  list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
-                                   warning = w.handler),
-       warning = W)
+  list(
+    value = withCallingHandlers(tryCatch(expr, error = function(e) e),
+      warning = w.handler
+    ),
+    warning = W
+  )
 }
 
 
@@ -34,8 +36,9 @@ CBIND <- function(..., deparse.level = 1) {
   dots <- list(...)
   len <- sapply(dots, length)
   dots <- lapply(seq_along(dots),
-                 function(i, x, len) rep(x[[i]], length.out = len),
-                 x = dots, len = max(len))
+    function(i, x, len) rep(x[[i]], length.out = len),
+    x = dots, len = max(len)
+  )
   do.call(cbind, c(dots, deparse.level = deparse.level))
 }
 
@@ -45,7 +48,7 @@ CBIND <- function(..., deparse.level = 1) {
 #'
 #' @param x numeric vector to be tested
 #' @param tol numeric; precision level
-is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
+is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
   abs(x - round(x)) < tol
 }
 
@@ -61,14 +64,14 @@ as_augment_tibble <- function(data) {
   }
   tryCatch(df <- tibble::as_tibble(data), error = function(cnd) {
     stop("Could not coerce data to `tibble`. Try explicitly passing a",
-         "dataset to either the `data` or `newdata` argument.",
-         call. = FALSE
+      "dataset to either the `data` or `newdata` argument.",
+      call. = FALSE
     )
   })
   if (has_rownames(data)) {
     df <- tibble::add_column(df,
-                             .rownames = rownames(data),
-                             .before = TRUE
+      .rownames = rownames(data),
+      .before = TRUE
     )
   }
   df
@@ -88,7 +91,7 @@ format.perc <- function(probs, digits) {
 data_error <- function(cnd) {
   # Imported from the broom package
   stop("Must specify either `data` or `newdata` argument.",
-       call. = FALSE
+    call. = FALSE
   )
 }
 
@@ -162,4 +165,20 @@ exponentiate <- function(data) {
     data <- dplyr::mutate_at(data, dplyr::vars(conf.low, conf.high), exp)
   }
   data
+}
+
+#' Imported from the groc package
+#' @keywords internal
+delete.intercept <- function(mm) {
+  saveattr <- attributes(mm)
+  intercept <- which(saveattr$assign == 0)
+  if (!length(intercept)) {
+    return(mm)
+  }
+  mm <- mm[, -intercept, drop = FALSE]
+  saveattr$dim <- dim(mm)
+  saveattr$dimnames <- dimnames(mm)
+  saveattr$assign <- saveattr$assign[-intercept]
+  attributes(mm) <- saveattr
+  mm
 }

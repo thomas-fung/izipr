@@ -2,12 +2,15 @@
 % Please edit documentation in R/summarize_extract.R
 \name{fitted.izip}
 \alias{fitted.izip}
+\alias{fitted.tsizip}
 \title{Extract Fitted Values from an iZIP Model Fit}
 \usage{
 \method{fitted}{izip}(object, ...)
+
+\method{fitted}{tsizip}(object, ...)
 }
 \arguments{
-\item{object}{an object class 'izip' object, obtained from a call to \code{glm.izip}}
+\item{object}{an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 }
@@ -15,8 +18,17 @@
 Fitted values \code{mu} extracted from the object \code{object}.
 }
 \description{
-An accessor function used to extract the fitted values from a 'izip' object.
+An accessor function used to extract the fitted values from a 'izip' object or a 'tsizip' object.
 \code{fitted.values} is an alias for \code{fitted}.
+}
+\examples{
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+fitted(M_bioChem)
+
+data(arson)
+M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+fitted.values(M_arson)
 }
 \seealso{
 \link{coef.izip}, \link{residuals.izip}, \link{glm.izip}.

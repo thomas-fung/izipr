@@ -2,12 +2,15 @@
 % Please edit documentation in R/summarize_extract.R
 \name{coef.izip}
 \alias{coef.izip}
+\alias{coef.tsizip}
 \title{Extract Model Coefficients from an iZIP Model Fit}
 \usage{
 \method{coef}{izip}(object, ...)
+
+\method{coef}{tsizip}(object, ...)
 }
 \arguments{
-\item{object}{an object class 'izip' object, obtained from a call to \code{glm.izip}}
+\item{object}{an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}.}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 }
@@ -15,9 +18,16 @@
 Coefficients extracted from the object \code{object}.
 }
 \description{
-An function used to extract model coefficients from a 'izip' object.
+An function used to extract model coefficients from an 'izip' or an 'tsizip' object.
 \code{coefficients} is an alias for \code{coef}.
 }
 \seealso{
-\link{fitted.izip}, \link{residuals.izip}, \link{glm.izip}.
+\link{fitted.izip}, \link{residuals.izip}, \link{glm.izip}, \link{fitted.tsizip}, \link{residuals.tsizip}, \link{tsglm.izip}.
+data(bioChemists)
+M_bioChem <- glm.izip(art~ ., data=bioChemists)
+coefficients(M_bioChem)
+
+data(arson)
+M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1,2))
+coef(M_arson)
 }

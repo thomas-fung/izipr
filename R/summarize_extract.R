@@ -1,18 +1,33 @@
 #' Extract iZIP Model Residuals
 #'
 #' \code{residuals} is a generic function which extracts model residuals from objects
-#' returned by the modelling function \code{glm.izip}. \code{resid} is an alias for
+#' returned by the modelling function \code{glm.izip} or \code{tsglm.izip}. \code{resid} is an alias for
 #' \code{residuals} .
 #'
-#' @param object an object class 'izip', obtained from a call to \code{glm.izip}.
+#' @param object an object class 'izip' or 'tsizip', obtained from a call to \code{glm.izip} or \code{tsglm.izip}.
 #' @param type the \code{type} of residuals which should be returned. The alternatives are:
-#' 'deviance' (default), 'pearson' and 'response'. Can be abbreviated.
+#' 'deviance' (default), 'pearson' and 'response' for an 'izip' object; 'response' (default),  and 'pearson' for an 'tsizip' object. Can be abbreviated.
 #' @param ... other arguments passed to or from other methods  (currently unused).
-#' @export
 #' @return
 #' Residuals extracted from the object \code{object}.
 #' @seealso
-#' \code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}}
+#' \code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}},
+#' \code{\link{coef.tsizip}}, \code{\link{fitted.tsizip}}, \code{\link{tsglm.izip}}
+#' @examples
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' # deviance residuals
+#' residuals(M_bioChem)
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+#' # pearson residuals
+#' resid(M_arson, type = "pearson")
+#' @name residuals.izip
+NULL
+
+#' @rdname residuals.izip
+#' @export
 residuals.izip <- function(object, type = c("deviance", "pearson", "response"), ...) {
   type <- match.arg(type)
   y <- object$y
@@ -20,48 +35,110 @@ residuals.izip <- function(object, type = c("deviance", "pearson", "response"), 
   nu <- object$nu
   p <- object$fitted_zero
   res <- switch(type,
-                deviance = object$d_res,
-                pearson = (y - mu) / sqrt(mu + mu^2 * p / (1-p)),
-                response = y - mu
+    deviance = object$d_res,
+    pearson = (y - mu) / sqrt(mu + mu^2 * p / (1 - p)),
+    response = y - mu
   )
   return(res)
 }
 
+#' @rdname residuals.izip
+#' @export
+residuals.tsizip <- function(object, type = c("response", "pearson"), ...) {
+  type <- match.arg(type)
+  y <- object$y
+  mu <- object$fitted_values
+  p <- object$fitted_zero
+  res <- switch(type,
+    response = y - mu,
+    pearson = (y - mu) / sqrt(mu + mu^2 * p / (1 - p)),
+  )
+  return(res)
+}
+
+
 #' Extract the (Maximized) Log-Likelihood from an iZIP Model Fit
 #'
-#' An accessor function used to extract the (maximized) log-likelihood from a 'izip' object.
-#' @param object an object of class 'izip' object, obtained from a call to \code{glm.izip}
+#' An accessor function used to extract the (maximized) log-likelihood from an 'izip' or a 'tsizip' object.
+#' @param object an object of class 'izip' object or 'tsizip', obtained from a call to \code{glm.izip} or \code{tsglm.izip}
 #' @param ... other arguments passed to or from other methods  (currently unused).
-#' @param x an object of class 'logLik.izip', obtained from a call to \code{logLik.izip}.
-#' @export
+#' @param x an object of class 'logLik.izip' or 'logLik.tsizip', obtained from a call to \code{logLik.izip} or \code{logLik.tsizip}.
 #' @seealso
-#' \link{coef.izip}, \link{fitted.izip}, \link{glm.izip}
+#' \link{coef.izip}, \link{fitted.izip}, \link{glm.izip}, \link{coef.tsizip}, \link{fitted.tsizip}, \link{tsglm.izip}
 #'
+#' @examples
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' logLik(M_bioChem)
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+#' logLik(M_arson)
 #' @name logLik.izip
-logLik.izip <- function(object,...)
-{ out <- object$logLik
-  attr(out, "df") <- length(object$coefficients)+1
-  class(out) <- "logLik.izip"
-  return(out)}
+NULL
 
 #' @rdname logLik.izip
-print.logLik.izip <- function(x,...){
-  cat("'log Lik. ' ", x, " (df=", attr(x,"df"),")",sep="")
+#' @export
+logLik.izip <- function(object, ...) {
+  out <- object$logLik
+  attr(out, "df") <- length(object$coefficients) + 1
+  class(out) <- "logLik.izip"
+  return(out)
+}
+
+#' @rdname logLik.izip
+#' @export
+print.logLik.izip <- function(x, ...) {
+  cat("'log Lik. ' ", x, " (df=", attr(x, "df"), ")", sep = "")
+}
+
+
+#' @rdname logLik.izip
+#' @export
+logLik.tsizip <- function(object, ...) {
+  out <- object$logLik
+  attr(out, "df") <- length(object$coefficients) + 1
+  class(out) <- "logLik.tsizip"
+  return(out)
+}
+
+#' @rdname logLik.izip
+#' @export
+print.logLik.tsizip <- function(x, ...) {
+  cat("'log Lik. ' ", x, " (df=", attr(x, "df"), ")", sep = "")
 }
 
 #' Extract the Number of Observation from an iZIP Model Fit
 #'
-#' An accessor function used to extract the number of observation from a 'izip' object.
+#' An accessor function used to extract the number of observation from an 'izip' or a 'tsizip' object.
 #'
-#' @param object an object class 'izip' object, obtained from a call to \code{glm.izip}
+#' @param object an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}.
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #' @return
 #' The number of observations extracted from the object \code{object}.
 #' @seealso
-#' \code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}}
+#' \code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}},
+#' \code{\link{coef.tsizip}}, \code{\link{fitted.tsizip}}, \code{\link{tsglm.izip}}
+#' @examples
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' nobs(M_bioChem)
+#' @name nobs.izip
+NULL
+
+#' @rdname nobs.izip
 #' @export
-nobs.izip <- function(object, ...)
-{ return(object$nobs)}
+nobs.izip <- function(object, ...) {
+  return(object$nobs)
+}
+
+#' @rdname nobs.izip
+#' @export
+nobs.tsizip <- function(object, ...) {
+  return(object$nobs)
+}
+
+
 
 #' Akaike's Information Criterion
 #'
@@ -71,7 +148,7 @@ nobs.izip <- function(object, ...)
 #' in the fitted model, and \emph{k=2} for the usual AIC or \emph{k=log(n)} (\emph{n} being
 #' the number of observations) for the so-called BIC (Bayesian Information Criterion).
 #'
-#' @param object an object class 'izip' object, obtained from a call to \code{glm.izip}
+#' @param object an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}.
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #' @param k numeric: the \emph{penalty} per parameter to be used; the default
 #' k = 2 is the classical AIC.
@@ -81,59 +158,134 @@ nobs.izip <- function(object, ...)
 #' @return
 #' A numeric value with the corresponding AIC (or BIC, or ..., depends on k).
 #' @seealso
-#' \link{logLik.izip}, \link{nobs.izip}, \link{glm.izip}
+#' \link{logLik.izip}, \link{nobs.izip}, \link{glm.izip}, \link{logLik.tsizip}, \link{nobs.tsizip}, \link{tsglm.izip}
+#' @examples
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' # AIC
+#' AIC(M_bioChem)
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+#' # BIC
+#' AIC(M_arson, k = log(nobs(M_arson)))
+#' @name aic.izip
+NULL
+
+#' @rdname aic.izip
 #' @export
-AIC.izip <- function(object, ..., k = 2){
+AIC.izip <- function(object, ..., k = 2) {
   temp <- logLik.izip(object)
-  aic <- -2*as.numeric(temp)+k*attr(temp,"df")
+  aic <- -2 * as.numeric(temp) + k * attr(temp, "df")
   return(aic)
 }
 
+#' @rdname aic.izip
+#' @export
+AIC.tsizip <- function(object, ..., k = 2) {
+  temp <- logLik.tsizip(object)
+  aic <- -2 * as.numeric(temp) + k * attr(temp, "df")
+  return(aic)
+}
+
+
 #' Extract Fitted Values from an iZIP Model Fit
 #'
-#' An accessor function used to extract the fitted values from a 'izip' object.
+#' An accessor function used to extract the fitted values from a 'izip' object or a 'tsizip' object.
 #' \code{fitted.values} is an alias for \code{fitted}.
 #'
-#' @param object an object class 'izip' object, obtained from a call to \code{glm.izip}
+#' @param object an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #' @return
 #' Fitted values \code{mu} extracted from the object \code{object}.
 #' @seealso
 #' \link{coef.izip}, \link{residuals.izip}, \link{glm.izip}.
+#' @examples
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' fitted(M_bioChem)
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+#' fitted.values(M_arson)
+#' @name fitted.izip
+NULL
+
+#' @rdname fitted.izip
 #' @export
-fitted.izip <- function(object, ...){
+fitted.izip <- function(object, ...) {
   return(object$fitted_values)
 }
 
+#' @rdname fitted.izip
+#' @export
+fitted.tsizip <- function(object, ...) {
+  return(object$fitted_values)
+}
+
+
 #' Extract the Model Frame from an iZIP Model Fit
 #'
-#' An accessor function used to extract the model frame from a 'izip' object.
+#' An accessor function used to extract the model frame from an 'izip' or a 'tsizip' object.
 #'
-#' @param formula an object class 'izip' object, obtained from a call to \code{glm.izip}
+#' @param formula an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip}
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #' @return
 #' The method will return the saved \code{\link{data.frame}} used when fitting the izip model.
 #' @seealso
-#' \link{coef.izip}, \link{residuals.izip}, \link{glm.izip}.
+#' \link{coef.izip}, \link{residuals.izip}, \link{glm.izip}, \link{coef.tsizip}, \link{residuals.tsizip}, \link{tsglm.izip}.
+#' @examples
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' model.frame(M_bioChem)
+#' @name model.frame.izip
+NULL
+
+#' @rdname model.frame.izip
 #' @export
-model.frame.izip <- function(formula, ...){
+model.frame.izip <- function(formula, ...) {
   return(formula$model)
 }
 
+#' @rdname model.frame.izip
+#' @export
+model.frame.tsizip <- function(formula, ...) {
+  return(formula$model)
+}
+
+
 #' Extract Model Coefficients from an iZIP Model Fit
 #'
-#' An function used to extract model coefficients from a 'izip' object.
+#' An function used to extract model coefficients from an 'izip' or an 'tsizip' object.
 #' \code{coefficients} is an alias for \code{coef}.
 #'
-#' @param object an object class 'izip' object, obtained from a call to \code{glm.izip}
+#' @param object an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}.
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #'
 #' @return
 #' Coefficients extracted from the object \code{object}.
 #' @seealso
-#' \link{fitted.izip}, \link{residuals.izip}, \link{glm.izip}.
+#' \link{fitted.izip}, \link{residuals.izip}, \link{glm.izip}, \link{fitted.tsizip}, \link{residuals.tsizip}, \link{tsglm.izip}.
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' coefficients(M_bioChem)
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1,2))
+#' coef(M_arson)
+#'
+#' @name coef.izip
+NULL
+
+#' @rdname coef.izip
 #' @export
-coef.izip <- function(object, ...){
+coef.izip <- function(object, ...) {
+  return(object$coefficients)
+}
+
+#' @rdname coef.izip
+#' @export
+coef.tsizip <- function(object, ...) {
   return(object$coefficients)
 }
 
@@ -175,28 +327,40 @@ NULL
 
 #' @rdname summary.izip
 #' @export
-summary.izip <- function(object, ...){
-    estimate <- object$coefficients
-    std.error <- object$stderr
-    statistic <- estimate/std.error
-    p.value <- 2*pnorm(-abs(statistic))
-    coef.table <- cbind(estimate, std.error, statistic, p.value)
-    dimnames(coef.table) <- list(names(estimate),
-                                 c("Estimate", "Std.Err", "Z value", "Pr(>|z|)"))
-  keep <- match(c("call", "terms", "nu", "ref.lambda",
-                  "family", "residual_deviance", "deviance",
-                 "contrasts", "df_residuals", "null_deviance",
-                 "df_null", "iter", "na.action"), names(object),
-                0L)
-  ans <- c(object[keep],
-           list(deviance_resid =
-                  residuals(object, type = "deviance"),
-           coefficients = coef.table,
-           df = c(object$rank, object$df_residuals,
-                  length(object$coefficients)),
-           aic = AIC.izip(object),
-           bic = AIC.izip(object, k = log(nobs.izip(object))),
-           coef.table = coef.table))
+summary.izip <- function(object, ...) {
+  estimate <- object$coefficients
+  std.error <- object$stderr
+  statistic <- estimate / std.error
+  p.value <- 2 * pnorm(-abs(statistic))
+  coef.table <- cbind(estimate, std.error, statistic, p.value)
+  dimnames(coef.table) <- list(
+    names(estimate),
+    c("Estimate", "Std.Err", "Z value", "Pr(>|z|)")
+  )
+  keep <- match(
+    c(
+      "call", "terms", "nu", "ref.lambda",
+      "family", "residual_deviance", "deviance",
+      "contrasts", "df_residuals", "null_deviance",
+      "df_null", "iter", "na.action"
+    ), names(object),
+    0L
+  )
+  ans <- c(
+    object[keep],
+    list(
+      deviance_resid =
+        residuals(object, type = "deviance"),
+      coefficients = coef.table,
+      df = c(
+        object$rank, object$df_residuals,
+        length(object$coefficients)
+      ),
+      aic = AIC.izip(object),
+      bic = AIC.izip(object, k = log(nobs.izip(object))),
+      coef.table = coef.table
+    )
+  )
   class(ans) <- "summary.izip"
   return(ans)
 }
@@ -205,30 +369,45 @@ summary.izip <- function(object, ...){
 #' @rdname summary.izip
 #' @export
 print.summary.izip <- function(x, digits = max(3, getOption("digits") - 3),
-                              signif.stars = getOption("show.signif.stars"), ...) {
+                               signif.stars = getOption("show.signif.stars"), ...) {
   cat("\nCall: ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
-      "\n", sep = "")
-  cat("\nDeviance Residuals:" , "\n")
+    "\n",
+    sep = ""
+  )
+  cat("\nDeviance Residuals:", "\n")
   if (x$df_residuals > 5) {
-    residuals_dev = setNames(quantile(x$deviance_resid, na.rm = TRUE),
-                             c("Min", "1Q", "Median", "3Q", "Max"))
+    residuals_dev <- setNames(
+      quantile(x$deviance_resid, na.rm = TRUE),
+      c("Min", "1Q", "Median", "3Q", "Max")
+    )
   }
   xx <- zapsmall(residuals_dev, digits + 1L)
   print.default(xx, digits = digits, na.print = "", print.gap = 2L)
-    cat("\nLinear Model Coefficients:\n")
-    printCoefmat(x$coefficients, digits = digits,
-                 signif.stars = signif.stars,
-                 na.print = "NA", ...)
-    cat("\n(Baseline zero-inflation odds for iZIP estimated to be ",
-        signif(x$nu, digits), ")\n", sep = "")
-    cat("\n(The baseline Poisson rate for iZIP is set at ",
-        signif(x$ref.lambda, digits), ")\n\n", sep = "")
-  cat("\n", apply(cbind(paste(format(c("Null", "Residual"), justify = "right"), "deviance:"),
-                        format(unlist(x[c("null_deviance","residual_deviance")]),
-                               digits = max(5L, digits + 1L)), " on",
-                        format(unlist(x[c("df_null", "df_residuals")])),
-                        "degrees of freedom\n"),
-                  1L, paste, collapse = " "), sep = "")
+  cat("\nLinear Model Coefficients:\n")
+  printCoefmat(x$coefficients,
+    digits = digits,
+    signif.stars = signif.stars,
+    na.print = "NA", ...
+  )
+  cat("\n(Baseline zero-inflation odds for iZIP estimated to be ",
+    signif(x$nu, digits), ")\n",
+    sep = ""
+  )
+  cat("\n(The baseline Poisson rate for iZIP is set at ",
+    signif(x$ref.lambda, digits), ")\n\n",
+    sep = ""
+  )
+  cat("\n", apply(cbind(
+    paste(format(c("Null", "Residual"), justify = "right"), "deviance:"),
+    format(unlist(x[c("null_deviance", "residual_deviance")]),
+      digits = max(5L, digits + 1L)
+    ), " on",
+    format(unlist(x[c("df_null", "df_residuals")])),
+    "degrees of freedom\n"
+  ),
+  1L, paste,
+  collapse = " "
+  ), sep = "")
   cat("\nAIC:", format(x$aic), "\n\n")
 }
 
@@ -247,18 +426,22 @@ print.summary.izip <- function(x, digits = max(3, getOption("digits") - 3),
 #' \link{summary.izip}, \link{coef.izip}, \link{fitted.izip}, \link{glm.izip}.
 #' @examples
 #' ## For examples see example(glm.izip)
-
-print.izip <- function(x,...)
-{
+print.izip <- function(x, ...) {
   cat("\nCall: ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
-      "\n", sep = "")
+    "\n",
+    sep = ""
+  )
   cat("\nLinear Model Coefficients:\n")
-  print.default(format(signif(x$coefficients,5)), print.gap = 2,quote = FALSE)
+  print.default(format(signif(x$coefficients, 5)), print.gap = 2, quote = FALSE)
   cat("\nBaseline Zero-inflation odds (nu):", signif(x$nu, 3))
-  cat("\nDegrees of Freedom:", x$df_null, "Total (i.e. Null); ",
-      x$df_residuals, "Residual")
-  cat("\nNull Deviance:", x$null_deviance, "\nResidual Deviance:",
-      x$residuals_deviance, "\nAIC:", format(AIC(x)), "\n\n")
+  cat(
+    "\nDegrees of Freedom:", x$df_null, "Total (i.e. Null); ",
+    x$df_residuals, "Residual"
+  )
+  cat(
+    "\nNull Deviance:", x$null_deviance, "\nResidual Deviance:",
+    x$residuals_deviance, "\nAIC:", format(AIC(x)), "\n\n"
+  )
 }
 
 
@@ -275,7 +458,7 @@ print.izip <- function(x,...)
 #'
 #' @examples
 #' data(bioChemists)
-#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' influence(M_bioChem)
 #' hatvalues(M_bioChem)
 #' rstandard(M_bioChem, type = "pearson")
@@ -304,11 +487,11 @@ hatvalues.izip <- function(model, ...) {
 #' @rdname regression.diagnostic.izip
 #' @export
 rstandard.izip <- function(model, infl = influence.izip(model),
-                          type = c("deviance", "pearson"), ...) {
+                           type = c("deviance", "pearson"), ...) {
   type <- match.arg(type)
   res <- switch(type,
-                pearson = infl$pear_res,
-                infl$dev_res
+    pearson = infl$pear_res,
+    infl$dev_res
   )
   res <- res / sqrt(1 - infl$hat)
   res[is.infinite(res)] <- NaN
@@ -318,8 +501,8 @@ rstandard.izip <- function(model, infl = influence.izip(model),
 #' @rdname regression.diagnostic.izip
 #' @export
 cooks.distance.izip <- function(model, infl = influence(model),
-                               res = infl$pear_res,
-                               hat = infl$hat, ...) {
+                                res = infl$pear_res,
+                                hat = infl$hat, ...) {
   rk <- model$rank
   h <- model$leverage
   std.pear <- res / sqrt(1 - h)
@@ -356,47 +539,49 @@ cooks.distance.izip <- function(model, infl = influence(model),
 #' \item{se.fit}{Estimated standard errors.}
 #' @examples
 #' data(bioChemists)
-#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #'
 #' predict(M_bioChem)
 #' predict(M_bioChem, type = "response")
 #' predict(M_bioChem, se.fit = TRUE, type = "response")
 #'
 #' newdataframe <- data.frame(
-#'    fem= "Women", mar = "Married", kid5 = 2,
-#'    phd = 3, ment = 8
+#'   fem = "Women", mar = "Married", kid5 = 2,
+#'   phd = 3, ment = 8
 #' )
 #' predict(M_bioChem, se.fit = TRUE, newdata = newdataframe, type = "response")
 predict.izip <- function(object, newdata = NULL, se.fit = FALSE, type = c("link", "response"),
-                        ...) {
+                         ...) {
   type <- match.arg(type)
   if (is.null(newdata)) {
     pred <- switch(type,
-                   link = object$linear_predictors,
-                   response = object$fitted_values
+      link = object$linear_predictors,
+      response = object$fitted_values
     )
     if (se.fit) {
       se <- switch(type,
-                   link = sqrt(diag(object$X %*% object$vcov %*% t(object$X))),
-                   response = sqrt(diag(object$X %*% object$vcov %*% t(object$X))) *
-                     object$fitted_values
+        link = sqrt(diag(object$X %*% object$vcov %*% t(object$X))),
+        response = sqrt(diag(object$X %*% object$vcov %*% t(object$X))) *
+          object$fitted_values
       )
       pred <- list(fit = pred, se.fit = se)
     }
   } else {
     mf <- model.frame(delete.response(object$terms),
-                      data = newdata, xlev = object$xlevels)
+      data = newdata, xlev = object$xlevels
+    )
     X <- model.matrix(delete.response(object$terms), mf,
-                      contrasts.arg = object$contrasts)
+      contrasts.arg = object$contrasts
+    )
     pred <- switch(type,
-                   link = X %*% object$coefficients,
-                   response = exp(X %*% object$coefficients)
+      link = X %*% object$coefficients,
+      response = exp(X %*% object$coefficients)
     )
     if (se.fit) {
       se <- switch(type,
-                   link =
-                     sqrt(diag(X %*% object$vcov %*% t(X))),
-                   response = sqrt(diag(X %*% object$vcov %*% t(X))) * pred
+        link =
+          sqrt(diag(X %*% object$vcov %*% t(X))),
+        response = sqrt(diag(X %*% object$vcov %*% t(X))) * pred
       )
       pred <- list(fit = t(pred)[1, ], se.fit = se)
     }
@@ -407,20 +592,32 @@ predict.izip <- function(object, newdata = NULL, se.fit = FALSE, type = c("link"
 
 #' Extract the Design Matrix from a iZIP Model Fit
 #'
-#' @param object an object class 'izip' object, obtained from a call to \code{glm.izip}
+#' @param object an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}.
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #'
 #' @return
 #' The method will return the saved \code{\link{model.matrix}} used when fitting the iZIP model.
-#' @export
 #'
 #' @examples
 #' data(bioChemists)
-#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' model.matrix(M_bioChem)
+#' @name model.matrix.izip
+NULL
+
+
+#' @rdname model.matrix.izip
+#' @export
 model.matrix.izip <- function(object, ...) {
-    return(object$X)
+  return(object$X)
 }
+
+#' @rdname model.matrix.izip
+#' @export
+model.matrix.tsizip <- function(object, ...) {
+  return(object$X)
+}
+
 
 #' @importFrom generics glance
 #' @export
@@ -449,30 +646,29 @@ generics::augment
 #' \item{std.error}{The standard error of the regression term.}
 #' \item{statistic}{The value of a test statistic to use in a hypothesis that the regression term is non-zero.}
 #' \item{p.value}{The two-sided p-value associated with the observed statistic based on asymptotic normality.}
-#' \item{parameter}{Only for varying dispersion models. Type of coefficient being estimated: 'mu', 'nu'}
 #' \item{conf.low}{Lower bound on the confidence interval for the estimate.}
 #' \item{conf.high}{Upper bound on the confidence interval for the estimate.}
 #'
 #' @export
 #' @examples
 #' data(bioChemists)
-#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' tidy(M_bioChem)
 tidy.izip <- function(x, conf.int = FALSE, conf.level = 0.95,
-                     exponentiate = FALSE, ...) {
+                      exponentiate = FALSE, ...) {
   ret <- tibble::as_tibble(summary.izip(x)$coefficients,
-                           rownames = "term"
+    rownames = "term"
   )
   colnames(ret) <- c(
-      "term", "estimate", "std.error", "statistic",
-      "p.value"
+    "term", "estimate", "std.error", "statistic",
+    "p.value"
   )
   if (conf.int) {
     ci <- confint.izip(x, level = conf.level)
     ci <- tibble::as_tibble(ci, rownames = "term")
     colnames(ci) <- c("term", "conf.low", "conf.high")
     ret <- dplyr::left_join(ret, ci, by = "term")
-      }
+  }
   if (exponentiate) {
     ret <- exponentiate(ret)
   }
@@ -480,22 +676,36 @@ tidy.izip <- function(x, conf.int = FALSE, conf.level = 0.95,
 }
 
 
-#' Extracting the Variance-Covariance Matrix from a iZIP
-#' Model Fit
+#' Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+#' INGARCH Model Fit
 #'
-#' @param object an object class 'izip' object, obtained from a call to \code{glm.izip}
+#' @param object an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}
 #' @param ... other arguments passed to or from other methods  (currently unused).
 #'
 #' @return
-#' The method will return the estimated covariances between the parameter estimates of the fitted iZIP model.
-#' @export
-#'
+#' The method will return the estimated covariances between the parameter estimates of the fitted iZIP log-linear or INGARCH model.
 #' @examples
 #' data(bioChemists)
-#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' vcov(M_bioChem)
+#'
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+#' vcov(M_arson)
+#' @name vcov.izip
+NULL
+
+#' @rdname vcov.izip
+#' @export
 vcov.izip <- function(object, ...) {
-    out <- object$vcov
+  out <- object$vcov
+  return(out)
+}
+#' @rdname vcov.izip
+#' @export
+vcov.tsizip <- function(object, ...) {
+  out <- object$vcov
   return(out)
 }
 
@@ -515,7 +725,7 @@ vcov.izip <- function(object, ...) {
 #'
 #' @return
 #'
-#' A \code{tibble::tibble()} with exactly one row and columns:
+#' For an 'izip' object, a \code{tibble::tibble()} with exactly one row and columns:
 #' \item{AIC}{Akaike's Information Criterion for the model.}
 #' \item{BIC}{Bayesian Information Criterion for the model.}
 #' \item{deviance}{(Residual) Deviance of the model.}
@@ -524,12 +734,26 @@ vcov.izip <- function(object, ...) {
 #' \item{logLik}{The log-likelihood of the model.}
 #' \item{nobs}{Number of observations used.}
 #' \item{null.deviance}{Deviance of the null model.}
-#' @export
+#'
+#' For an 'tsizip' object, a \code{tibble::tibble()} with exactly one row and columns:
+#' \item{AIC}{Akaike's Information Criterion for the model.}
+#' \item{BIC}{Bayesian Information Criterion for the model.}
+#' \item{logLik}{The log-likelihood of the model.}
+#' \item{nobs}{Number of observations used.}
 #'
 #' @examples
 #' data(bioChemists)
-#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' glance(M_bioChem)
+#'
+#' data(arson)
+#' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+#' glance(M_arson)
+#' @name glance.izip
+NULL
+
+#' @rdname glance.izip
+#' @export
 glance.izip <- function(x, ...) {
   as_glance_tibble(
     null.deviance = x$null_deviance, df.null = x$df_null,
@@ -538,6 +762,19 @@ glance.izip <- function(x, ...) {
     deviance = x$deviance,
     df.residual = x$df_residuals,
     nobs = x$nobs, na_types = "rirrrrii"
+  )
+}
+
+
+#' @rdname glance.izip
+#' @export
+glance.tsizip <- function(x, ...) {
+  as_glance_tibble(
+    logLik = as.numeric(logLik.izip(x)),
+    k = length(coef(x)) + 1,
+    AIC = AIC.izip(x),
+    BIC = AIC.izip(x, k = log(x$nobs)),
+    nobs = x$nobs, na_types = "rrrrr"
   )
 }
 
@@ -578,13 +815,13 @@ glance.izip <- function(x, ...) {
 #'
 #' @examples
 #' data(bioChemists)
-#' M_bioChem <- glm.izip(art~ ., data=bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' augment(M_bioChem)
 augment.izip <- function(x, data = model.frame.izip(x),
-                        newdata = NULL,
-                        type.predict = c("link", "response"),
-                        type.residuals = c("deviance", "pearson", "response"),
-                        se_fit = FALSE, ...) {
+                         newdata = NULL,
+                         type.predict = c("link", "response"),
+                         type.residuals = c("deviance", "pearson", "response"),
+                         se_fit = FALSE, ...) {
   type.predict <- rlang::arg_match(type.predict)
   type.residuals <- rlang::arg_match(type.residuals)
   df <- if (is.null(newdata)) {
@@ -595,8 +832,8 @@ augment.izip <- function(x, data = model.frame.izip(x),
   df <- as_augment_tibble(df)
   if (se_fit) {
     pred_obj <- predict.izip(x, newdata,
-                            type = type.predict,
-                            se.fit = TRUE
+      type = type.predict,
+      se.fit = TRUE
     )
     df$.fitted <- unname(pred_obj$fit)
     df$.se.fit <- unname(pred_obj$se.fit)
@@ -620,3 +857,191 @@ augment.izip <- function(x, data = model.frame.izip(x),
 }
 
 
+#' Summarizing a iZIP INGARCH Model Fit
+#'
+#' \code{summary} method for class \code{tsizip}.
+#'
+#' @param object an object class 'tsizip', obtained from a call to \code{tsglm.izip}.
+#' @param x a result of the \emph{default} method of \code{summary()}.
+#' @param digits numeric; minimum number of significant digits to be used for most numbers.
+#' @param signif.stars logical. If TRUE, ‘significance stars’ are printed for each coefficient.
+#' @param ... other arguments passed to or from other methods  (currently unused).
+#' @details
+#' \code{print.summary.tsizip} tries to be smart about formatting the coefficients, standard errors
+#' and gives 'significance stars'. The \code{coefficients} component of the result gives the
+#' estimated coefficients and their estimated standard errors, together with their ratio. This
+#' third column is labelled as \code{Z value} as the dispersion is fixed for this family. A
+#' forth column gives the two-tailed p-value corresponding to \code{Z value} based on
+#' the asymptotic Normal reference distribution.
+#'
+#' @return
+#' \code{summary.tsizip} returns an object of class "summary.tsizip", a list containing at least the following components:
+#' \item{call}{the component from object.}
+#' \item{family}{the component from object.}
+#' \item{coefficients}{the matrix of coefficients, standard errors, z-values and p-values.}
+#' \item{df}{a 3-vector of the rank of the model and the number of residual degrees of freedom, plus number of coefficients.}
+#'
+#' @seealso
+#' \link{coef.tsizip}, \link{fitted.tsizip}, \link{tsglm.izip}.
+#' @examples
+#' ## For examples see example(tsglm.izip)
+#' @name summary.tsizip
+NULL
+
+#' @rdname summary.tsizip
+#' @export
+summary.tsizip <- function(object, ...) {
+  estimate <- object$coefficients
+  std.error <- object$stderr
+  statistic <- estimate / std.error
+  p.value <- 2 * pnorm(-abs(statistic))
+  coef.table <- cbind(estimate, std.error, statistic, p.value)
+  dimnames(coef.table) <- list(
+    names(estimate),
+    c("Estimate", "Std.Err", "Z value", "Pr(>|z|)")
+  )
+  keep <- match(
+    c(
+      "call", "terms", "nu", "ref.lambda",
+      "family", "contrasts", "logLik",
+      "na.action"
+    ), names(object),
+    0L
+  )
+  ans <- c(
+    object[keep],
+    list(
+      coefficients = coef.table,
+      aic = AIC.tsizip(object),
+      bic = AIC.tsizip(object, k = log(nobs.tsizip(object))),
+      coef.table = coef.table
+    )
+  )
+  class(ans) <- "summary.tsizip"
+  return(ans)
+}
+
+
+#' @rdname summary.tsizip
+#' @export
+print.summary.tsizip <- function(x, digits = max(3, getOption("digits") - 3),
+                                 signif.stars = getOption("show.signif.stars"), ...) {
+  cat("\nCall: ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
+    "\n",
+    sep = ""
+  )
+  cat("\n Model Coefficients:\n")
+  printCoefmat(x$coefficients,
+    digits = digits,
+    signif.stars = signif.stars,
+    na.print = "NA", ...
+  )
+  cat("\n(Standard errors obtained by normal approximation.)")
+  cat("\n(Baseline zero-inflation odds for iZIP estimated to be ",
+    signif(x$nu, digits), ")",
+    sep = ""
+  )
+  cat("\n(The baseline Poisson rate for iZIP is set at ",
+    signif(x$ref.lambda, digits), ")\n",
+    sep = ""
+  )
+  cat("\nAIC:", format(x$aic), "")
+  cat("\nBIC:", format(x$bic), "\n")
+}
+
+#' Print Values of iZIP INGARCH Model
+#'
+#' \code{print} method for class \code{tsizip}.
+#'
+#' @param x an object class 'tsizip', obtained from a call to \code{tsglm.izip}.
+#' @param ... other arguments passed to or from other methods  (currently unused).
+#' @export
+#' @details
+#' \code{print.tsizip} can be used to print a short summary of object class 'tsizip'.
+#'
+#' @seealso
+#' \link{summary.izip}, \link{coef.tsizip}, \link{fitted.tsizip}, \link{tsglm.izip}.
+#' @examples
+#' ## For examples see example(tsglm.izip)
+print.tsizip <- function(x, ...) {
+  cat("\nCall: ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
+    "\n",
+    sep = ""
+  )
+  cat("\nLinear Model Coefficients:\n")
+  print.default(format(signif(x$coefficients, 5)), print.gap = 2, quote = FALSE)
+  cat("\nBaseline Zero-inflation odds (nu):", signif(x$nu, 3))
+}
+
+
+#' Tidy a(n) iZIP INGARCH model object
+#'
+#' Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.
+#' @param x an object class 'tsizip' object, obtained from a call to \code{tsglm.izip}
+#' @param conf.int Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.
+#' @param conf.level The confidence level to use for the confidence interval if conf.int = TRUE. Must be strictly greater than 0 and less than 1. Defaults to 0.95, which corresponds to a 95 percent confidence interval.
+#' @param exponentiate Logical indicating whether or not to exponentiate the the coefficient estimates.
+#' @param ... other arguments passed to or from other methods  (currently unused).
+#' @return
+#' A \code{tibble::tibble()} with columns:
+#' \item{term}{The name of the regression term.}
+#' \item{estimate}{The estimated value of the regression term.}
+#' \item{std.error}{The standard error of the regression term.}
+#' \item{statistic}{The value of a test statistic to use in a hypothesis that the regression term is non-zero.}
+#' \item{p.value}{The two-sided p-value associated with the observed statistic based on asymptotic normality.}
+#' \item{conf.low}{Lower bound on the confidence interval for the estimate.}
+#' \item{conf.high}{Upper bound on the confidence interval for the estimate.}
+#'
+#' @export
+#' @examples
+#' data(bioChemists)
+#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+#' tidy(M_bioChem)
+#' @name tidy.izip
+NULL
+
+#' @rdname tidy.izip
+#' @export
+tidy.izip <- function(x, conf.int = FALSE, conf.level = 0.95,
+                      exponentiate = FALSE, ...) {
+  ret <- tibble::as_tibble(summary.izip(x)$coefficients,
+    rownames = "term"
+  )
+  colnames(ret) <- c(
+    "term", "estimate", "std.error", "statistic",
+    "p.value"
+  )
+  if (conf.int) {
+    ci <- confint.izip(x, level = conf.level)
+    ci <- tibble::as_tibble(ci, rownames = "term")
+    colnames(ci) <- c("term", "conf.low", "conf.high")
+    ret <- dplyr::left_join(ret, ci, by = "term")
+  }
+  if (exponentiate) {
+    ret <- exponentiate(ret)
+  }
+  ret
+}
+
+#' @rdname tidy.izip
+#' @export
+tidy.tsizip <- function(x, conf.int = FALSE, conf.level = 0.95,
+                        exponentiate = FALSE, ...) {
+  ret <- tibble::as_tibble(summary.tsizip(x)$coefficients,
+    rownames = "term"
+  )
+  colnames(ret) <- c(
+    "term", "estimate", "std.error", "statistic",
+    "p.value"
+  )
+  if (conf.int) {
+    ci <- confint.tsizip(x, level = conf.level)
+    ci <- tibble::as_tibble(ci, rownames = "term")
+    colnames(ci) <- c("term", "conf.low", "conf.high")
+    ret <- dplyr::left_join(ret, ci, by = "term")
+  }
+  if (exponentiate) {
+    ret <- exponentiate(ret)
+  }
+  ret
+}

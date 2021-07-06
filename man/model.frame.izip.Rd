@@ -2,12 +2,15 @@
 % Please edit documentation in R/summarize_extract.R
 \name{model.frame.izip}
 \alias{model.frame.izip}
+\alias{model.frame.tsizip}
 \title{Extract the Model Frame from an iZIP Model Fit}
 \usage{
 \method{model.frame}{izip}(formula, ...)
+
+\method{model.frame}{tsizip}(formula, ...)
 }
 \arguments{
-\item{formula}{an object class 'izip' object, obtained from a call to \code{glm.izip}}
+\item{formula}{an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip}}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 }
@@ -15,8 +18,13 @@
 The method will return the saved \code{\link{data.frame}} used when fitting the izip model.
 }
 \description{
-An accessor function used to extract the model frame from a 'izip' object.
+An accessor function used to extract the model frame from an 'izip' or a 'tsizip' object.
+}
+\examples{
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+model.frame(M_bioChem)
 }
 \seealso{
-\link{coef.izip}, \link{residuals.izip}, \link{glm.izip}.
+\link{coef.izip}, \link{residuals.izip}, \link{glm.izip}, \link{coef.tsizip}, \link{residuals.tsizip}, \link{tsglm.izip}.
 }

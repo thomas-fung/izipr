@@ -45,7 +45,7 @@ This suite of functions provides the basic quantities which are used in forming 
 }
 \examples{
 data(bioChemists)
-M_bioChem <- glm.izip(art~ ., data=bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 influence(M_bioChem)
 hatvalues(M_bioChem)
 rstandard(M_bioChem, type = "pearson")

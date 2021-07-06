@@ -2,25 +2,33 @@
 % Please edit documentation in R/summarize_extract.R
 \name{vcov.izip}
 \alias{vcov.izip}
-\title{Extracting the Variance-Covariance Matrix from a iZIP
-Model Fit}
+\alias{vcov.tsizip}
+\title{Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+INGARCH Model Fit}
 \usage{
 \method{vcov}{izip}(object, ...)
+
+\method{vcov}{tsizip}(object, ...)
 }
 \arguments{
-\item{object}{an object class 'izip' object, obtained from a call to \code{glm.izip}}
+\item{object}{an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 }
 \value{
-The method will return the estimated covariances between the parameter estimates of the fitted iZIP model.
+The method will return the estimated covariances between the parameter estimates of the fitted iZIP log-linear or INGARCH model.
 }
 \description{
-Extracting the Variance-Covariance Matrix from a iZIP
-Model Fit
+Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
+INGARCH Model Fit
 }
 \examples{
 data(bioChemists)
-M_bioChem <- glm.izip(art~ ., data=bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 vcov(M_bioChem)
+
+
+data(arson)
+M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+vcov(M_arson)
 }

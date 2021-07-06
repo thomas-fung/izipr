@@ -54,8 +54,8 @@ interpretable Zero-Inflated Poisson with parameter \code{mu} and \code{nu}
 }
 \examples{
 dizip(0:5, mu = 2, nu = 1.2)
-pizip(5, mu=2, nu =1.2)
-p <- (1:9)/10
+pizip(5, mu = 2, nu = 1.2)
+p <- (1:9) / 10
 qizip(p, mu = 2, nu = 1)
 rizip(10, mu = 2, nu = 4)
 }

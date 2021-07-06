@@ -2,12 +2,15 @@
 % Please edit documentation in R/summarize_extract.R
 \name{nobs.izip}
 \alias{nobs.izip}
+\alias{nobs.tsizip}
 \title{Extract the Number of Observation from an iZIP Model Fit}
 \usage{
 \method{nobs}{izip}(object, ...)
+
+\method{nobs}{tsizip}(object, ...)
 }
 \arguments{
-\item{object}{an object class 'izip' object, obtained from a call to \code{glm.izip}}
+\item{object}{an object class 'izip' or 'tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}.}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 }
@@ -15,8 +18,14 @@
 The number of observations extracted from the object \code{object}.
 }
 \description{
-An accessor function used to extract the number of observation from a 'izip' object.
+An accessor function used to extract the number of observation from an 'izip' or a 'tsizip' object.
+}
+\examples{
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+nobs(M_bioChem)
 }
 \seealso{
-\code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}}
+\code{\link{coef.izip}}, \code{\link{fitted.izip}}, \code{\link{glm.izip}},
+\code{\link{coef.tsizip}}, \code{\link{fitted.tsizip}}, \code{\link{tsglm.izip}}
 }

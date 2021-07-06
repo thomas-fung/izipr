@@ -53,7 +53,7 @@ The generic assessor functions \code{coef} (i.e., \code{\link{coef.izip}}),
 can be used to extract various useful features of the value
 returned by \code{glm.izip}.
 
-An object class 'glm.izip' is a list containing at least the following components:
+An object class 'izip' is a list containing at least the following components:
 
 \item{coefficients}{a named vector of coefficients}
 \item{stderr}{approximate standard errors (using observed rather than expected information) for mean coefficients}
@@ -107,11 +107,11 @@ plot(M_bioChem) # or autoplot(M_bioChem)
 ## Ridout, Hinde & Demetrio (1998).
 data(appleshoots)
 M_shoots <- glm.izip(roots ~ 1 +
-             1 + factor(photo)*factor(bap),
-             data = appleshoots)
+  1 + factor(photo) * factor(bap),
+data = appleshoots
+)
 summary(M_shoots)
 plot(M_shoots) # or autoplot(M_bioChem)
-
 }
 \references{
 Huang, A. and Fung, T. (2020). Zero-inflated Poisson exponential families, with applications to time-series modelling of counts.

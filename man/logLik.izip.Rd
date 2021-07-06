@@ -3,22 +3,37 @@
 \name{logLik.izip}
 \alias{logLik.izip}
 \alias{print.logLik.izip}
+\alias{logLik.tsizip}
+\alias{print.logLik.tsizip}
 \title{Extract the (Maximized) Log-Likelihood from an iZIP Model Fit}
 \usage{
 \method{logLik}{izip}(object, ...)
 
 \method{print}{logLik.izip}(x, ...)
+
+\method{logLik}{tsizip}(object, ...)
+
+\method{print}{logLik.tsizip}(x, ...)
 }
 \arguments{
-\item{object}{an object of class 'izip' object, obtained from a call to \code{glm.izip}}
+\item{object}{an object of class 'izip' object or 'tsizip', obtained from a call to \code{glm.izip} or \code{tsglm.izip}}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 
-\item{x}{an object of class 'logLik.izip', obtained from a call to \code{logLik.izip}.}
+\item{x}{an object of class 'logLik.izip' or 'logLik.tsizip', obtained from a call to \code{logLik.izip} or \code{logLik.tsizip}.}
 }
 \description{
-An accessor function used to extract the (maximized) log-likelihood from a 'izip' object.
+An accessor function used to extract the (maximized) log-likelihood from an 'izip' or a 'tsizip' object.
+}
+\examples{
+data(bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
+logLik(M_bioChem)
+
+data(arson)
+M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+logLik(M_arson)
 }
 \seealso{
-\link{coef.izip}, \link{fitted.izip}, \link{glm.izip}
+\link{coef.izip}, \link{fitted.izip}, \link{glm.izip}, \link{coef.tsizip}, \link{fitted.tsizip}, \link{tsglm.izip}
 }

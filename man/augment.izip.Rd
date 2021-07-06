@@ -55,6 +55,6 @@ We are in the process of defining behaviours for models fit with various na.acti
 }
 \examples{
 data(bioChemists)
-M_bioChem <- glm.izip(art~ ., data=bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 augment(M_bioChem)
 }

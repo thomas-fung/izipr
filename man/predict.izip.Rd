@@ -42,15 +42,15 @@ If newdata is omitted the predictions are based on the data used for the fit.
 }
 \examples{
 data(bioChemists)
-M_bioChem <- glm.izip(art~ ., data=bioChemists)
+M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 
 predict(M_bioChem)
 predict(M_bioChem, type = "response")
 predict(M_bioChem, se.fit = TRUE, type = "response")
 
 newdataframe <- data.frame(
-   fem= "Women", mar = "Married", kid5 = 2,
-   phd = 3, ment = 8
+  fem = "Women", mar = "Married", kid5 = 2,
+  phd = 3, ment = 8
 )
 predict(M_bioChem, se.fit = TRUE, newdata = newdataframe, type = "response")
 }

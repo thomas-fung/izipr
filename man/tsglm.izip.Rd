@@ -2,23 +2,88 @@
 % Please edit documentation in R/zipingarch.R
 \name{tsglm.izip}
 \alias{tsglm.izip}
-\title{Title}
+\title{Fit an integered-valued GARCH time series iZIP Model}
 \usage{
 tsglm.izip(
-  y,
-  X = NULL,
+  formula,
   past_mean_lags = 1,
   past_obs_lags = 1,
+  data,
   ref.lambda = NULL,
   ...
 )
 }
 \arguments{
-\item{...}{}
+\item{formula}{an object of class 'formula': a symbolic description of the response and exogenous regressors.}
+
+\item{past_mean_lags}{numeric vector: integer vector giving the previous conditional means to be regressed on. If omitted, or of length zero, there will be no regression on previous observations.}
+
+\item{past_obs_lags}{numeric vector: integer vector giving the previous observations to be regressed on (autoregression). If omitted, or of length zero, there will be no regression on previous conditional means.}
+
+\item{data}{an optional data frame containing the variables in the model}
+
+\item{ref.lambda}{the rate of a Poisson distribution that baseline zero-inflated odds based on.}
+
+\item{...}{additional arguments to be passed to the lower level fitting function tsglm. See ?tscount::tsglm for more details.}
 }
 \value{
+A fitted model object of class \code{tsizip} similar to one obtained from \code{tsglm}.
 
+The function \code{summary} (i.e., \code{\link{summary.tsizip}}) can be used to obtain
+and print a summary of the results.
+
+The functions \code{plot} (i.e., \code{\link{plot.tsizip}}) and
+\code{autoplot} can be used to produce a range
+of diagnostic plots.
+
+The generic assessor functions \code{coef} (i.e., \code{\link{coef.tsizip}}),
+\code{logLik} (i.e., \code{\link{logLik.tsizip}})
+\code{fitted} (i.e., \code{\link{fitted.tsizip}}),
+\code{nobs} (i.e., \code{\link{nobs.tsizip}}),
+\code{AIC} (i.e., \code{\link{AIC.tsizip}}) and
+\code{residuals} (i.e., \code{\link{residuals.tsizip}})
+can be used to extract various useful features of the value
+returned by \code{tsglm.izip}.
+
+An object class 'tsizip' is a list containing at least the following components:
+
+\item{coefficients}{a named vector of coefficients}
+\item{stderr}{robust standard errors (using the sandwich estimators)}
+\item{residuals}{the \emph{response} residuals (i.e., observed-fitted)}
+\item{fitted_values}{the fitted mean values}
+\item{y}{the \code{y} vector used.}
+\item{X}{the model matrix for mean}
+\item{model}{the model frame for regression}
+\item{call}{the matched call}
+\item{formula}{the formula supplied for regression}
+\item{terms}{the \code{terms} object used for regression}
+\item{data}{the \code{data} argument}
 }
 \description{
-Title
+The function tsglm.izip is used to fit an iZIP integer-valued INGARCH model with identity link. The estimation is done by qausi-likelihood approach based on the Poisson likelihood function.
+}
+\details{
+Fit an integered-valued GARCH time series iZIP Model.
+
+The model is
+
+\deqn{Y_i ~ ZIP_{\nu}(\mu_i | \lambda = \lambda_{ref}),}
+
+where
+
+\deqn{E(Y_i) = \mu_i = x_i^T \beta + \alpha_1\mu_{t-1} + \ldots + \alpha_s\mu_{t-s} + \beta_1Y_{t-1} + \ldots + \beta_q Y_{t-q},}
+
+\eqn{x_i} are some covariates.
+
+\eqn{\nu \ge 0} is the baseline zero-inflated odds relative to a Poisson with
+rate \eqn{\lambda_{ref}}.
+}
+\examples{
+data(arson)
+M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+summary(M_arson)
+plot(M_arson) # or autoplot(M_arson)
+}
+\references{
+Huang, A. and Fung, T. (2020). Zero-inflated Poisson exponential families, with applications to time-series modelling of counts.
 }

@@ -32,7 +32,6 @@ M_bioChem.full
 ## Dropping phd
 M.bioChem.null <- update(M_bioChem.full, . ~ . - phd)
 M.bioChem.null
-
 }
 \seealso{
 \code{\link{glm.izip}}, \code{\link{update.formula}}, \code{\link{iziplrtest}}.

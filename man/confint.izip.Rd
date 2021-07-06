@@ -2,12 +2,15 @@
 % Please edit documentation in R/inference.R
 \name{confint.izip}
 \alias{confint.izip}
+\alias{confint.tsizip}
 \title{Confidence Intervals for iZIP Model Parameters}
 \usage{
 \method{confint}{izip}(object, parm, level = 0.95, ...)
+
+\method{confint}{tsizip}(object, parm, level = 0.95, ...)
 }
 \arguments{
-\item{object}{an object class 'izip', obtained from a call to \code{\link{glm.izip}}.}
+\item{object}{an object class 'izip' or 'tsizip', obtained from a call to \code{\link{glm.izip}} or \code{\link{tsglm.izip}}.}
 
 \item{parm}{a specification of which parameters are to be given confidence intervals, either a vector of numbers or a vector of names (comparing to those provided by \code{\link{coef}()}) . If missing, all parameters are considered.}
 
@@ -27,4 +30,8 @@ data(bioChemists)
 M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 confint(M_bioChem)
 confint(M_bioChem, param = "ment", level = 0.9)
+
+data(arson)
+M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
+confint(M_arson)
 }

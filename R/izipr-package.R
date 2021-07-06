@@ -62,11 +62,28 @@ NULL
 #' @references
 #' Jackman, S. (2020). pscl: Classes and Methods for R Developed in the Political Science Computational Laboratory. United States Studies Centre, University of Sydney. Sydney, New South Wales, Australia. R package version 1.5.5. URL https://github.com/atahk/pscl/
 #'
-#'Long, J. Scott. 1990. The origins of sex differences in science. Social Forces. 68(3):1297-1316.
+#' Long, J. Scott. 1990. The origins of sex differences in science. Social Forces. 68(3):1297-1316.
 #'
-#'Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. Thousand Oaks, California: Sage.
+#' Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. Thousand Oaks, California: Sage.
 #' @examples
 #' ## For examples see example(glm.izip)
+NULL
+
+
+#' arson data set
+#'
+#' This data set gives the monthly counts of arson in the 13th police car beat plus in Pittsburgh PA, USA, starting from January 1990 to December 2001. We have 144 observations in which 61 of them, or 42.4%, are zeros.
+#' @name arson
+#' @format A vector of 144 observations.
+#' @docType data
+#' @keywords datasets
+#' @usage
+#' data(arson)
+#' @source https://www.icpsr.umich.edu/icpsrweb/NACJD
+#' @references
+#' Zhu, F. (2012) Zero-inflated poisson and negative binomial integer-valued garch models. Journal of Statistical Planning and Inference, 142, 826–839.
+#' @examples
+#' ## For examples see example(tsglm.izip)
 NULL
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
