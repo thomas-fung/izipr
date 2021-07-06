@@ -18,5 +18,5 @@ test_that("Testing inference", {
   )
   expect_snapshot(iziplrtest(M_bioChem.full, M.bioChem.null))
   expect_snapshot(confint(M_bioChem.full))
-  expect_snapshot(confint(M_bioChem.full, param = "ment", level = 0.9))
+  expect_snapshot(confint(M_bioChem.full, parm = "ment", level = 0.9))
 })

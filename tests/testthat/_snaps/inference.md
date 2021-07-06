@@ -63,13 +63,8 @@
 ---
 
     Code
-      confint(M_bioChem.full, param = "ment", level = 0.9)
+      confint(M_bioChem.full, parm = "ment", level = 0.9)
     Output
-                          5 %        95 %
-      (Intercept)  0.12990939  0.51922509
-      femWomen    -0.33222841 -0.12501762
-      marMarried   0.04276045  0.27502173
-      kid5        -0.26569884 -0.11338733
-      phd         -0.03964397  0.05988022
-      ment         0.02111009  0.02826435
+                  5 %       95 %
+      ment 0.02111009 0.02826435
 

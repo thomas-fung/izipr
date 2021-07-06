@@ -17,7 +17,7 @@ test_that("Testing main estimation function", {
   expect_snapshot(M_bioChem)
   expect_snapshot(M_bioChem$coefficients)
   expect_snapshot(M_bioChem$loglik)
-  expect_snapshot(M_bioChem$vcov)
+  expect_snapshot(round(M_bioChem$vcov,5))
   expect_snapshot(M_bioChem1)
   expect_snapshot(M_bioChem1$coefficients)
   expect_snapshot(M_bioChem1$loglik)
@@ -56,9 +56,11 @@ test_that("Testing function that extracting info from glm.izip", {
   expect_snapshot(influence(M_bioChem))
   expect_snapshot(hatvalues(M_bioChem))
   expect_snapshot(rstandard(M_bioChem))
-  expect_snapshot(rstandard(M_bioChem, type = "pearson"))
+  expect_snapshot(round(rstandard(M_bioChem,
+                                  type = "pearson"), 5))
   expect_snapshot(cooks.distance(M_bioChem))
-  expect_snapshot(predict(M_bioChem, type = "link"))
+  expect_snapshot(round(predict(M_bioChem,
+                                type = "link"), 5))
   expect_snapshot(predict(M_bioChem, type = "response"))
   expect_equal(
     predict(M_bioChem, type = "link"),

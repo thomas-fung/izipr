@@ -158,7 +158,8 @@ update.izip <- function(object, formula., ...,
 #' data(bioChemists)
 #' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
 #' confint(M_bioChem)
-#' confint(M_bioChem, param = "ment", level = 0.9)
+#' # 90% CI for 'ment' only
+#' confint(M_bioChem, parm = "ment", level = 0.9)
 #'
 #' data(arson)
 #' M_arson <- tsglm.izip(arson ~ 1, past_mean_lags = 1, past_obs_lags = c(1, 2))
@@ -194,6 +195,7 @@ confint.izip <- function(object, parm, level = 0.95, ...) {
 #' @rdname confint.izip
 #' @export
 confint.tsizip <- function(object, parm, level = 0.95, ...) {
+  browser()
   cf <- coef(object)
   ses <- object$stderr
   pnames <- names(ses) <- names(cf)
