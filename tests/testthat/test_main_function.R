@@ -73,10 +73,10 @@ test_that("Testing function that extracting info from glm.izip", {
     predict(M_bioChem, type = "link", se.fit = TRUE),
     predict(M_bioChem, se.fit = TRUE)
   )
-  expect_snapshot(predict(M_bioChem,
+  expect_snapshot(
+    round(predict(M_bioChem,
     type = "response",
-    se.fit = TRUE
-  ))
+    se.fit = TRUE)$se.fit, 5))
   expect_snapshot(
     predict(M_bioChem,
       newdata = newdataframe, type = "response"
