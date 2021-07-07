@@ -20,7 +20,10 @@ Suggests:
     spelling,
     pscl,
     covr,
-    vdiffr
+    vdiffr,
+    knitr,
+    rmarkdown,
+    markdown
 Imports: 
     VGAM,
     stats,
@@ -37,3 +40,4 @@ Imports:
 Language: en-GB
 Depends: 
     R (>= 2.10)
+VignetteBuilder: knitr

@@ -1,6 +1,8 @@
 pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-06-21T13:04Z
+articles:
+  izipr: izipr.html
+  people: people.html
+last_built: 2021-07-06T07:57Z
 

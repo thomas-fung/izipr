@@ -1,0 +1,24 @@
+---
+title: The `izipr` Team
+keywords: authors, izipr, contributors
+csl: '`r here::here("vignettes", "apa-old-doi-prefix.csl")`'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The `izipr` Team}
+  %\VignetteEngine{knitr::knitr}
+  %\usepackage[utf8]{inputenc}
+---
+
+> Details of those who have contributed to the izipr project.
+Core development team:
+
+- Thomas Fung (Macquarie University)
+- Alan Huang (University of Queensland)
+
+#### Citation
+
+If you use this package to inform your model selection choices, please use the following citation:
+
+```{r, comment=NA}
+citation("izipr")
+```

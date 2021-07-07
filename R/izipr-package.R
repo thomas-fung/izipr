@@ -1,6 +1,6 @@
 #' Interpretable Zero-inflated Poisson Regression
 #'
-#' @name compak-package
+#' @name izipr-package
 #' @aliases izipr
 #' @docType package
 #' @title Interpretable Zero-inflated Poisson Regression

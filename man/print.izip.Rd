@@ -2,24 +2,27 @@
 % Please edit documentation in R/summarize_extract.R
 \name{print.izip}
 \alias{print.izip}
+\alias{print.tsizip}
 \title{Print Values of iZIP Model}
 \usage{
 \method{print}{izip}(x, ...)
+
+\method{print}{tsizip}(x, ...)
 }
 \arguments{
-\item{x}{an object class 'izip', obtained from a call to \code{glm.izip}.}
+\item{x}{an object class 'izip' or 'tsizip', obtained from a call to \code{glm.izip} and \code{tsglm.izip}.}
 
 \item{...}{other arguments passed to or from other methods  (currently unused).}
 }
 \description{
-\code{print} method for class \code{izip}.
+\code{print} method for class \code{izip} and \code{tsizip}
 }
 \details{
-\code{print.izip} can be used to print a short summary of object class 'izip'.
+\code{print.izip} and \code{print.tsizip} can be used to print a short summary of object class 'izip' and 'tsizip' respectively.
 }
 \examples{
-## For examples see example(glm.izip)
+## For examples see example(glm.izip) or example(tsglm.izip)
 }
 \seealso{
-\link{summary.izip}, \link{coef.izip}, \link{fitted.izip}, \link{glm.izip}.
+\link{summary.izip}, \link{coef.izip}, \link{fitted.izip}, \link{glm.izip}, \link{summary.tsizip}, \link{coef.tsizip}, \link{fitted.tsizip}, \link{tsglm.izip}.
 }

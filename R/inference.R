@@ -152,8 +152,6 @@ update.izip <- function(object, formula., ...,
 #'
 #' @return
 #' A matrix (or vector) with columns giving lower and upper confidence limits for each parameter. These will be labelled as (1-level)/2 and 1 - (1-level)/2 in % (by default 2.5% and 97.5%).
-#' @export
-#'
 #' @examples
 #' data(bioChemists)
 #' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
@@ -195,7 +193,6 @@ confint.izip <- function(object, parm, level = 0.95, ...) {
 #' @rdname confint.izip
 #' @export
 confint.tsizip <- function(object, parm, level = 0.95, ...) {
-  browser()
   cf <- coef(object)
   ses <- object$stderr
   pnames <- names(ses) <- names(cf)

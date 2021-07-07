@@ -8,12 +8,19 @@
 
 <title>Fit an interpretable Zero-Inflated Poisson Generalized Linear Model — glm.izip • izipr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -42,6 +49,7 @@
 <meta property="og:title" content="Fit an interpretable Zero-Inflated Poisson Generalized Linear Model — glm.izip" />
 <meta property="og:description" content="The function glm.izip is used to fit an interpretable zero-inflated Poisson
 generalized linear model with a log-link." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -81,18 +89,30 @@ generalized linear model with a log-link." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Change log</a>
+</li>
+<li>
+  <a href="../articles/izipr.html">Tutorial</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/thomas-fung/izipr/">
-    <span class="fab fa-github fa-lg"></span>
+  <a href="https://github.com/thomas-fung/izipr">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="../articles/people.html">
+    <span class="fa fa-info-circle fa-lg"></span>
      
   </a>
 </li>
@@ -154,15 +174,15 @@ generalized linear model with a log-link.</p>
 fitting process.</p></td>
     </tr>
     <tr>
+      <th>contrasts</th>
+      <td><p>optional lists. See the contrasts.arg of model.matrix.default.</p></td>
+    </tr>
+    <tr>
       <th>na.action</th>
       <td><p>a function which indicates what should happen when the data contain
 NAs. The default is set by the na.action setting of options, and is na.fail if that
 is unset. The ‘factory-fresh’ default is na.omit. Another possible value is NULL,
 no action. Value na.exclude can be useful.</p></td>
-    </tr>
-    <tr>
-      <th>contrast</th>
-      <td><p>optional lists. See the contrasts.arg of model.matrix.default.</p></td>
     </tr>
     </table>
 
@@ -172,18 +192,18 @@ no action. Value na.exclude can be useful.</p></td>
 or <code>glm.nb</code>.</p>
 <p>The function <code>summary</code> (i.e., <code><a href='summary.izip.html'>summary.izip</a></code>) can be used to obtain
 and print a summary of the results.</p>
-<p>The functions <code>plot</code> (i.e., <code><a href='plot.izip.html'>plot.izip</a></code>) and
+<p>The functions <code>plot</code> (i.e., <code><a href='izip_graphics.html'>plot.izip</a></code>) and
 <code>autoplot</code> can be used to produce a range
 of diagnostic plots.</p>
 <p>The generic assessor functions <code>coef</code> (i.e., <code><a href='coef.izip.html'>coef.izip</a></code>),
 <code>logLik</code> (i.e., <code><a href='logLik.izip.html'>logLik.izip</a></code>)
 <code>fitted</code> (i.e., <code><a href='fitted.izip.html'>fitted.izip</a></code>),
 <code>nobs</code> (i.e., <code><a href='nobs.izip.html'>nobs.izip</a></code>),
-<code>AIC</code> (i.e., <code><a href='AIC.izip.html'>AIC.izip</a></code>) and
-<code>residuals</code> (i.e., <code>residuals.izip</code>)
+<code>AIC</code> (i.e., <code><a href='aic.izip.html'>AIC.izip</a></code>) and
+<code>residuals</code> (i.e., <code><a href='residuals.izip.html'>residuals.izip</a></code>)
 can be used to extract various useful features of the value
 returned by <code>glm.izip</code>.</p>
-<p>An object class 'glm.izip' is a list containing at least the following components:</p>
+<p>An object class 'izip' is a list containing at least the following components:</p>
 <dt>coefficients</dt><dd><p>a named vector of coefficients</p></dd>
 <dt>stderr</dt><dd><p>approximate standard errors (using observed rather than expected information) for mean coefficients</p></dd>
 <dt>residuals</dt><dd><p>the <em>response</em> residuals (i.e., observed-fitted)</p></dd>
@@ -219,8 +239,90 @@ rate \(\lambda_{ref}\).</p>
     <p>Huang, A. and Fung, T. (2020). Zero-inflated Poisson exponential families, with applications to time-series modelling of counts.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>## article production by graduate students in</span></span>
+<span class='r-in'><span class='co'>## biochemistry PhD programs of Long (1990, 1997)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bioChemists</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>M_bioChem</span> <span class='op'>&lt;-</span> <span class='fu'>glm.izip</span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call: glm.izip(formula = art ~ ., data = bioChemists)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Deviance Residuals: </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Min      1Q  Median      3Q     Max  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -3.377  -1.423  -0.338   0.520   5.349  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Linear Model Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              Estimate   Std.Err Z value Pr(&gt;|z|)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)  0.324567  0.118344   2.743 0.006096 ** </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> femWomen    -0.228623  0.062988  -3.630 0.000284 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> marMarried   0.158891  0.070602   2.251 0.024417 *  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> kid5        -0.189543  0.046299  -4.094 4.24e-05 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> phd          0.010118  0.030253   0.334 0.738041    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ment         0.024687  0.002175  11.352  &lt; 2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Baseline zero-inflation odds for iZIP estimated to be 0.2861)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (The baseline Poisson rate for iZIP is set at 1.693)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Null deviance: 1542.8  on 914 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual deviance: 1405.5  on 909 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AIC: 3240.321 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>M_bioChem</span><span class='op'>)</span> <span class='co'># or autoplot(M_bioChem)</span></span>
+<span class='r-plt'><img src='glm.izip-1.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='glm.izip-2.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='glm.izip-3.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='glm.izip-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Root counts for propagated columnar apple shoots of</span></span>
+<span class='r-in'><span class='co'>## Ridout, Hinde &amp; Demetrio (1998).</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>appleshoots</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>M_shoots</span> <span class='op'>&lt;-</span> <span class='fu'>glm.izip</span><span class='op'>(</span><span class='va'>roots</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>photo</span><span class='op'>)</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>bap</span><span class='op'>)</span>,</span>
+<span class='r-in'>data <span class='op'>=</span> <span class='va'>appleshoots</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>M_shoots</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call: glm.izip(formula = roots ~ 1 + 1 + factor(photo) * factor(bap), </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     data = appleshoots)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Deviance Residuals: </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Min       1Q   Median       3Q      Max  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -3.5028  -1.9069  -0.2788   0.8393   3.9440  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Linear Model Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Estimate Std.Err Z value Pr(&gt;|z|)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)                       1.7636  0.1014  17.398  &lt; 2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> factor(photo)16                  -0.5798  0.2000  -2.900  0.00374 ** </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> factor(bap)4.4                    0.2862  0.1253   2.285  0.02232 *  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> factor(bap)8.8                    0.2513  0.1211   2.076  0.03790 *  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> factor(bap)17.6                   0.2035  0.1231   1.654  0.09819 .  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> factor(photo)16:factor(bap)4.4   -0.4645  0.2895  -1.604  0.10863    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> factor(photo)16:factor(bap)8.8   -0.2930  0.2757  -1.063  0.28780    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> factor(photo)16:factor(bap)17.6  -0.4912  0.2797  -1.756  0.07902 .  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Baseline zero-inflation odds for iZIP estimated to be 0.6592)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (The baseline Poisson rate for iZIP is set at 5.059)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Null deviance: 628.20  on 269 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual deviance: 503.72  on 262 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AIC: 1283.312 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>M_shoots</span><span class='op'>)</span> <span class='co'># or autoplot(M_bioChem)</span></span>
+<span class='r-plt'><img src='glm.izip-5.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='glm.izip-6.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='glm.izip-7.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='glm.izip-8.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

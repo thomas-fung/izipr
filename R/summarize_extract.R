@@ -414,18 +414,22 @@ print.summary.izip <- function(x, digits = max(3, getOption("digits") - 3),
 #'
 #' Print Values of iZIP Model
 #'
-#' \code{print} method for class \code{izip}.
+#' \code{print} method for class \code{izip} and \code{tsizip}
 #'
-#' @param x an object class 'izip', obtained from a call to \code{glm.izip}.
+#' @param x an object class 'izip' or 'tsizip', obtained from a call to \code{glm.izip} and \code{tsglm.izip}.
 #' @param ... other arguments passed to or from other methods  (currently unused).
-#' @export
 #' @details
-#' \code{print.izip} can be used to print a short summary of object class 'izip'.
+#' \code{print.izip} and \code{print.tsizip} can be used to print a short summary of object class 'izip' and 'tsizip' respectively.
 #'
 #' @seealso
-#' \link{summary.izip}, \link{coef.izip}, \link{fitted.izip}, \link{glm.izip}.
+#' \link{summary.izip}, \link{coef.izip}, \link{fitted.izip}, \link{glm.izip}, \link{summary.tsizip}, \link{coef.tsizip}, \link{fitted.tsizip}, \link{tsglm.izip}.
 #' @examples
-#' ## For examples see example(glm.izip)
+#' ## For examples see example(glm.izip) or example(tsglm.izip)
+#' @name print.izip
+NULL
+
+#' @rdname print.izip
+#' @export
 print.izip <- function(x, ...) {
   cat("\nCall: ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
     "\n",
@@ -443,6 +447,19 @@ print.izip <- function(x, ...) {
     x$residuals_deviance, "\nAIC:", format(AIC(x)), "\n\n"
   )
 }
+
+#' @rdname print.izip
+#' @export
+print.tsizip <- function(x, ...) {
+  cat("\nCall: ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
+      "\n",
+      sep = ""
+  )
+  cat("\nLinear Model Coefficients:\n")
+  print.default(format(signif(x$coefficients, 5)), print.gap = 2, quote = FALSE)
+  cat("\nBaseline Zero-inflation odds (nu):", signif(x$nu, 3))
+}
+
 
 
 #' iZIP Regression Diagnostic
@@ -630,50 +647,6 @@ generics::tidy
 #' @importFrom generics augment
 #' @export
 generics::augment
-
-#' Tidy a(n) iZIP model object
-#'
-#' Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.
-#' @param x an object class 'izip' object, obtained from a call to \code{glm.izip}
-#' @param conf.int Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.
-#' @param conf.level The confidence level to use for the confidence interval if conf.int = TRUE. Must be strictly greater than 0 and less than 1. Defaults to 0.95, which corresponds to a 95 percent confidence interval.
-#' @param exponentiate Logical indicating whether or not to exponentiate the the coefficient estimates.
-#' @param ... other arguments passed to or from other methods  (currently unused).
-#' @return
-#' A \code{tibble::tibble()} with columns:
-#' \item{term}{The name of the regression term.}
-#' \item{estimate}{The estimated value of the regression term.}
-#' \item{std.error}{The standard error of the regression term.}
-#' \item{statistic}{The value of a test statistic to use in a hypothesis that the regression term is non-zero.}
-#' \item{p.value}{The two-sided p-value associated with the observed statistic based on asymptotic normality.}
-#' \item{conf.low}{Lower bound on the confidence interval for the estimate.}
-#' \item{conf.high}{Upper bound on the confidence interval for the estimate.}
-#'
-#' @export
-#' @examples
-#' data(bioChemists)
-#' M_bioChem <- glm.izip(art ~ ., data = bioChemists)
-#' tidy(M_bioChem)
-tidy.izip <- function(x, conf.int = FALSE, conf.level = 0.95,
-                      exponentiate = FALSE, ...) {
-  ret <- tibble::as_tibble(summary.izip(x)$coefficients,
-    rownames = "term"
-  )
-  colnames(ret) <- c(
-    "term", "estimate", "std.error", "statistic",
-    "p.value"
-  )
-  if (conf.int) {
-    ci <- confint.izip(x, level = conf.level)
-    ci <- tibble::as_tibble(ci, rownames = "term")
-    colnames(ci) <- c("term", "conf.low", "conf.high")
-    ret <- dplyr::left_join(ret, ci, by = "term")
-  }
-  if (exponentiate) {
-    ret <- exponentiate(ret)
-  }
-  ret
-}
 
 
 #' Extracting the Variance-Covariance Matrix from a iZIP Log-Linear or
@@ -921,7 +894,6 @@ summary.tsizip <- function(object, ...) {
   return(ans)
 }
 
-
 #' @rdname summary.tsizip
 #' @export
 print.summary.tsizip <- function(x, digits = max(3, getOption("digits") - 3),
@@ -949,35 +921,11 @@ print.summary.tsizip <- function(x, digits = max(3, getOption("digits") - 3),
   cat("\nBIC:", format(x$bic), "\n")
 }
 
-#' Print Values of iZIP INGARCH Model
-#'
-#' \code{print} method for class \code{tsizip}.
-#'
-#' @param x an object class 'tsizip', obtained from a call to \code{tsglm.izip}.
-#' @param ... other arguments passed to or from other methods  (currently unused).
-#' @export
-#' @details
-#' \code{print.tsizip} can be used to print a short summary of object class 'tsizip'.
-#'
-#' @seealso
-#' \link{summary.izip}, \link{coef.tsizip}, \link{fitted.tsizip}, \link{tsglm.izip}.
-#' @examples
-#' ## For examples see example(tsglm.izip)
-print.tsizip <- function(x, ...) {
-  cat("\nCall: ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
-    "\n",
-    sep = ""
-  )
-  cat("\nLinear Model Coefficients:\n")
-  print.default(format(signif(x$coefficients, 5)), print.gap = 2, quote = FALSE)
-  cat("\nBaseline Zero-inflation odds (nu):", signif(x$nu, 3))
-}
 
-
-#' Tidy a(n) iZIP INGARCH model object
+#' Tidy a(n) iZIP model object
 #'
 #' Tidy summarizes information about the components of a model. A model component might be a single term in a regression, a single hypothesis, a cluster, or a class. Exactly what tidy considers to be a model component varies across models but is usually self-evident. If a model has several distinct types of components, you will need to specify which components to return.
-#' @param x an object class 'tsizip' object, obtained from a call to \code{tsglm.izip}
+#' @param x an object class 'izip' or tsizip' object, obtained from a call to \code{glm.izip} or \code{tsglm.izip}.
 #' @param conf.int Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.
 #' @param conf.level The confidence level to use for the confidence interval if conf.int = TRUE. Must be strictly greater than 0 and less than 1. Defaults to 0.95, which corresponds to a 95 percent confidence interval.
 #' @param exponentiate Logical indicating whether or not to exponentiate the the coefficient estimates.
@@ -992,7 +940,6 @@ print.tsizip <- function(x, ...) {
 #' \item{conf.low}{Lower bound on the confidence interval for the estimate.}
 #' \item{conf.high}{Upper bound on the confidence interval for the estimate.}
 #'
-#' @export
 #' @examples
 #' data(bioChemists)
 #' M_bioChem <- glm.izip(art ~ ., data = bioChemists)

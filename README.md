@@ -9,6 +9,9 @@
 status](https://github.com/thomas-fung/izipr/workflows/R-CMD-check/badge.svg)](https://github.com/thomas-fung/izipr/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/thomas-fung/izipr/branch/master/graph/badge.svg)](https://codecov.io/gh/thomas-fung/izipr?branch=master)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+\# izipr <img src='man/figures/logo.png' align="right" height="139" />
 <!-- badges: end -->
 
 The `izipr` package provides a collection of functions for estimation,

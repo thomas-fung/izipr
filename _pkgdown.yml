@@ -1,0 +1,72 @@
+template:
+  params:
+    bootswatch: lumen
+    toc_depth: 4
+
+reference:
+  - title: "Core functions"
+    contents:
+      - glm.izip
+      - tsglm.izip
+  - title: "Data sets"
+    contents:
+      - appleshoots
+      - bioChemists
+      - arson
+  - title: "Generic extract, plot, print and summary methods"
+    contents:
+      - AIC.izip
+      - coef.izip
+      - print.izip
+      - plot.izip
+      - autoplot.izip
+      - tsizip_graphics
+      - summary.izip
+      - summary.tsizip
+      - residuals.izip
+      - model.frame.izip
+      - model.matrix.izip
+      - nobs.izip
+      - fitted.izip
+      - logLik.izip
+      - predict.izip
+      - update.izip
+      - tidy.izip
+      - augment.izip
+      - confint.izip
+      - glance.izip
+      - regression.diagnostic.izip
+      - vcov.izip
+      - iZIP_Distribution
+      - iziplrtest
+      - nrPIT
+      - rPIT
+  - title: "Some less commonly used functions"
+    contents:
+      - izipr-package
+      - is.wholenumber
+      - CBIND
+      - PIT_Plot
+      - tryCatch.W.E
+      - PIT_ggPlot
+
+
+navbar:
+  title: "izipr"
+  type: default
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Change log"
+      href: news/index.html
+    - text: "Tutorial"
+      href: "articles/izipr.html"
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/thomas-fung/izipr
+    - icon: fa-info-circle fa-lg
+      href: articles/people.html
+
+
