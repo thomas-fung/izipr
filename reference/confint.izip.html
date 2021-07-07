@@ -8,12 +8,19 @@
 
 <title>Confidence Intervals for iZIP Model Parameters — confint.izip • izipr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -42,6 +49,7 @@
 <meta property="og:title" content="Confidence Intervals for iZIP Model Parameters — confint.izip" />
 <meta property="og:description" content="Computes confidence intervals for one or more parameters in a
 fitted model." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -81,18 +89,30 @@ fitted model." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Change log</a>
+</li>
+<li>
+  <a href="../articles/izipr.html">Tutorial</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/thomas-fung/izipr/">
-    <span class="fab fa-github fa-lg"></span>
+  <a href="https://github.com/thomas-fung/izipr">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="../articles/people.html">
+    <span class="fa fa-info-circle fa-lg"></span>
      
   </a>
 </li>
@@ -167,24 +187,7 @@ fitted model.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>arson</span><span class='op'>)</span>
 <span class='va'>M_arson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tsglm.izip.html'>tsglm.izip</a></span><span class='op'>(</span><span class='va'>arson</span> <span class='op'>~</span> <span class='fl'>1</span>, past_mean_lags <span class='op'>=</span> <span class='fl'>1</span>, past_obs_lags <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>M_arson</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Called from: confint.tsizip(M_arson)
-#&gt; debug: cf &lt;- coef(object)
-#&gt; debug: ses &lt;- object$stderr
-#&gt; debug: pnames &lt;- names(ses) &lt;- names(cf)
-#&gt; debug: if (missing(parm)) {
-#&gt;     parm &lt;- pnames
-#&gt; } else if (is.numeric(parm)) {
-#&gt;     parm &lt;- pnames[parm]
-#&gt; }
-#&gt; debug: parm &lt;- pnames
-#&gt; debug: a &lt;- (1 - level)/2
-#&gt; debug: a &lt;- c(a, 1 - a)
-#&gt; debug: fac &lt;- qnorm(a)
-#&gt; debug: pct &lt;- format.perc(a, 3)
-#&gt; debug: ci &lt;- array(NA_real_, dim = c(length(parm), 2L), dimnames = list(parm, 
-#&gt;     pct))
-#&gt; debug: ci[] &lt;- cf[parm] + ses[parm] %o% fac
-#&gt; debug: ci</div><div class='output co'>#&gt;                    2.5 %    97.5 %
+</div><div class='output co'>#&gt;                    2.5 %    97.5 %
 #&gt; (Intercept) -0.109465665 1.7724965
 #&gt; beta_1      -0.137404909 0.1901232
 #&gt; beta_2       0.001429144 0.3497717
