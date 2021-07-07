@@ -23,7 +23,8 @@ Suggests:
     vdiffr,
     knitr,
     rmarkdown,
-    markdown
+    markdown,
+    here
 Imports: 
     VGAM,
     stats,
